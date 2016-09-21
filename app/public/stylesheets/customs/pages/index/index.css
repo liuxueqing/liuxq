@@ -1,0 +1,36 @@
+/* *****************************- 顶部导航条a标签的默认效果  -******************************** */
+.navbar .navbar-nav>li>a {
+    background: transparent;
+}
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:focus,
+.navbar-default .navbar-nav>.active>a:hover{
+    background: rgba(0,0,0,.1);
+    color: #fff;
+}
+.ace-settings-container{
+    top: 60px;
+}
+@media only screen and (max-width: 991px)  {
+    .navbar .navbar-nav>li, .navbar .navbar-nav>li {
+        display: inline-block;
+    }
+}
+/* *****************************- sidebar  -******************************** */
+#sidebar {
+    margin-top: 5px;
+    z-index: 1025;
+    background: repeat-x #f7f7f7;
+    background-image: linear-gradient(to bottom,#FFF 0,#EEE 100%);
+    background-image: -webkit-linear-gradient(top,#FFF 0,#EEE 100%);
+    background-image: -o-linear-gradient(top,#FFF 0,#EEE 100%);
+    background-image: linear-gradient(to bottom,#FFF 0,#EEE 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffeeeeee', GradientType=0);
+}
+#ace-settings-container {
+    z-index: 1000;
+}
+/* *****************************- 音频面板  -******************************** */
+.widget-main .main-left{float: left;  width: 150px;}
+.widget-main .main-right{margin-left: 150px;/*==等于左边栏宽度==*/}
+/* *****************************- 顶部导航样式（仿hn）  -******************************** */

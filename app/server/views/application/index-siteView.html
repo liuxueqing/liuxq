@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title><%= title %></title>
+
+    <meta name="description" content="Draggabble Widget Boxes with Persistent Position and State"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/font-awesome.min.css"/>
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/jquery-ui.custom.min.css"/>
+    <link rel="stylesheet" href="/bower_components/jPlayer/dist/skin/blue.monday/css/jplayer.blue.monday.min.css"/>
+    <link href="/bower_components/segment/segment.css" rel="stylesheet">
+    <link href="/stylesheets/customs/pages/index/meter.css" rel="stylesheet">
+    <link href="/stylesheets/customs/pages/index/audioPlayerBox.css" rel="stylesheet">
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/fonts.googleapis.com.css"/>
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace.min.css" class="ace-main-stylesheet"
+          id="main-ace-style"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-part2.min.css" class="ace-main-stylesheet"/>
+    <![endif]-->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-skins.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-rtl.min.css"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-ie.min.css"/>
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+    <link rel="stylesheet" href="/stylesheets/customs/pages/index/index.css"/>
+
+    <!-- ace settings handler -->
+    <script src="/javascripts/Ace_template_js/ace-extra.min.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="/javascripts/Ace_template_js/html5shiv.min.js"></script>
+    <script src="/javascripts/Ace_template_js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="skin-hn">
+<% include ../includes/topNav.html %>
+
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.loadState('main-container')
+        } catch (e) {
+        }
+    </script>
+
+    <% include ../includes/sideBar.html %>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+
+            <div class="page-content">
+                <% include ../includes/ace-settings-container.html %>
+
+                <% include ../includes/audioPlayerBox.html %>
+
+                <div class="page-header">
+                    <h1>
+                        <%= mainDatas[0].ProjName %>
+                        <small>
+                            <i class="ace-icon fa fa-angle-double-right"></i>
+                            全部
+                        </small>
+                    </h1>
+                </div><!-- /.page-header -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div class="invisible" id="main-widget-container">
+
+                            <div class="row">
+                                <div class="col-xs-12 widget-container-col" id="widget-container-col-1">
+                                    <div class="widget-box" id="widget-box-1">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">
+                                                <i class="ace-icon fa fa-dashboard"></i>
+                                                音频监测面板 section-A
+                                            </h5>
+
+                                            <div class="widget-toolbar">
+                                                <div class="widget-menu">
+                                                    <a href="#" data-rel="tooltip" title=""
+                                                       data-original-title="详细参数页面">
+                                                        <i class="ace-icon fa fa-cog"></i>
+                                                    </a>
+                                                </div>
+
+                                                <a href="#" data-action="fullscreen" class="orange2">
+                                                    <i class="ace-icon fa fa-expand"></i>
+                                                </a>
+
+                                                <a href="#" data-action="reload">
+                                                    <i class="ace-icon fa fa-refresh"></i>
+                                                </a>
+
+                                                <a href="#" data-action="collapse">
+                                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="widget-body">
+                                            <div class="widget-main clearfix">
+                                                <div class="main-right">
+
+                                                    <div class="col-xs-12">
+                                                        <!-- PAGE CONTENT BEGINS -->
+                                                        <form class="form-horizontal" role="form">
+                                                            <div class="form-group">
+                                                                <label class="col-xs-4 control-label no-padding-top">
+                                                                    接收频率 </label>
+
+                                                                <div class="col-xs-8">
+                                                                    <div class="rating inline"><span
+                                                                            class="label label-xlg label-primary arrowed arrowed-right"> 94.5 MHz </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="col-xs-4 control-label no-padding-right">
+                                                                    频率设置 </label>
+
+                                                                <div class="col-xs-8">
+                                                                    <div class="input-group col-xs-10 col-xs-8">
+                                                                        <input type="text" id="form-field-1"
+                                                                               placeholder="频率设置" value="94.5"
+                                                                               class="col-xs-10 col-xs-10" readonly>
+                                                                            <span class="input-group-btn">
+                                                                                <button class="btn btn-minier btn-warning"
+                                                                                        type="button"
+                                                                                        disabled="disabled">
+                                                                                    <i class="ace-icon fa fa-gear bigger-110"></i>
+                                                                                    设置!
+                                                                                </button>
+                                                                            </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="hr hr-16 hr-dotted"></div>
+
+
+                                                            <div class="form-group" style="margin-bottom: 0;">
+                                                                <div class="col-xs-12">
+                                                                    <table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <th>
+                                                                                <i class="ace-icon fa fa-tags bigger-110"></i>
+                                                                                参数名称
+                                                                            </th>
+                                                                            <th>
+                                                                                <i class="ace-icon fa fa-database bigger-110"></i>
+                                                                                参数值
+                                                                            </th>
+                                                                        </tr>
+                                                                        </thead>
+
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td>音频状态</td>
+                                                                            <td>
+                                                                                <select class="segment-select">
+                                                                                    <option value="1">单声道</option>
+                                                                                    <option value="2">立体声</option>
+                                                                                </select>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>温度</td>
+                                                                            <td><span
+                                                                                    class="label label-sm label-success">26 ℃</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>湿度</td>
+                                                                            <td><span
+                                                                                    class="label label-sm label-success">26.40 RH</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>接收场强</td>
+                                                                            <td><span
+                                                                                    class="label label-sm label-warning">20 dBuV</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>接收信噪比</td>
+                                                                            <td><span
+                                                                                    class="label label-sm label-warning">20 dB</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>联网模式</td>
+                                                                            <td>
+                                                                                <select class="segment-select">
+                                                                                    <option value="1">LAN</option>
+                                                                                    <option value="2">WIFI</option>
+                                                                                    <option value="3">GPRS</option>
+                                                                                </select>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>FM状态</td>
+                                                                            <td><span
+                                                                                    class="label label-sm label-success">正常</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>TH状态</td>
+                                                                            <td><span
+                                                                                    class="label label-sm label-danger">异常</span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+
+                                                                    <div class="space-6"></div>
+
+                                                                    <div class="form-group">
+                                                                        <div class="col-xs-12">
+                                                                            <div class="rating inline col-xs-6 center">
+                                                                                <button type="button" class="btn btn-sm btn-primary" id="btnPlay_1">
+                                                                                    <i class="ace-icon fa fa-play align-top bigger-125"></i>
+                                                                                    实时监听
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="rating inline col-xs-6 center">
+                                                                                <button type="button" class="btn btn-sm btn-primary Js_btnStop">
+                                                                                    <i class="ace-icon fa fa-stop align-top bigger-125"></i>
+                                                                                    暂停监听
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <table id="simple-table-1"
+                                                                           class="table  table-bordered table-hover"
+                                                                           style="margin-bottom: 0;">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <th class="center">
+                                                                                <i class="ace-icon fa fa-file-audio-o bigger-110 hidden-480"></i>
+                                                                                历史音频资源
+                                                                            </th>
+                                                                            <th class="hidden-1024 center">
+                                                                                <i class="ace-icon fa fa-calendar bigger-110 hidden-480"></i>
+                                                                                上传日期
+                                                                            </th>
+                                                                            <th class="center">
+                                                                                <i class="ace-icon fa fa-cogs bigger-110 hidden-480"></i>
+                                                                                资源操作
+                                                                            </th>
+                                                                        </tr>
+                                                                        </thead>
+
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td class="center">
+                                                                                FM0996_150000.mp3
+                                                                            </td>
+                                                                            <td class="center hidden-1024">
+                                                                                2007-12-03
+                                                                            </td>
+                                                                            <td class="center">
+                                                                                <div class="btn-group">
+                                                                                    <button class="btn btn-minier btn-info">
+                                                                                        <i class="ace-icon fa fa-play-circle align-top bigger-125"></i>
+                                                                                        播放
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="btn-group">
+                                                                                    <button class="btn btn-minier">
+                                                                                        <i class="ace-icon fa fa-cloud-download align-top bigger-125"></i>
+                                                                                        下载
+                                                                                    </button>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="center">
+                                                                                Miaow-07-Bubble.mp3
+                                                                            </td>
+                                                                            <td class="center hidden-1024">
+                                                                                2007-12-03
+                                                                            </td>
+                                                                            <td class="center">
+                                                                                <div class="btn-group">
+                                                                                    <button class="btn btn-minier btn-info">
+                                                                                        <i class="ace-icon fa fa-play-circle align-top bigger-125"></i>
+                                                                                        播放
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="btn-group">
+                                                                                    <button class="btn btn-minier">
+                                                                                        <i class="ace-icon fa fa-cloud-download align-top bigger-125"></i>
+                                                                                        下载
+                                                                                    </button>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="center">
+                                                                                Miaow-07-Bubble.mp3
+                                                                            </td>
+                                                                            <td class="center hidden-1024">
+                                                                                2007-12-03
+                                                                            </td>
+                                                                            <td class="center">
+                                                                                <div class="btn-group">
+                                                                                    <button class="btn btn-minier btn-info">
+                                                                                        <i class="ace-icon fa fa-play-circle align-top bigger-125"></i>
+                                                                                        播放
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="btn-group">
+                                                                                    <button class="btn btn-minier">
+                                                                                        <i class="ace-icon fa fa-cloud-download align-top bigger-125"></i>
+                                                                                        下载
+                                                                                    </button>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="center">
+                                                                                Miaow-07-Bubble.mp3
+                                                                            </td>
+                                                                            <td class="center hidden-1024">
+                                                                                2007-12-03
+                                                                            </td>
+                                                                            <td class="center">
+                                                                                <div class="btn-group">
+                                                                                    <button class="btn btn-minier btn-info">
+                                                                                        <i class="ace-icon fa fa-play-circle align-top bigger-125"></i>
+                                                                                        播放
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="btn-group">
+                                                                                    <button class="btn btn-minier">
+                                                                                        <i class="ace-icon fa fa-cloud-download align-top bigger-125"></i>
+                                                                                        下载
+                                                                                    </button>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="center">
+                                                                                Miaow-07-Bubble.mp3
+                                                                            </td>
+                                                                            <td class="center hidden-1024">
+                                                                                2007-12-03
+                                                                            </td>
+                                                                            <td class="center">
+                                                                                <div class="btn-group">
+                                                                                    <button class="btn btn-minier btn-info">
+                                                                                        <i class="ace-icon fa fa-play-circle align-top bigger-125"></i>
+                                                                                        播放
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="btn-group">
+                                                                                    <button class="btn btn-minier">
+                                                                                        <i class="ace-icon fa fa-cloud-download align-top bigger-125"></i>
+                                                                                        下载
+                                                                                    </button>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <ul class="pagination pull-right"
+                                                                        style="margin: 5px 0 0 0;">
+                                                                        <li class="disabled">
+                                                                            <a href="#">
+                                                                                <i class="ace-icon fa fa-angle-double-left"></i>
+                                                                            </a>
+                                                                        </li>
+
+                                                                        <li class="active">
+                                                                            <a href="#">1</a>
+                                                                        </li>
+
+                                                                        <li>
+                                                                            <a href="#">2</a>
+                                                                        </li>
+
+                                                                        <li>
+                                                                            <a href="#">3</a>
+                                                                        </li>
+
+                                                                        <li>
+                                                                            <a href="#">4</a>
+                                                                        </li>
+
+                                                                        <li>
+                                                                            <a href="#">5</a>
+                                                                        </li>
+
+                                                                        <li>
+                                                                            <a href="#">
+                                                                                <i class="ace-icon fa fa-angle-double-right"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+
+                                                        <!-- PAGE CONTENT ENDS -->
+                                                    </div><!-- /.col -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr/>
+                            <div class="text-center">
+                                <button type="reset" id="reset-widgets"
+                                        class="btn btn-danger btn-white btn-bold btn-round">重置页面布局
+                                </button>
+                            </div>
+                        </div><!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+
+    <% include ../includes/footer.html %>
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+
+<!-- basic scripts -->
+
+<!--[if !IE]> -->
+<script src="/javascripts/Ace_template_js/jquery-2.1.4.min.js"></script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script src="/javascripts/Ace_template_js/jquery-1.11.3.min.js"></script>
+<![endif]-->
+<script type="text/javascript">
+    if ('ontouchstart' in document.documentElement) document.write("<script src='/javascripts/Ace_template_js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+</script>
+<script src="/javascripts/Ace_template_js/bootstrap.min.js"></script>
+
+<!-- page specific plugin scripts -->
+<script src="/javascripts/Ace_template_js/jquery-ui.custom.min.js"></script>
+<script src="/javascripts/Ace_template_js/jquery.ui.touch-punch.min.js"></script>
+<script src="/bower_components/jPlayer/dist/jplayer/jquery.jplayer.min.js"></script>
+<script src="/bower_components/jPlayer/dist/add-on/jplayer.playlist.min.js"></script>
+
+<!-- ace scripts -->
+<script src="/javascripts/Ace_template_js/ace-elements.min.js"></script>
+<script src="/javascripts/Ace_template_js/ace.min.js"></script>
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    jQuery(function ($) {
+        //tooltip
+        $('[data-rel=tooltip]').tooltip();
+        $('[data-rel=popover]').popover({html: true});
+
+        $('#simple-colorpicker-1').ace_colorpicker({pull_right: true}).on('change', function () {
+            var color_class = $(this).find('option:selected').data('class');
+            var new_class = 'widget-box';
+            if (color_class != 'default')  new_class += ' widget-color-' + color_class;
+            $(this).closest('.widget-box').attr('class', new_class);
+        });
+
+
+        // scrollables
+        $('.scrollable').each(function () {
+            var $this = $(this);
+            $(this).ace_scroll({
+                size: $this.attr('data-size') || 100
+                //styleClass: 'scroll-left scroll-margin scroll-thin scroll-dark scroll-light no-track scroll-visible'
+            });
+        });
+        $('.scrollable-horizontal').each(function () {
+            var $this = $(this);
+            $(this).ace_scroll(
+                    {
+                        horizontal: true,
+                        styleClass: 'scroll-top',//show the scrollbars on top(default is bottom)
+                        size: $this.attr('data-size') || 500,
+                        mouseWheelLock: true
+                    }
+            ).css({'padding-top': 12});
+        });
+
+        $(window).on('resize.scroll_reset', function () {
+            $('.scrollable-horizontal').ace_scroll('reset');
+        });
+
+
+        $('#id-checkbox-vertical').prop('checked', false).on('click', function () {
+            $('#widget-toolbox-1').toggleClass('toolbox-vertical')
+                    .find('.btn-group').toggleClass('btn-group-vertical')
+                    .filter(':first').toggleClass('hidden')
+                    .parent().toggleClass('btn-toolbar')
+        });
+
+        /**
+         //or use slimScroll plugin
+         $('.slim-scrollable').each(function () {
+					var $this = $(this);
+					$this.slimScroll({
+						height: $this.data('height') || 100,
+						railVisible:true
+					});
+				});
+         */
+
+
+        /**$('.widget-box').on('setting.ace.widget' , function(e) {
+					e.preventDefault();
+				});*/
+
+        /**
+         $('.widget-box').on('show.ace.widget', function(e) {
+					//e.preventDefault();
+					//this = the widget-box
+				});
+         $('.widget-box').on('reload.ace.widget', function(e) {
+					//this = the widget-box
+				});
+         */
+
+            //$('#my-widget-box').widget_box('hide');
+
+
+            // widget boxes
+            // widget box drag & drop example
+        $('.widget-container-col').sortable({
+            connectWith: '.widget-container-col',
+            items: '> .widget-box',
+            handle: ace.vars['touch'] ? '.widget-title' : false,
+            cancel: '.fullscreen',
+            opacity: 0.8,
+            revert: true,
+            forceHelperSize: true,
+            placeholder: 'widget-placeholder',
+            forcePlaceholderSize: true,
+            tolerance: 'pointer',
+            start: function (event, ui) {
+                //when an element is moved, it's parent becomes empty with almost zero height.
+                //we set a min-height for it to be large enough so that later we can easily drop elements back onto it
+                ui.item.parent().css({'min-height': ui.item.height()})
+                //ui.sender.css({'min-height':ui.item.height() , 'background-color' : '#F5F5F5'})
+            },
+            update: function (event, ui) {
+                ui.item.parent({'min-height': ''})
+                //p.style.removeProperty('background-color');
+
+
+                //save widget positions
+                var widget_order = {}
+                $('.widget-container-col').each(function () {
+                    var container_id = $(this).attr('id');
+                    widget_order[container_id] = []
+
+
+                    $(this).find('> .widget-box').each(function () {
+                        var widget_id = $(this).attr('id');
+                        widget_order[container_id].push(widget_id);
+                        //now we know each container contains which widgets
+                    });
+                });
+
+                ace.data.set('demo', 'widget-order', widget_order, null, true);
+            }
+        });
+
+
+        ///////////////////////
+
+        //when a widget is shown/hidden/closed, we save its state for later retrieval
+        $(document).on('shown.ace.widget hidden.ace.widget closed.ace.widget', '.widget-box', function (event) {
+            var widgets = ace.data.get('demo', 'widget-state', true);
+            if (widgets == null) widgets = {};
+
+            var id = $(this).attr('id');
+            widgets[id] = event.type;
+            ace.data.set('demo', 'widget-state', widgets, null, true);
+        });
+
+
+        (function () {
+            //restore widget order
+            var container_list = ace.data.get('demo', 'widget-order', true);
+            if (container_list) {
+                for (var container_id in container_list) if (container_list.hasOwnProperty(container_id)) {
+
+                    var widgets_inside_container = container_list[container_id];
+                    if (widgets_inside_container.length == 0) continue;
+
+                    for (var i = 0; i < widgets_inside_container.length; i++) {
+                        var widget = widgets_inside_container[i];
+                        $('#' + widget).appendTo('#' + container_id);
+                    }
+
+                }
+            }
+
+
+            //restore widget state
+            var widgets = ace.data.get('demo', 'widget-state', true);
+            if (widgets != null) {
+                for (var id in widgets) if (widgets.hasOwnProperty(id)) {
+                    var state = widgets[id];
+                    var widget = $('#' + id);
+                    if
+                    (
+                            (state == 'shown' && widget.hasClass('collapsed'))
+                            ||
+                            (state == 'hidden' && !widget.hasClass('collapsed'))
+                    ) {
+                        widget.widget_box('toggleFast');
+                    }
+                    else if (state == 'closed') {
+                        widget.widget_box('closeFast');
+                    }
+                }
+            }
+
+
+            $('#main-widget-container').removeClass('invisible');
+
+
+            //reset saved positions and states
+            $('#reset-widgets').on('click', function () {
+                ace.data.remove('demo', 'widget-state');
+                ace.data.remove('demo', 'widget-order');
+                document.location.reload();
+            });
+
+        })();
+
+    });
+</script>
+</body>
+</html>

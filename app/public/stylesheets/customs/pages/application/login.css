@@ -1,0 +1,144 @@
+/* 底部自适应文档和窗口  */
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-size: 100%;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    display: block;
+    width: 100%;
+    height: 50px;
+    background: #fff;
+}
+
+.wrap {
+    position: relative;
+    min-height: 100%;
+    _height: 100%;
+}
+
+.content {
+    padding: 0 0 300px;
+    zoom: 1;
+}
+
+.content .inner-box {
+    padding: 150px 0 0 350px;
+}
+
+.content .login-info {
+    list-style: none;
+    font-size: 14px;
+}
+
+.content .login-box {
+    position: relative;
+    padding: 30px;
+    width: 380px;
+    background: hsla(0, 0%, 100%, 1);
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.content .login-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    filter: blur(20px);
+    margin: -30px;
+}
+
+.captcha-ipt {
+    padding: 0 15px 0 0;
+}
+
+footer {
+    height: 255px;
+    margin: -255px 0 0;
+    background: #fff;
+}
+
+/* footer  */
+footer .row {
+    padding: 30px;
+}
+
+footer .logo {
+    text-align: center;
+}
+
+footer .logo img {
+    display: inline-block;
+    width: 280px;
+}
+
+footer .title {
+    text-align: center;
+}
+
+footer .title h2 {
+    display: inline-block;
+    width: 400px;
+    text-align: right;
+    font-size: 2em;
+    font-weight: bold;
+    font-family: "微软雅黑";
+    color: #666;
+}
+
+footer .copyright {
+    text-align: center;
+    font-family: "微软雅黑";
+}
+
+.error {
+    padding: 6px 12px;
+    color: rgb(255, 0, 0);
+}
+
+.captcha-ipt {
+    padding: 0 15px 0 0;
+}
+
+.captcha-svg {
+    padding: 0;
+    height: 34px;
+    overflow: hidden;
+    border: 0;
+}
+
+.captcha-svg svg {
+    overflow: hidden;
+}
+
+@media screen and (max-width: 1024px) {
+    .content .inner-box {
+        padding: 100px 0 0 0px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .content .login-box {
+        float: none;
+        display: inline-block;
+    }
+
+    footer .title h2 {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    .content .login-box {
+        width: 100%;
+    }
+}

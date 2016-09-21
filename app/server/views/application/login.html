@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title><%= title %></title>
+
+    <meta name="description" content="User login page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/font-awesome.min.css"/>
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/fonts.googleapis.com.css"/>
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace.min.css"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-part2.min.css"/>
+    <![endif]-->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-rtl.min.css"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-ie.min.css"/>
+    <![endif]-->
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="/javascripts/Ace_template_js/html5shiv.min.js"></script>
+    <script src="/javascripts/Ace_template_js/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+    <link rel="stylesheet" href="/stylesheets/customs/pages/application/login.css"/>
+</head>
+
+<body data-vide-bg="mp4: ./video/sunset.mp4">
+
+<!-- 顶部留白 -->
+<header></header>
+
+<div class="wrap">
+    <div class="content">
+        <div class="inner-box clearfix">
+            <div class="login-box">
+
+                <h4 class="header blue lighter bigger">
+                    <i class="ace-icon fa fa-sign-in"></i>
+                    平台登录
+                </h4>
+                <!-- 表单验证提示信息 -->
+                <ul class="login-info"></ul>
+
+                <div class="space-6"></div>
+
+                <form id="signinForm" novalidate="novalidate" class="validator-form">
+                    <fieldset>
+                        <label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="text" class="form-control" name="user"
+                                                                   placeholder="Email地址">
+															<i class="ace-icon fa fa-user"></i>
+														</span>
+                        </label>
+
+                        <label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															<input type="password" name="pass" class="form-control"
+                                                                   placeholder="密码">
+															<i class="ace-icon fa fa-lock"></i>
+														</span>
+                        </label>
+
+                        <label class="block clearfix">
+														<span class="col-xs-7 captcha-ipt input-icon input-icon-right">
+															<input id="captcha" type="text" name="captcha"
+                                                                   class="form-control" placeholder="验证码">
+														</span>
+                            <iframe id="loginIframe" class="col-xs-5 captcha-svg" src="/captcha" style="height: 34px;overflow: hidden"></iframe>
+                        </label>
+
+                        <div class="space"></div>
+
+                        <div class="clearfix">
+                            <label class="inline">
+                                <input name="remember-me" type="checkbox" class="ace">
+                                <span class="lbl"> 7天免登录</span>
+                            </label>
+
+                            <button type="submit" class="width-35 pull-right btn btn-sm">
+                                <i class="ace-icon fa fa-sign-in"></i>
+                                <span class="bigger-110">登录</span>
+                            </button>
+                        </div>
+
+                        <div class="space-4"></div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 logo">
+                <img class="logo" src="/images/customs/application/905logo.png" alt=""/>
+            </div>
+            <div class="col-md-6 title">
+                <h2>中国高速交通广播网<br>湖南FM90.5系统监测平台</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <p class="copyright">Copyright © 2016-2017 智和云 Application © 2016-2017</p>
+    </div>
+
+</footer>
+
+<!-- 登陆提示信息模态框 -->
+<div class="modal fade" id="formInfoBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">提示信息</h4>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- basic scripts -->
+
+<!--[if !IE]> -->
+<script src="/javascripts/Ace_template_js/jquery-2.1.4.min.js"></script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script src="/javascripts/Ace_template_js/jquery-1.11.3.min.js"></script>
+<![endif]-->
+<script type="text/javascript">
+    if ('ontouchstart' in document.documentElement) document.write("<script src='/javascripts/Ace_template_js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+</script>
+
+<!-- page specific plugin scripts -->
+<script src="/bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="/javascripts/Ace_template_js/bootstrap.min.js"></script>
+<script src="/bower_components/jquery-validation/dist/localization/messages_zh.js"></script>
+<script src="/bower_components/jquery.vide/jquery.vide.js"></script>
+<script src="/javascripts/customs/pages/application/login.js"></script>
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    jQuery(function ($) {
+        $(document).on('click', '.toolbar a[data-target]', function (e) {
+            e.preventDefault();
+            var target = $(this).data('target');
+            $('.widget-box.visible').removeClass('visible');//hide others
+            $(target).addClass('visible');//show target
+        });
+    });
+
+
+    //you don't need this, just used for changing background
+    jQuery(function ($) {
+        $('#btn-login-dark').on('click', function (e) {
+            $('body').attr('class', 'login-layout');
+            $('#id-text2').attr('class', 'white');
+            $('#id-company-text').attr('class', 'blue');
+
+            e.preventDefault();
+        });
+        $('#btn-login-light').on('click', function (e) {
+            $('body').attr('class', 'login-layout light-login');
+            $('#id-text2').attr('class', 'grey');
+            $('#id-company-text').attr('class', 'blue');
+
+            e.preventDefault();
+        });
+        $('#btn-login-blur').on('click', function (e) {
+            $('body').attr('class', 'login-layout blur-login');
+            $('#id-text2').attr('class', 'white');
+            $('#id-company-text').attr('class', 'light-blue');
+
+            e.preventDefault();
+        });
+
+    });
+</script>
+</body>
+</html>

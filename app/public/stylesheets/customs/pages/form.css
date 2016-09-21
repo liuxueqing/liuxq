@@ -1,0 +1,15 @@
+.error {
+    color: red;
+}
+.captcha-ipt{
+    padding: 0 15px 0 0;
+}
+.captcha-svg{
+    padding: 0;
+    height: 34px;
+    overflow: hidden;
+    border: 0;
+}
+.captcha-svg svg{
+    overflow: hidden;
+}

@@ -1,0 +1,762 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title><%= title %></title>
+
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/font-awesome.min.css"/>
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/bootstrap-datepicker3.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ui.jqgrid.min.css"/>
+    <link rel="stylesheet" href="/bower_components/Messenger/css/messenger.css"/>
+    <link rel="stylesheet" href="/bower_components/Messenger/css/messenger-theme-future.css"/>
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/fonts.googleapis.com.css"/>
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace.min.css" class="ace-main-stylesheet"
+          id="main-ace-style"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-part2.min.css" class="ace-main-stylesheet"/>
+    <![endif]-->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-skins.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-rtl.min.css"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-ie.min.css"/>
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+    <script src="/javascripts/Ace_template_js/ace-extra.min.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="/javascripts/Ace_template_js/html5shiv.min.js"></script>
+    <script src="/javascripts/Ace_template_js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="no-skin">
+<% include ../includes/admin-topNav.html %>
+
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.loadState('main-container')
+        } catch (e) {
+        }
+    </script>
+
+    <div id="sidebar" class="sidebar      h-sidebar                navbar-collapse collapse          ace-save-state">
+        <script type="text/javascript">
+            try {
+                ace.settings.loadState('sidebar')
+            } catch (e) {
+            }
+        </script>
+
+        <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+            <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                <button class="btn btn-success">
+                    <i class="ace-icon fa fa-signal"></i>
+                </button>
+
+                <button class="btn btn-info">
+                    <i class="ace-icon fa fa-pencil"></i>
+                </button>
+
+                <button class="btn btn-warning">
+                    <i class="ace-icon fa fa-users"></i>
+                </button>
+
+                <button class="btn btn-danger">
+                    <i class="ace-icon fa fa-cogs"></i>
+                </button>
+            </div>
+
+            <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                <span class="btn btn-success"></span>
+
+                <span class="btn btn-info"></span>
+
+                <span class="btn btn-warning"></span>
+
+                <span class="btn btn-danger"></span>
+            </div>
+        </div><!-- /.sidebar-shortcuts -->
+
+        <ul class="nav nav-list">
+            <li class="hover">
+                <a href="/admin">
+                    <i class="menu-icon fa fa-tachometer"></i>
+                    <span class="menu-text"> 管理首页 </span>
+                </a>
+                <b class="arrow"></b>
+            </li>
+
+            <li class="hover">
+                <a href="/admin/user">
+                    <i class="menu-icon fa fa-users"></i>
+                    <span class="menu-text"> 用户管理 </span>
+                </a>
+                <b class="arrow"></b>
+            </li>
+
+            <li class="hover">
+                <a href="/admin/role">
+                    <i class="menu-icon fa fa-unlock-alt"></i>
+
+
+                    <span class="menu-text"> 角色管理 </span>
+                </a>
+                <b class="arrow"></b>
+            </li>
+
+            <li class="active open hover">
+                <a href="/admin/log/login/">
+                    <i class="menu-icon fa fa-file-text-o"></i>
+                    <span class="menu-text"> 日志管理 </span>
+                </a>
+                <b class="arrow"></b>
+            </li>
+
+        </ul><!-- /.nav-list -->
+    </div>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="page-content">
+                <% include ../includes/ace-settings-container.html %>
+
+                <div class="page-header">
+                    <h1>日志管理 - 操作日志 </h1>
+                </div><!-- /.page-header -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div class="invisible">
+                            <button data-target="#sidebar2" type="button" class="pull-left menu-toggler navbar-toggle">
+                                <span class="sr-only">Toggle sidebar</span>
+
+                                <i class="ace-icon fa fa-dashboard white bigger-125"></i>
+                            </button>
+
+                            <div id="sidebar2" class="sidebar responsive menu-min ace-save-state">
+                                <ul class="nav nav-list">
+
+                                    <li class="open">
+                                        <a href="#" class="dropdown-toggle">
+                                            <i class="menu-icon fa fa-unlock-alt"></i>
+                                                <span class="menu-text">
+                                                    日志管理
+                                                </span>
+
+                                            <b class="arrow fa fa-angle-down"></b>
+                                        </a>
+
+                                        <b class="arrow"></b>
+
+                                        <ul class="submenu nav-show" style="display: block;">
+                                            <li class="">
+                                                <a href="/admin/log/login/">
+                                                    <i class="menu-icon fa fa-caret-right"></i>
+                                                    登录日志
+                                                </a>
+
+                                                <b class="arrow"></b>
+                                            </li>
+                                            <li class="">
+                                                <a href="/admin/log/operation/">
+                                                    <i class="menu-icon fa fa-caret-right"></i>
+                                                    操作日志
+                                                </a>
+
+                                                <b class="arrow"></b>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                </ul><!-- /.nav-list -->
+
+                                <div class="sidebar-toggle sidebar-collapse">
+                                    <i id="sidebar3-toggle-icon"
+                                       class="ace-icon fa fa-angle-double-right ace-save-state"
+                                       data-icon1="ace-icon fa fa-angle-double-left"
+                                       data-icon2="ace-icon fa fa-angle-double-right"></i>
+                                </div>
+                            </div><!-- .sidebar -->
+                        </div>
+
+                        <!-- 用户列表 -->
+                        <table id="grid-table"></table>
+
+                        <div id="grid-pager"></div>
+                        <!-- /用户列表 -->
+
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+
+    <% include ../includes/footer.html %>
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+
+<!-- 删除确认对话框 -->
+<div class="modal fade" id="formInfoBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">删除用户</h4>
+            </div>
+            <div class="modal-body">是否要删除该用户？</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-danger" id="btnDel">确认删除</button>
+            </div>
+        </div>
+    </div>
+</div><!-- /删除确认对话框 -->
+
+<!-- basic scripts -->
+
+<!--[if !IE]> -->
+<script src="/javascripts/Ace_template_js/jquery-2.1.4.min.js"></script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script src="/javascripts/Ace_template_js/jquery-1.11.3.min.js"></script>
+<![endif]-->
+<script type="text/javascript">
+    if ('ontouchstart' in document.documentElement) document.write("<script src='/javascripts/Ace_template_js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+</script>
+<script src="/javascripts/Ace_template_js/bootstrap.min.js"></script>
+
+<!-- page specific plugin scripts -->
+<script src="/javascripts/Ace_template_js/jquery.jqGrid.min.js"></script>
+<script src="/javascripts/Ace_template_js/grid.locale-cn.js"></script>
+<script src="/bower_components/Messenger/js/messenger.min.js"></script>
+<script src="/bower_components/Messenger/js/messenger-theme-future.js"></script>
+
+<!-- ace scripts -->
+<script src="/javascripts/Ace_template_js/ace-elements.min.js"></script>
+<script src="/javascripts/Ace_template_js/ace.min.js"></script>
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('#sidebar2').insertBefore('.page-content');
+        $('#navbar').addClass('h-navbar');
+        $('.footer').insertAfter('.page-content');
+
+        $('.page-content').addClass('main-content');
+
+        $('.menu-toggler[data-target="#sidebar2"]').insertBefore('.navbar-brand');
+
+
+        $(document).on('settings.ace.two_menu', function (e, event_name, event_val) {
+            if (event_name == 'sidebar_fixed') {
+                if ($('#sidebar').hasClass('sidebar-fixed')) $('#sidebar2').addClass('sidebar-fixed')
+                else $('#sidebar2').removeClass('sidebar-fixed')
+            }
+        }).triggerHandler('settings.ace.two_menu', ['sidebar_fixed', $('#sidebar').hasClass('sidebar-fixed')]);
+
+        $('#sidebar2[data-sidebar-hover=true]').ace_sidebar_hover('reset');
+        $('#sidebar2[data-sidebar-scroll=true]').ace_sidebar_scroll('reset', true);
+    })
+</script>
+<script type="text/javascript">
+    var grid_data = [];
+
+    jQuery(function ($) {
+        var grid_selector = "#grid-table";
+        var pager_selector = "#grid-pager";
+
+
+        var parent_column = $(grid_selector).closest('[class*="col-"]');
+
+        setTimeout(function () {
+            $(grid_selector).jqGrid('setGridWidth', parent_column.width());
+        }, 150);
+
+        //resize to fit page size
+        $(window).on('resize.jqGrid', function () {
+            $(grid_selector).jqGrid('setGridWidth', parent_column.width());
+        });
+
+        //resize on sidebar collapse/expand
+        $(document).on('settings.ace.jqGrid', function (ev, event_name, collapsed) {
+            if (event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed') {
+                //setTimeout is for webkit only to give time for DOM changes and then redraw!!!
+                setTimeout(function () {
+                    $(grid_selector).jqGrid('setGridWidth', parent_column.width());
+                }, 20);
+            }
+        });
+
+        //if your grid is inside another element, for example a tab pane, you should use its parent's width:
+        /**
+         $(window).on('resize.jqGrid', function () {
+					var parent_width = $(grid_selector).closest('.tab-pane').width();
+					$(grid_selector).jqGrid( 'setGridWidth', parent_width );
+				})
+         //and also set width when tab pane becomes visible
+         $('#myTab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+				  if($(e.target).attr('href') == '#mygrid') {
+					var parent_width = $(grid_selector).closest('.tab-pane').width();
+					$(grid_selector).jqGrid( 'setGridWidth', parent_width );
+				  }
+				})
+         */
+
+
+        function highlight(cellvalue, options, rowObject) {
+            var temp = "";
+            if (cellvalue == "超级管理员") {
+                temp = '<span class="label label-sm label-danger">' + cellvalue + '</span>';
+            } else if (cellvalue == "系统管理员") {
+                temp = '<span class="label label-sm label-warning">' + cellvalue + '</span>';
+            } else {
+                temp = '<span class="label label-sm label-info">' + cellvalue + '</span>';
+            }
+
+            return temp
+        }
+
+        function addButton(cellvalue, options, rowObject) {
+
+            var temp = '<a href="/admin/role/' + cellvalue + '/edit" class="btn btn-default btn-minier">编辑</a>&nbsp;<a href="/admin/role/' + cellvalue + '/del" class="btn btn-danger btn-minier J_del">删除</a>';
+
+
+            return temp
+        }
+
+
+        jQuery(grid_selector).jqGrid({
+            datatype: "json",
+            url: "/admin/log/operation/getAllRecords",
+            height: 500,
+            mtype: 'POST',
+            colNames: ['_id', '日志类型', '用户名', '用户角色', '登录时间','用户IP',  '操作'],
+            colModel: [
+                {
+                    name: '_id',
+                    index: '_id',
+                    width: 40,
+                    sorttype: "text",
+                    hidden: true,
+                    editable: false,
+                    editrules: {edithidden: true},
+                    key: true
+                },
+                {
+                    name: 'name',
+                    index: 'name',
+                    width: 18,
+                    editable: true,
+                    sorttype: "text",
+                    editrules: {edithidden: true, required: true, email: true},
+                    editoptions: {minlength: 8, maxlength: 16}
+                },
+                {name: 'user', index: 'user', width: 40, editable: true},
+                {name: 'role', index: 'role', width: 25, editable: false, formatter: highlight},
+                {
+                    name: 'date',
+                    index: 'date',
+                    width: 40,
+                    datefmt: "MMMM Do YYYY, h:mm:ss a",
+                    editable: false,
+                    sorttype: "date"
+                },
+                {name: 'IP', index: 'IP', width: 40, editable: true},
+                {name: 'result.msg', index: 'result.msg', width: 100, editable: true}
+            ],
+
+            viewrecords: true,
+            rowNum: 20,
+            rowList: [20, 50, 100],
+            pager: pager_selector,
+            emptyrecords: "Nothing to display",
+            sortname : 'date',
+            sortorder: 'desc',
+            altRows: true,
+            //toppager: true,
+
+            multiselect: false,
+            //multikey: "ctrlKey",
+            multiboxonly: true,
+
+            loadComplete: function () {
+                var table = this;
+                setTimeout(function () {
+                    styleCheckbox(table);
+                    updateActionIcons(table);
+                    updatePagerIcons(table);
+                    enableTooltips(table);
+                }, 0);
+            },
+
+            editurl: "",
+            caption: "",
+            reloadAfterSubmit: true,
+            checkOnSubmit: true
+
+            //,autowidth: true,
+
+
+            /**
+             ,
+             grouping:true,
+             groupingView : {
+						 groupField : ['name'],
+						 groupDataSorted : true,
+						 plusicon : 'fa fa-chevron-down bigger-110',
+						 minusicon : 'fa fa-chevron-up bigger-110'
+					},
+             caption: "Grouping"
+             */
+
+        });
+        $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
+
+
+        //enable search/filter toolbar
+        //jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch:true,stringResult:true})
+        //jQuery(grid_selector).filterToolbar({});
+
+
+        //switch element when editing inline
+        function aceSwitch(cellvalue, options, cell) {
+            setTimeout(function () {
+                $(cell).find('input[type=checkbox]')
+                        .addClass('ace ace-switch ace-switch-5')
+                        .after('<span class="lbl"></span>');
+            }, 0);
+        }
+
+        //enable datepicker
+        function pickDate(cellvalue, options, cell) {
+            setTimeout(function () {
+                $(cell).find('input[type=text]')
+                        .datepicker({format: 'yyyy-mm-dd', autoclose: true});
+            }, 0);
+        }
+
+
+        //navButtons
+        jQuery(grid_selector).jqGrid('navGrid', pager_selector,
+                { 	//navbar options
+                    edit: false,
+                    editicon: 'ace-icon fa fa-pencil blue',
+                    add: false,
+                    addicon: 'ace-icon fa fa-plus-circle purple',
+                    del: false,
+                    delicon: 'ace-icon fa fa-trash-o red',
+                    search: true,
+                    searchicon: 'ace-icon fa fa-search orange',
+                    refresh: true,
+                    refreshicon: 'ace-icon fa fa-refresh green',
+                    view: false,
+                    viewicon: 'ace-icon fa fa-search-plus grey'
+                },
+                {
+                    //edit record form
+                    //closeAfterEdit: true,
+                    //width: 700,
+                    recreateForm: true,
+                    beforeShowForm: function (e) {
+                        var form = $(e[0]);
+                        form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+                        style_edit_form(form);
+                    }
+                },
+                {
+                    //new record form
+                    //width: 700,
+                    closeAfterAdd: true,
+                    recreateForm: true,
+                    viewPagerButtons: false,
+                    beforeShowForm: function (e) {
+                        var form = $(e[0]);
+                        form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar')
+                                .wrapInner('<div class="widget-header" />')
+                        style_edit_form(form);
+                    }
+                },
+                {
+                    //delete record form
+                    recreateForm: true,
+                    beforeShowForm: function (e) {
+                        var form = $(e[0]);
+                        if (form.data('styled')) return false;
+
+                        form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+                        style_delete_form(form);
+
+                        form.data('styled', true);
+                    },
+                    onClick: function (e) {
+                        //alert(1);
+                    }
+                },
+                {
+                    //search form
+                    recreateForm: true,
+                    afterShowSearch: function (e) {
+                        var form = $(e[0]);
+                        form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
+                        style_search_form(form);
+                    },
+                    afterRedraw: function () {
+                        style_search_filters($(this));
+                    }
+                    ,
+                    multipleSearch: true
+                    /**
+                     multipleGroup:true,
+                     showQuery: true
+                     */
+                },
+                {
+                    //view record form
+                    recreateForm: true,
+                    beforeShowForm: function (e) {
+                        var form = $(e[0]);
+                        form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
+                    }
+                }
+        );
+
+
+        function style_edit_form(form) {
+            //enable datepicker on "sdate" field and switches for "stock" field
+            form.find('input[name=sdate]').datepicker({format: 'yyyy-mm-dd', autoclose: true})
+
+            form.find('input[name=stock]').addClass('ace ace-switch ace-switch-5').after('<span class="lbl"></span>');
+            //don't wrap inside a label element, the checkbox value won't be submitted (POST'ed)
+            //.addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
+
+
+            //update buttons classes
+            var buttons = form.next().find('.EditButton .fm-button');
+            buttons.addClass('btn btn-sm').find('[class*="-icon"]').hide();//ui-icon, s-icon
+            buttons.eq(0).addClass('btn-primary').prepend('<i class="ace-icon fa fa-check"></i>');
+            buttons.eq(1).prepend('<i class="ace-icon fa fa-times"></i>');
+
+            buttons = form.next().find('.navButton a');
+            buttons.find('.ui-icon').hide();
+            buttons.eq(0).append('<i class="ace-icon fa fa-chevron-left"></i>');
+            buttons.eq(1).append('<i class="ace-icon fa fa-chevron-right"></i>');
+        }
+
+        function style_delete_form(form) {
+            var buttons = form.next().find('.EditButton .fm-button');
+            buttons.addClass('btn btn-sm btn-white btn-round').find('[class*="-icon"]').hide();//ui-icon, s-icon
+            buttons.eq(0).addClass('btn-danger').prepend('<i class="ace-icon fa fa-trash-o"></i>');
+            buttons.eq(1).addClass('btn-default').prepend('<i class="ace-icon fa fa-times"></i>')
+        }
+
+        function style_search_filters(form) {
+            form.find('.delete-rule').val('X');
+            form.find('.add-rule').addClass('btn btn-xs btn-primary');
+            form.find('.add-group').addClass('btn btn-xs btn-success');
+            form.find('.delete-group').addClass('btn btn-xs btn-danger');
+        }
+
+        function style_search_form(form) {
+            var dialog = form.closest('.ui-jqdialog');
+            var buttons = dialog.find('.EditTable');
+            buttons.find('.EditButton a[id*="_reset"]').addClass('btn btn-sm btn-info').find('.ui-icon').attr('class', 'ace-icon fa fa-retweet');
+            buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'ace-icon fa fa-comment-o');
+            buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'ace-icon fa fa-search');
+        }
+
+        function beforeDeleteCallback(e) {
+            var form = $(e[0]);
+            if (form.data('styled')) return false;
+
+            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+            style_delete_form(form);
+
+            form.data('styled', true);
+        }
+
+        function beforeEditCallback(e) {
+            var form = $(e[0]);
+            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+            style_edit_form(form);
+        }
+
+
+        //it causes some flicker when reloading or navigating grid
+        //it may be possible to have some customs formatter to do this as the grid is being created to prevent this
+        //or go back to default browser checkbox styles for the grid
+        function styleCheckbox(table) {
+            /**
+             $(table).find('input:checkbox').addClass('ace')
+             .wrap('<label />')
+             .after('<span class="lbl align-top" />')
+
+
+             $('.ui-jqgrid-labels th[id*="_cb"]:first-child')
+             .find('input.cbox[type=checkbox]').addClass('ace')
+             .wrap('<label />').after('<span class="lbl align-top" />');
+             */
+        }
+
+
+        //unlike navButtons icons, action icons in rows seem to be hard-coded
+        //you can change them like this in here if you want
+        function updateActionIcons(table) {
+            /**
+             var replacement =
+             {
+                 'ui-ace-icon fa fa-pencil' : 'ace-icon fa fa-pencil blue',
+                 'ui-ace-icon fa fa-trash-o' : 'ace-icon fa fa-trash-o red',
+                 'ui-icon-disk' : 'ace-icon fa fa-check green',
+                 'ui-icon-cancel' : 'ace-icon fa fa-times red'
+             };
+             $(table).find('.ui-pg-div span.ui-icon').each(function(){
+						var icon = $(this);
+						var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+						if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+					})
+             */
+        }
+
+        //replace icons with FontAwesome icons like above
+        function updatePagerIcons(table) {
+            var replacement =
+            {
+                'ui-icon-seek-first': 'ace-icon fa fa-angle-double-left bigger-140',
+                'ui-icon-seek-prev': 'ace-icon fa fa-angle-left bigger-140',
+                'ui-icon-seek-next': 'ace-icon fa fa-angle-right bigger-140',
+                'ui-icon-seek-end': 'ace-icon fa fa-angle-double-right bigger-140'
+            };
+            $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function () {
+                var icon = $(this);
+                var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+
+                if ($class in replacement) icon.attr('class', 'ui-icon ' + replacement[$class]);
+            })
+        }
+
+        function enableTooltips(table) {
+            $('.navtable .ui-pg-button').tooltip({container: 'body'});
+            $(table).find('.ui-pg-div').tooltip({container: 'body'});
+        }
+
+        //var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
+
+        $(document).one('ajaxloadstart.page', function (e) {
+            $.jgrid.gridDestroy(grid_selector);
+            $('.ui-jqdialog').remove();
+        });
+
+
+        $("#bedata").click(function () {
+            var gr = jQuery("#grid-table").jqGrid('getGridParam', 'selrow');
+            if (gr != null)
+                jQuery("#grid-table").jqGrid('editGridRow', gr, {
+                    height: 300,
+                    reloadAfterSubmit: false
+                });
+            else
+                alert("Please Select Row");
+        });
+
+        //延时执行， 等待Dom先生成
+        setTimeout(function () {
+            $(".J_del").on("click", J_del);
+        }, 20);
+
+        function J_del(event) {
+            var WhetherToDelete = false;
+            var url = $(this).attr("href");
+
+            $('#formInfoBox').modal();
+
+            $("#btnDel").on("click", function () {
+                //点击确认按钮开始删除用户
+                WhetherToDelete = true;
+                $('#formInfoBox').modal('hide')
+            });
+            $('#formInfoBox').on('hidden.bs.modal', function (e) {
+                //确认删除
+                if (WhetherToDelete) {
+                    $.ajax({
+                        //提交数据的类型 POST GET
+                        type: "POST",
+                        //提交的网址
+                        url: url,
+                        //提交的数据
+                        data: {oper: "del"},
+                        //返回数据的格式
+                        datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+                        //在请求之前调用的函数
+                        beforeSend: function () {
+                            msg = Messenger().post({
+                                message: '处理中..',
+                                hideAfter: 5,
+                                id: "Only-one-message"
+                            });
+                        },
+                        //成功返回之后调用的函数
+                        success: function (data) {
+                            msg.update({
+                                message: '删除成功！',
+                                type: 'success',
+                                hideAfter: 5,
+                                id: "Only-one-message"
+                            });
+                        },
+                        complete: function (e) {
+                            //先清除， 再重新加载数据！
+                            $("#grid-table").jqGrid("clearGridData");
+                            fetchGridData();
+                            setTimeout(function () {
+                                $(".J_del").on("click", J_del);
+                            }, 20)
+                        },
+                        //调用出错执行的函数
+                        error: function (e) {
+                            msg.update({
+                                message: '删除失败！',
+                                type: 'error',
+                                hideAfter: 5,
+                                id: "Only-one-message"
+                            })
+                        }
+                    });
+                    WhetherToDelete = false;
+                }
+
+            });
+            return false;//阻止链接跳转
+        }
+    });
+</script>
+</body>
+</html>

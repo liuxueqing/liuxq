@@ -1,0 +1,99 @@
+body{
+    background: #394557;
+}
+h1{
+    text-align: center;
+    color: #fff;
+}
+.box{
+    display:inline-block;
+    position: relative;
+    padding: 8px;
+    margin: 8px;
+    width: 100%;
+    height: 8em;
+    color: #fff;
+    text-align: center;
+    background: #00a8ec;
+}
+.box:hover {
+    color: #fff;
+    opacity: 0.85;
+    filter: alpha(opacity=85);
+}
+span{
+    position: absolute;
+    left: 0.5em;
+    bottom: 0.5em;
+    font-size: 1em;
+}
+.fa{
+    margin-top: 0.5em;
+    font-size:3.6em;
+    color: #fff;
+}
+.container {
+    z-index:  1024;
+}
+.height2{
+    height:calc(16em + 16px)
+}
+.height2 i{
+    margin-top: 1.8em;
+}
+.box1{
+    background: #00a8ec;
+}
+.box2{
+    background: rgb(107, 107, 107);
+}
+.box4{
+    background: rgb(60, 91, 155)
+}
+.box5{
+    background: rgb(255, 200, 8);
+}
+.box6{
+    background: rgb(67, 181, 31)
+}
+.box7{
+    background: rgb(245, 141, 0);
+}
+.box8{
+    background: rgb(211, 44, 44);
+}
+.box9{
+    background: rgb(0, 169, 236);
+}
+.box10{
+    background: rgb(0, 174, 239);
+}
+.box11{
+    background: rgb(100, 15, 108);
+}
+.box12{
+    background: rgb(248, 116, 164)
+}
+
+.verCode {
+    position: absolute;
+    right: 50px;
+    bottom: 25px;
+    color: #fff;
+}
+.outWrap{
+    position: absolute;
+    top: 0;
+    left:0;
+    bottom: 0;
+    right: 0;
+    z-index: 1024;
+}
+#particles-js {
+    position: absolute;
+    top: 0;
+    left:0;
+    bottom: 10px;
+    right: 0;
+    z-index: 999;
+}

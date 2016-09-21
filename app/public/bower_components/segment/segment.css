@@ -1,0 +1,80 @@
+.ui-segment{
+    color: #3a3a3a;
+    border: 1px solid #cccccc;
+    display:inline-block;
+    overflow: hidden;
+    width: auto;
+    height: 30px;
+    padding: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+    vertical-align: middle;
+}
+.ui-segment span.option.active{
+    background-color: #2694b5;
+    color: white;
+}
+.ui-segment span.option{
+    font-size: 12px;
+    width: 48px;
+    height: 28px;
+    line-height: 28px;
+    box-sizing: border-box;
+    text-align:center;
+    display:inline-block;
+    margin: 0;
+    border-radius: 0;
+    float:left;
+    cursor:pointer;
+    border-right:1px solid #cccccc;
+}
+.ui-segment span.option:last-child{
+    border-right: none;
+}
+.ui-segment.ui-segment-2 span.option{
+    width: 50%;
+    height: 28px;
+}
+.ui-segment.ui-segment-3 span.option{
+    width: 33%;
+    height: 28px;
+}
+.ui-segment.ui-segment-3 span.option:last-child{
+    width: 34%;
+    height: 28px;
+}
+.segment-select{
+    display:none;
+}
+.site-switch{
+    display: inline-block;
+    width: 100px;
+}
+.site-switch .ui-segment{
+    display: inline-block;
+    width: 100%;
+}
+.site-switch .ui-segment .option:first-child.active{
+   background: #5cb85c;
+    color: #fff;
+}
+.site-switch .ui-segment .option:last-child.active{
+    background: #d9534f;
+    color: #fff;
+}
+/* 窗口宽度>768 */
+@media screen and (min-width:767px){
+    .ui-segment{
+        width: 120px;
+    }
+}
+
+
+/* 窗口宽度<768 */
+@media screen and (max-width:767px){
+    .ui-segment{
+        display: block;
+        width: 100%;
+    }
+}

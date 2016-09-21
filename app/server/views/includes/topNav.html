@@ -1,0 +1,150 @@
+<!-- template topNav -->
+<div id="navbar" class="navbar navbar-default ace-save-state">
+    <div class="navbar-container ace-save-state" id="navbar-container">
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+            <span class="sr-only">Toggle sidebar</span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="navbar-header pull-left">
+            <a href="/" class="navbar-brand">
+                <!--<small>-->
+                <!--<i class="fa fa-cloud"></i>-->
+                <!--山西-吉兆 FM监听系统-->
+                <!--</small>-->
+                <img src="/images/customs/application/logo.png" alt=""/>
+            </a>
+        </div>
+
+        <div class="navbar-header pull-left">
+            <ul class="nav navbar-nav">
+
+                <% topNavData.forEach(function(a, index){ %>
+                <li>
+                    <a href='<%= a.link %>'><%= a.NavName %></a>
+                </li>
+                <% }) %>
+            </ul>
+        </div>
+
+        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+
+            <% if (udata) { %>
+            <ul class="nav ace-nav">
+                <li class="purple dropdown-modal">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <i class="ace-icon fa fa-bell icon-animated-bell"></i>
+                        <span class="badge badge-important">8</span>
+                    </a>
+
+                    <ul class="dropdown-menu-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+                        <li class="dropdown-header">
+                            <i class="ace-icon fa fa-exclamation-triangle"></i>
+                            8条 报警信息
+                        </li>
+
+                        <li class="dropdown-content">
+                            <ul class="dropdown-menu dropdown-navbar navbar-pink">
+                                <li>
+                                    <a href="#">
+                                        <div class="clearfix">
+													<span class="pull-left">
+														温湿度通信异常！<small class="grey"> [益阳联通塔]</small>
+													</span>
+                                            <span class="pull-right label label-danger arrowed-in">异常</span>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <div class="clearfix">
+													<span class="pull-left">
+														市电异常！<small class="grey"> [益阳联通塔]</small>
+													</span>
+                                            <span class="pull-right label label-warning arrowed-in">警告</span>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <div class="clearfix">
+													<span class="pull-left">
+														射频手动关机！<small class="grey"> [醴陵珊田基站]</small>
+													</span>
+                                            <span class="pull-right label label-warning arrowed-in">警告</span>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#">
+                                        <div class="clearfix">
+													<span class="pull-left">
+														市电异常！<small class="grey"> [岳阳五尖山]</small>
+													</span>
+                                            <span class="pull-right label label-warning arrowed-in">警告</span>
+                                        </div>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li class="dropdown-footer">
+                            <a href="/alert">
+                                查看报警列表
+                                <i class="ace-icon fa fa-arrow-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="light-blue dropdown-modal">
+                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                        <img class="nav-user-photo" src="/images/Ace_template_images/avatars/user.jpg"
+                             alt="Jason's Photo"/>
+								<span class="user-info">
+									<small>你好,</small>
+									<%= udata.name %>
+								</span>
+
+                        <i class="ace-icon fa fa-caret-down"></i>
+                    </a>
+
+                    <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                        <li>
+                            <a href="#">
+                                <i class="ace-icon fa fa-cog"></i>
+                                设置
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="">
+                                <i class="ace-icon fa fa-user"></i>
+                                个人信息
+                            </a>
+                        </li>
+
+                        <li class="divider"></li>
+
+                        <li>
+                            <a href="/logout">
+                                <i class="ace-icon fa fa-power-off"></i>
+                                注销
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <% } %>
+        </div>
+    </div><!-- /template topNav -->
+</div>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title><%= title %></title>
+
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/font-awesome.min.css"/>
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/bootstrap-datepicker3.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ui.jqgrid.min.css"/>
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/fonts.googleapis.com.css"/>
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace.min.css" class="ace-main-stylesheet"
+          id="main-ace-style"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-part2.min.css" class="ace-main-stylesheet"/>
+    <![endif]-->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-skins.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-rtl.min.css"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-ie.min.css"/>
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+    <script src="/javascripts/Ace_template_js/ace-extra.min.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="/javascripts/Ace_template_js/html5shiv.min.js"></script>
+    <script src="/javascripts/Ace_template_js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="no-skin">
+<% include ../includes/admin-topNav.html %>
+
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.loadState('main-container')
+        } catch (e) {
+        }
+    </script>
+
+    <div id="sidebar" class="sidebar      h-sidebar                navbar-collapse collapse          ace-save-state">
+        <script type="text/javascript">
+            try {
+                ace.settings.loadState('sidebar')
+            } catch (e) {
+            }
+        </script>
+
+        <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+            <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                <button class="btn btn-success">
+                    <i class="ace-icon fa fa-signal"></i>
+                </button>
+
+                <button class="btn btn-info">
+                    <i class="ace-icon fa fa-pencil"></i>
+                </button>
+
+                <button class="btn btn-warning">
+                    <i class="ace-icon fa fa-users"></i>
+                </button>
+
+                <button class="btn btn-danger">
+                    <i class="ace-icon fa fa-cogs"></i>
+                </button>
+            </div>
+
+            <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                <span class="btn btn-success"></span>
+
+                <span class="btn btn-info"></span>
+
+                <span class="btn btn-warning"></span>
+
+                <span class="btn btn-danger"></span>
+            </div>
+        </div><!-- /.sidebar-shortcuts -->
+
+        <ul class="nav nav-list">
+            <li class="hover">
+                <a href="/admin">
+                    <i class="menu-icon fa fa-tachometer"></i>
+                    <span class="menu-text"> 管理首页 </span>
+                </a>
+                <b class="arrow"></b>
+            </li>
+
+            <li class="active open hover">
+                <a href="/admin/user">
+                    <i class="menu-icon fa fa-users"></i>
+                    <span class="menu-text"> 用户管理 </span>
+                </a>
+                <b class="arrow"></b>
+            </li>
+
+            <li class="hover">
+                <a href="/admin/role">
+                    <i class="menu-icon fa fa-tag"></i>
+
+
+                    <span class="menu-text"> 角色管理 </span>
+                </a>
+                <b class="arrow"></b>
+            </li>
+
+            <li class="hover">
+                <a href="/admin/log/login/">
+                    <i class="menu-icon fa fa-file-text-o"></i>
+                    <span class="menu-text"> 日志管理 </span>
+                </a>
+                <b class="arrow"></b>
+            </li>
+
+        </ul><!-- /.nav-list -->
+    </div>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="page-content">
+                <% include ../includes/ace-settings-container.html %>
+
+                <div class="page-header">
+                    <h1>用户管理 </h1>
+                </div><!-- /.page-header -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div class="invisible">
+                            <div id="sidebar2" class="sidebar responsive menu-min ace-save-state">
+                                <ul class="nav nav-list">
+
+                                    <li class="open">
+                                        <a href="#" class="dropdown-toggle">
+                                            <i class="menu-icon fa fa-users"></i>
+                                                <span class="menu-text">
+                                                    用户管理
+                                                </span>
+
+                                            <b class="arrow fa fa-angle-down"></b>
+                                        </a>
+
+                                        <b class="arrow"></b>
+
+                                        <ul class="submenu nav-show" style="display: block;">
+                                            <li class="">
+                                                <a href="/admin/user">
+                                                    <i class="menu-icon fa fa-caret-right"></i>
+                                                    用户列表
+                                                </a>
+
+                                                <b class="arrow"></b>
+                                            </li>
+                                            <li class="">
+                                                <a href="/admin/user/addUser">
+                                                    <i class="menu-icon fa fa-caret-right"></i>
+                                                    添加用户
+                                                </a>
+
+                                                <b class="arrow"></b>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                </ul><!-- /.nav-list -->
+
+                                <div class="sidebar-toggle sidebar-collapse">
+                                    <i id="sidebar3-toggle-icon"
+                                       class="ace-icon fa fa-angle-double-right ace-save-state"
+                                       data-icon1="ace-icon fa fa-angle-double-left"
+                                       data-icon2="ace-icon fa fa-angle-double-right"></i>
+                                </div>
+                            </div><!-- .sidebar -->
+                        </div>
+
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+
+                        <div class="widget-box">
+                            <div class="widget-header">
+                                <h4 class="widget-title">添加用户</h4>
+                            </div>
+
+                            <div class="widget-body" style="display: block;">
+                                <div class="widget-main">
+                                    <form class="form-horizontal" role="form" id="signupForm">
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="ipt_email">
+                                                输入用户帐号 </label>
+
+                                            <div class="col-sm-9">
+                                                <input type="email" id="ipt_email" name="email"
+                                                       placeholder="例如： example@domain.com"
+                                                       class="col-xs-12 col-sm-5">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="name">
+                                                输入用户名 </label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" id="name" name="name" placeholder="输入用户名称"
+                                                       class="col-xs-12 col-sm-5">
+                                            </div>
+                                        </div>
+
+                                        <div class="space-4"></div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="password">
+                                                输入密码 </label>
+
+                                            <div class="col-sm-9">
+                                                <input type="password" id="password" name="password"
+                                                       placeholder="Password"
+                                                       class="col-xs-12 col-sm-5">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right"
+                                                   for="confirm_password">
+                                                确认密码 </label>
+
+                                            <div class="col-sm-9">
+                                                <input type="password" id="confirm_password" name="pass"
+                                                       placeholder="Password"
+                                                       class="col-xs-12 col-sm-5">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="slt_role">
+                                                选择用户角色 </label>
+
+                                            <div class="col-sm-9">
+                                                <select class="col-xs-12 col-sm-5" name="role" id="slt_role">
+                                                    <% roleList.forEach(function(a){ %>
+                                                    <option value="<%= a._id %>"><%= a.name %></option>
+                                                    <% }) %>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="clearfix form-actions">
+                                            <div class="col-md-offset-3 col-md-9">
+                                                <button class="btn btn-sm btn-success" type="submit">
+                                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                                    添加
+                                                </button>
+
+                                                &nbsp; &nbsp; &nbsp;
+                                                <button class="btn btn-sm" type="reset" id="">
+                                                    <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                    重置
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+
+    <% include ../includes/footer.html %>
+
+    <!-- 注册提示信息模态框 -->
+    <div class="modal fade" id="formInfoBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">提示信息</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+
+<!-- basic scripts -->
+
+<!--[if !IE]> -->
+<script src="/javascripts/Ace_template_js/jquery-2.1.4.min.js"></script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script src="/javascripts/Ace_template_js/jquery-1.11.3.min.js"></script>
+<![endif]-->
+<script type="text/javascript">
+    if ('ontouchstart' in document.documentElement) document.write("<script src='/javascripts/Ace_template_js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+</script>
+<script src="/javascripts/Ace_template_js/bootstrap.min.js"></script>
+
+<!-- page specific plugin scripts -->
+<script src="/bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="/bower_components/jquery-validation/dist/localization/messages_zh.js"></script>
+
+<!-- ace scripts -->
+<script src="/javascripts/Ace_template_js/ace-elements.min.js"></script>
+<script src="/javascripts/Ace_template_js/ace.min.js"></script>
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('#sidebar2').insertBefore('.page-content');
+        $('#navbar').addClass('h-navbar');
+        $('.footer').insertAfter('.page-content');
+
+        $('.page-content').addClass('main-content');
+
+        $('.menu-toggler[data-target="#sidebar2"]').insertBefore('.navbar-brand');
+
+
+        $(document).on('settings.ace.two_menu', function (e, event_name, event_val) {
+            if (event_name == 'sidebar_fixed') {
+                if ($('#sidebar').hasClass('sidebar-fixed')) $('#sidebar2').addClass('sidebar-fixed')
+                else $('#sidebar2').removeClass('sidebar-fixed')
+            }
+        }).triggerHandler('settings.ace.two_menu', ['sidebar_fixed', $('#sidebar').hasClass('sidebar-fixed')]);
+
+        $('#sidebar2[data-sidebar-hover=true]').ace_sidebar_hover('reset');
+        $('#sidebar2[data-sidebar-scroll=true]').ace_sidebar_scroll('reset', true);
+    })
+
+</script>
+<script src="/javascripts/customs/pages/admin/addUser.js"></script>
+</body>
+</html>

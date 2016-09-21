@@ -1,0 +1,112 @@
+/* 去掉地图滚动条 */
+body {
+    overflow: hidden;
+}
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+}
+
+/* 去掉百度地图的logo */
+.anchorBL {
+    display: none;
+}
+
+.m-hunanMap {
+    width: 100%;
+    height: 100%;
+}
+
+.m-hunanMap .copyright {
+    font-size: 11px;
+    background: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    color: #333;;
+}
+
+.m-hunanMap .copyright a {
+    color: #0078A8;;
+}
+
+.m-siteInfoWindow {
+    position: absolute;
+    left: 90px;
+    top: 88px;
+    width: 335px;
+}
+
+.m-ctrlBox{
+    position: absolute;
+    right: 10px;
+    top: 175px;
+    width: auto;
+}
+
+.m-deviceInfoBox{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 220px;
+    background: rgba(8,48,74,.8);
+    z-index: 1024;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.BMap_scaleCtrl.BMap_noprint.anchorTL{
+    top: 150px!important;
+    left: 5px!important;
+}
+.m-deviceInfoBox h3{
+    cursor: pointer;
+    margin: 0;
+}
+.m-deviceInfoBox h3:hover{
+    background: #72cfd7;
+}
+.m-deviceInfoBox h3 i{
+    padding-right: 10px;
+}
+.m-deviceInfoBox li{
+    min-width: 200px;
+    color: #fff;
+}
+.m-deviceInfoBox h3,
+.navbar-fixed-bottom{
+    background-color:#1291a9;
+}
+.m-deviceInfoBox h3,
+.navbar-fixed-bottom div{
+    color: #fff;
+    text-align: center;
+}
+
+/*这是卫星图与普通地图切换模块*/
+.BMap_noprint.anchorTR>div>div{
+    display:inline-block;
+    padding-right:3px!important;
+    width:120px;
+    height:80px;
+    line-height:132px!important;
+    text-align:right!important;
+    vertical-align:bottom;
+    color:#fff!important
+}
+.BMap_noprint.anchorTR > div {
+    margin-left:10px;
+    border:2px solid rgb(139, 164, 220);
+}
+.BMap_noprint.anchorTR >div>div {
+
+}
+.BMap_noprint.anchorTR > div:first-child>div{
+    background-image:url(/images/customs/application/map1.png)!important;
+    background-size:100%;
+
+}
+.BMap_noprint.anchorTR > div:last-child > div {
+    background-image:url(/images/customs/application/map2.png)!important;
+    background-size:100%;
+}

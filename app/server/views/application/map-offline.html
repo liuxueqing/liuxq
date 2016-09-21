@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title><%= title %></title>
+
+    <meta name="description" content="map page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/font-awesome.min.css"/>
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="/bower_components/leafletjs/dist/leaflet.css"/>
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="/bower_components/leafletjs/dist/leaflet-ie.css"/>
+    <link rel="stylesheet" href="/bower_components/leafletjs/dist/locate-ie.css"/>
+    <![endif]-->
+    <link rel="stylesheet" href="/bower_components/leafletjs/dist/mobile.css"/>
+    <link rel="stylesheet" href="/bower_components/leafletjs/dist/locate.css"/>
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/fonts.googleapis.com.css"/>
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace.min.css" class="ace-main-stylesheet"
+          id="main-ace-style"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-part2.min.css" class="ace-main-stylesheet"/>
+    <![endif]-->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-skins.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-rtl.min.css"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-ie.min.css"/>
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+    <link rel="stylesheet" href="/stylesheets/customs/pages/index/index.css"/>
+
+    <!-- ace settings handler -->
+    <script src="/javascripts/Ace_template_js/ace-extra.min.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="/javascripts/Ace_template_js/html5shiv.min.js"></script>
+    <script src="/javascripts/Ace_template_js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="skin-hn">
+<% include ../includes/topNav.html %>
+
+
+<div id="map"></div>
+
+
+<script src="/bower_components/leafletjs/dist/leaflet.js"></script>
+<script src="/bower_components/leafletjs/dist/proj4js-compressed.js"></script>
+<script src="/bower_components/leafletjs/dist/proj4leaflet.js"></script>
+<script src="/bower_components/leafletjs/dist/locate.js"></script>
+<script type="text/javascript">
+
+    var url_gaode = 'http://192.168.1.9:3000/GISMap/1818940751/{z}/{x}/{y}.png';
+    var glayer_gaode = new L.TileLayer(url_gaode, {maxZoom: 11,minZoom: 1, attribution: '&copy; 智和云'});
+
+    var url_google_satelite = 'http://192.168.1.9:3000/GISMap/1818940751/{z}/{x}/{y}.png';
+    var glayer_google_satelite = new L.TileLayer(url_google_satelite, {maxZoom: 18, attribution: '&copy; 智和云'});
+
+    var latlng = new L.LatLng(37.860463, 112.587054);
+
+    var map = new L.Map('map', {center: latlng, zoom: 8, layers: [glayer_gaode]});
+
+    var baseLayers =
+    {
+        "普通地图": glayer_gaode,
+        "卫星地图": glayer_google_satelite
+    };
+
+    L.control.layers(baseLayers).addTo(map);
+
+    var marker = new L.Marker(latlng);
+    map.addLayer(marker);
+    marker.bindPopup("离线地图测试<br>限制了视野范围 1 - 11").openPopup();
+</script>
+</body>
+</html>

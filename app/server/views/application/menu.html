@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title><%= title %></title>
+
+    <meta name="description" content="Draggabble Widget Boxes with Persistent Position and State"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/font-awesome.min.css"/>
+
+    <!-- page specific plugin styles -->
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/fonts.googleapis.com.css"/>
+
+    <!-- ace styles -->
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-part2.min.css" class="ace-main-stylesheet"/>
+    <![endif]-->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-skins.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-rtl.min.css"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-ie.min.css"/>
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+    <link rel="stylesheet" href="/stylesheets/customs/pages/menu.css"/>
+
+    <!-- ace settings handler -->
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="/javascripts/Ace_template_js/html5shiv.min.js"></script>
+    <script src="/javascripts/Ace_template_js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- verCode -->
+<h4 class="verCode">Version SXJZ 0.1.0</h4>
+
+<div class="outWrap">
+    <!-- main -->
+    <div class="container">
+        <h1>山西-吉兆 FM监测平台（测试）-- 导航菜单</h1>
+        <div class="nav clearfix">
+            <div class="row">
+                <div class="col-sm-3">
+                    <a class="box box1" href="/user/monitor/">
+                        <span>监控主页</span>
+                        <i class="fa fa-video-camera"></i>
+                    </a>
+                    <a class="box box2 btn" href="#" disabled="disabled">
+                        <span>地图主页（尚未开放）</span>
+                        <i class="fa fa-map"></i>
+                    </a>
+                </div>
+                <div class="col-sm-6">
+                    <a class="box box3 height2 btn" href="#" disabled="disabled">
+                        <span>照片（尚未开放）</span>
+                        <i></i>
+                    </a>
+                </div>
+                <div class="col-sm-3">
+                    <a class="box box4" href="/admin/role">
+                        <span>角色列表</span>
+                        <i class="fa fa fa-smile-o"></i>
+                    </a>
+                    <a class="box box5" href="/admin/role/addRole">
+                        <span>新建角色</span>
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <a class="box box6 btn" href="#" disabled="disabled">
+                        <span>报警主页（尚未开放）</span>
+                        <i class="fa fa-warning"></i>
+                    </a>
+                    <a class="box box10" href="/user/audioTest">
+                        <span>音频测试</span>
+                        <i class="fa fa-area-chart"></i>
+                    </a>
+                </div>
+                <div class="col-sm-3">
+                    <a class="box box8 height2" href="/admin">
+                        <span>管理首页</span>
+                        <i class="fa fa-dashboard"></i>
+                    </a>
+                </div>
+                <div class="col-sm-3">
+                    <a class="box box7" href="/admin/user">
+                        <span>用户列表</span>
+                        <i class="fa fa-users"></i>
+                    </a>
+                    <a class="box box11" href="/admin/user/addUser">
+                        <span>新建用户</span>
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+                <div class="col-sm-3">
+                    <a class="box box9" href="/admin/log/login/">
+                        <span>登陆日志</span>
+                        <i class="fa fa-file"></i>
+                    </a>
+                    <a class="box box12" href="/admin/log/operation">
+                        <span>操作日志</span>
+                        <i class="fa fa-file"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- particles.js container -->
+<div id="particles-js"></div>
+
+<script src="/javascripts/Ace_template_js/particles.min.js"></script>
+<script>
+    //背景动画
+    particlesJS('particles-js',
+
+            {
+                "particles": {
+                    "number": {
+                        "value": 40,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#ffffff"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#ffffff",
+                        },
+                        "polygon": {
+                            "nb_sides": 4
+                        },
+                        "image": {
+                            "src": "img/github.svg",
+                            "width": 100,
+                            "height": 100
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": true,
+                            "speed": 0.5,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 10,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#ffffff",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 1,
+                        "direction": "none",
+                        "random": true,
+                        "straight": false,
+                        "out_mode": "out",
+                        "attract": {
+                            "enable": true,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "repulse"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 400,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 10
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true,
+                "config_demo": {
+                    "hide_card": false,
+                    "background_color": "#000",
+                    "background_image": "",
+                    "background_position": "50% 50%",
+                    "background_repeat": "no-repeat",
+                    "background_size": "cover"
+                }
+            }
+
+    );
+</script>
+</body>
+</html>
