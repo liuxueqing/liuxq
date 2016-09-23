@@ -9749,7 +9749,7 @@ input.ace + .lbl.padding-0::before {
 
 .tab-content {
     border: 1px solid #C5D0DC;
-    padding: 16px 12px;
+    padding: 8px 12px;
     position: relative
 }
 
@@ -11196,7 +11196,27 @@ tr.detail-row > td {
 .widget-main .tab-content {
     border-width: 0
 }
-
+.widget-main .tab-content .media-left{
+    position: relative;
+}
+.widget-main .tab-content .strapping{
+    background: red;
+    position: absolute;
+    top:37px;
+    left: 2px;
+    width: 80px;
+    height: 240px;
+}
+.widget-main .media-body .real-time-data{
+    margin-bottom: 10px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    height: 247px;
+    overflow-y: scroll;
+}
+.history-time-data .table-bordered{
+    min-height: 225px;
+}
 .widget-toolbar > .nav-tabs {
     border-bottom-width: 0;
     margin-bottom: 0;
@@ -20732,7 +20752,14 @@ input.typeahead.scrollable ~ .tt-menu {
     border-color:#337ab7 ;
     color:#337ab7 ;
 }
-
+.sidebar .sidebar-legend{
+    text-align: center;
+    min-height: 40px;
+    margin-bottom: 0;
+    overflow: hidden;
+    position: relative;
+    border: 0 solid;
+}
 /*左侧导航警报颜色设置*/
 /*正常*/
 .site_complex_status[data-alert="1"] {
@@ -20775,23 +20802,28 @@ input.typeahead.scrollable ~ .tt-menu {
 
 /*左侧导航条动画*/
 .animated.fa-angle-double-down:hover {
-    animation: down 0.15s infinite alternate;
-    -moz-animation: down 0.15s infinite alternate;
-    -webkit-animation: down 0.15s infinite alternate;
-    -o-animation: down 0.15s infinite alternate;
+    animation: down 0.6s infinite alternate ;
+    -moz-animation: down 0.6s  infinite alternate ;
+    -webkit-animation: down 0.6s infinite alternate ;
+    -o-animation: down 0.6s infinite alternate ;
 }
 
 @keyframes down {
-    0%, 20%, 53%, 80%, to {
-        -webkit-animation-timing-function: cubic-bezier(.215, .61, .355, 1);
-        animation-timing-function: cubic-bezier(.215, .61, .355, 1);
-    }
-    from {
+    /*0%, 20%, 53%, 80%, to {*/
+        /*-webkit-animation-timing-function: cubic-bezier(.215, .61, .355, 1);*/
+        /*animation-timing-function: cubic-bezier(.215, .61, .355, 1);*/
+    /*}*/
+    0% {
         top: 12px
     }
-    to {
+    15% {
         top: 16px
     }
+    30%{
+        top: 12px
+    }
+
+
 }
 
 .skin-hn .widget-header{

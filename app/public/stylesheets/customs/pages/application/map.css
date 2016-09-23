@@ -1,13 +1,4 @@
-/* 去掉地图滚动条 */
-body {
-    overflow: hidden;
-}
-
-body,
-html {
-    width: 100%;
-    height: 100%;
-}
+body, html,#baiduMap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
 
 /* 去掉百度地图的logo */
 .anchorBL {
@@ -15,9 +6,32 @@ html {
 }
 
 .m-hunanMap {
-    width: 100%;
+    overflow: hidden;
     height: 100%;
+    position: relative;
+    z-index: 1;
 }
+
+.m-hunanMap .m-mapLabel {
+    color: #fff;
+    background: #ABBAC3;
+    padding: 3px 6px;
+    font-size: 14px;
+}
+
+.m-hunanMap .m-mapLabel[data-alert="0"]{
+    background: #ABBAC3;
+}
+.m-hunanMap .m-mapLabel[data-alert="1"]{
+    background: #87B87F;
+}
+.m-hunanMap .m-mapLabel[data-alert="2"]{
+    background: #FFB752;
+}
+.m-hunanMap .m-mapLabel[data-alert="3"]{
+    background: #D15B47;
+}
+
 
 .m-hunanMap .copyright {
     font-size: 11px;
@@ -37,76 +51,115 @@ html {
     width: 335px;
 }
 
-.m-ctrlBox{
+.m-ctrlBox {
     position: absolute;
     right: 10px;
-    top: 175px;
+    top: 85px;
     width: auto;
 }
 
-.m-deviceInfoBox{
+.m-deviceInfoBox {
     position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;
     height: 220px;
-    background: rgba(8,48,74,.8);
+    background: rgba(8, 48, 74, .8);
     z-index: 1024;
     overflow-x: hidden;
     overflow-y: auto;
 }
-.BMap_scaleCtrl.BMap_noprint.anchorTL{
-    top: 150px!important;
-    left: 5px!important;
+
+.BMap_scaleCtrl.BMap_noprint.anchorTL {
+    top: 150px !important;
+    left: 5px !important;
 }
-.m-deviceInfoBox h3{
+
+.m-deviceInfoBox h3 {
     cursor: pointer;
     margin: 0;
 }
-.m-deviceInfoBox h3:hover{
+
+.m-deviceInfoBox h3:hover {
     background: #72cfd7;
 }
-.m-deviceInfoBox h3 i{
+
+.m-deviceInfoBox h3 i {
     padding-right: 10px;
+    /*position: relative;*/
+    /*left: calc((100% - 410px)/2);*/
 }
-.m-deviceInfoBox li{
+
+.m-deviceInfoBox li {
     min-width: 200px;
+    list-style: none;
     color: #fff;
 }
+
 .m-deviceInfoBox h3,
-.navbar-fixed-bottom{
-    background-color:#1291a9;
+.navbar-fixed-bottom {
+    background-color: #1291a9;
 }
+
 .m-deviceInfoBox h3,
-.navbar-fixed-bottom div{
+.navbar-fixed-bottom div {
     color: #fff;
     text-align: center;
 }
 
 /*这是卫星图与普通地图切换模块*/
-.BMap_noprint.anchorTR>div>div{
-    display:inline-block;
-    padding-right:3px!important;
-    width:120px;
-    height:80px;
-    line-height:132px!important;
-    text-align:right!important;
-    vertical-align:bottom;
-    color:#fff!important
+.BMap_noprint.anchorTR{
+    bottom: 10px!important;
+    top: auto!important;
 }
+.BMap_noprint.anchorTR > div > div {
+    display: inline-block;
+    padding-right: 3px !important;
+    width: 120px;
+    height: 80px;
+    line-height: 132px !important;
+    text-align: right !important;
+    vertical-align: bottom;
+    color: #fff !important
+}
+
 .BMap_noprint.anchorTR > div {
-    margin-left:10px;
-    border:2px solid rgb(139, 164, 220);
+    margin-left: 10px;
+    border: 2px solid rgb(139, 164, 220);
 }
-.BMap_noprint.anchorTR >div>div {
+
+
+.BMap_noprint.anchorTR > div:first-child > div {
+    background-image: url(/images/customs/application/map1.png) !important;
+    background-size: 100%;
 
 }
-.BMap_noprint.anchorTR > div:first-child>div{
-    background-image:url(/images/customs/application/map1.png)!important;
-    background-size:100%;
 
-}
 .BMap_noprint.anchorTR > div:last-child > div {
-    background-image:url(/images/customs/application/map2.png)!important;
-    background-size:100%;
+    background-image: url(/images/customs/application/map2.png) !important;
+    background-size: 100%;
+}
+/*地图页面警告图标*/
+.map-sidebar{
+    position: absolute;
+    padding: 4px 6px;
+    bottom: 230px;
+    left: 8px;
+    height: 46px;
+    overflow: hidden;
+    background: rgba(255, 255, 255,0.9);
+}
+.map-sidebar span{
+    position: relative;
+    bottom: 13px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+}
+.map-sidebar #launch{
+    display: inline-block;
+    overflow: hidden
+}
+.map-sidebar .btn{
+    padding: 4px 7px;
 }

@@ -48,6 +48,19 @@
     <script src="/javascripts/Ace_template_js/html5shiv.min.js"></script>
     <script src="/javascripts/Ace_template_js/respond.min.js"></script>
     <![endif]-->
+
+    <style>
+        .widget-box-audioMonitoring .widget-main {
+            height: 320px;
+        }
+
+        .footer {
+            position: fixed;
+            width: 100%;;
+            bottom: 0;
+            background: #fff;
+        }
+    </style>
 </head>
 
 <body class="skin-hn">
@@ -69,14 +82,13 @@
             <div class="page-content">
                 <% include ../includes/ace-settings-container.html %>
 
-                <% include ../includes/audioPlayerBox.html %>
 
                 <div class="page-header">
                     <h1>
-                        <%= mainDatas[0].projName %>
+                        <%= mainDatas[0].ProjName %>
                         <small>
                             <i class="ace-icon fa fa-angle-double-right"></i>
-                            <%= mainDatas[0].sites[0].siteName %>
+                            <%= mainDatas[0].sites[0].SiteName %>
                         </small>
                     </h1>
                 </div><!-- /.page-header -->
@@ -87,190 +99,275 @@
                         <div class="invisible" id="main-widget-container">
                             <div class="row">
 
-                                <div class="col-xs-6 col-lg-3 widget-container-col" id="widget-container-col-1">
-                                    <div class="widget-box" id="widget-box-1">
+                                <div class="col-md-6 col-lg-3 widget-container-col" id="widget-container-col-1">
+                                    <div class="widget-box widget-box-audioMonitoring" id="widget-box-1">
                                         <div class="widget-header">
-                                            <h5 class="widget-title bigger lighter">
-                                                <i class="ace-icon fa fa-dashboard"></i>
-                                                音频监测面板 section-A
-                                            </h5>
+
+                                            <div class="widget-toolbar no-border pull-left">
+
+                                                <!-- nav-tabs -->
+                                                <ul class="nav nav-tabs" id="myTab">
+                                                    <li class="active">
+                                                        <a data-toggle="tab" href="#NM_57d7618fac9dec0830976e5f"
+                                                           aria-expanded="true"><i class="ace-icon fa fa-exchange"></i>
+                                                            实时音频监听</a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a data-toggle="tab" href="#HM_57d7618fac9dec0830976e5f"
+                                                           aria-expanded="false"><i class="ace-icon fa fa-history"></i>
+                                                            历史音频监听</a>
+                                                    </li>
+                                                </ul><!-- /nav-tabs -->
+                                            </div>
 
                                             <div class="widget-toolbar">
-                                                <div class="widget-menu">
-                                                    <a href="#" data-rel="tooltip" title=""
-                                                       data-original-title="详细参数页面">
-                                                        <i class="ace-icon fa fa-cog"></i>
-                                                    </a>
-                                                </div>
+                                                <a href="#" data-action="" data-rel="tooltip" class="purple"
+                                                   data-original-title="历史数据">
+                                                    <i class="fa fa-sticky-note" aria-hidden="true"></i>
+                                                </a>
+                                                <a href="#" data-action="" data-rel="tooltip" class="dark"
+                                                   data-original-title="参数设置">
+                                                    <i class="ace-icon fa fa-cog"></i>
+                                                </a>
 
-                                                <a href="#" data-action="fullscreen" class="orange2">
+                                                <a href="#" data-action="fullscreen" class="pink" data-rel="tooltip"
+                                                   data-original-title="全屏显示">
                                                     <i class="ace-icon fa fa-expand"></i>
                                                 </a>
 
-                                                <a href="#" data-action="reload">
-                                                    <i class="ace-icon fa fa-refresh"></i>
-                                                </a>
-
-                                                <a href="#" data-action="collapse">
+                                                <a href="#" data-action="collapse" data-rel="tooltip"
+                                                   data-original-title="折叠 / 收缩">
                                                     <i class="ace-icon fa fa-chevron-up"></i>
                                                 </a>
                                             </div>
                                         </div>
 
                                         <div class="widget-body">
-                                            <div class="widget-main clearfix">
+                                            <div class="widget-main padding-6">
+                                                <!-- tab-content -->
+                                                <div class="tab-content">
+                                                    <div id="NM_57d7618fac9dec0830976e5f" class="tab-pane active">
+                                                        <div class="media">
+                                                            <a class="media-left" href="#">
+                                                                <img src="/images/customs/application/rule.png" alt="...">
+                                                                <div class="strapping">
+                                                                    <div id="meter"></div>
+                                                                </div>
+                                                            </a>
+                                                            <div class="media-body">
+                                                                <div class="real-time-data">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-bordered no-margin-bottom">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <td>数据名称</td>
+                                                                                    <td>数据参数</td>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td>实时列表</td>
+                                                                                    <td>实时列表</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>实时列表</td>
+                                                                                    <td>实时列表</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>实时列表</td>
+                                                                                    <td>实时列表</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>实时列表</td>
+                                                                                    <td>实时列表</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>实时列表</td>
+                                                                                    <td>实时列表</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>实时列表</td>
+                                                                                    <td>实时列表</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>实时列表</td>
+                                                                                    <td>实时列表</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                                   <button class="btn btn-block btn-info btn-sm">
+                                                                       <i class="fa fa-play" aria-hidden="true"></i>
+                                                                       播放</button>
+                                                            </div>
+                                                        </div>
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 col-lg-3 widget-container-col" id="widget-container-col-2">
-                                    <div class="widget-box" id="widget-box-2">
-                                        <div class="widget-header">
-                                            <h5 class="widget-title bigger lighter">
-                                                <i class="ace-icon fa fa-dashboard"></i>
-                                                音频监测面板 section-B
-                                            </h5>
+                                                    </div>
 
-                                            <div class="widget-toolbar">
-                                                <div class="widget-menu">
-                                                    <a href="#" data-rel="tooltip" title=""
-                                                       data-original-title="详细参数页面">
-                                                        <i class="ace-icon fa fa-cog"></i>
-                                                    </a>
+                                                    <div id="HM_57d7618fac9dec0830976e5f" class="tab-pane">
+                                                        <div class="history-time-data">
+                                                            <table id="simple-table" class="table table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <td>
+                                                                           选项
+                                                                        </td>
+                                                                        <td>序号</td>
+                                                                        <td>电台名称</td>
+                                                                        <td>播放</td>
+                                                                        <td>删除</td>
+                                                                        <td>下载</td>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="checkbox"/>
+                                                                        </td>
+                                                                        <td>01</td>
+                                                                        <td>电台1</td>
+                                                                        <td>
+                                                                            <a class="fa fa-play-circle-o" aria-hidden="true"></a>
+                                                                        </td>
+                                                                        <td>
+                                                                           <a class="fa fa-times" aria-hidden="true"></a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a class="fa fa-cloud-download" aria-hidden="true"></a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="checkbox"/>
+                                                                        </td>
+                                                                        <td>01</td>
+                                                                        <td>电台1</td>
+                                                                        <td>
+                                                                            <a class="fa fa-play-circle-o" aria-hidden="true"></a>
+                                                                        </td>
+                                                                        <td>
+                                                                           <a class="fa fa-times" aria-hidden="true"></a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a class="fa fa-cloud-download" aria-hidden="true"></a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="checkbox"/>
+                                                                        </td>
+                                                                        <td>01</td>
+                                                                        <td>电台1</td>
+                                                                        <td>
+                                                                            <a class="fa fa-play-circle-o" aria-hidden="true"></a>
+                                                                        </td>
+                                                                        <td>
+                                                                           <a class="fa fa-times" aria-hidden="true"></a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a class="fa fa-cloud-download" aria-hidden="true"></a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="checkbox"/>
+                                                                        </td>
+                                                                        <td>01</td>
+                                                                        <td>电台1</td>
+                                                                        <td>
+                                                                            <a class="fa fa-play-circle-o" aria-hidden="true"></a>
+                                                                        </td>
+                                                                        <td>
+                                                                           <a class="fa fa-times" aria-hidden="true"></a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a class="fa fa-cloud-download" aria-hidden="true"></a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="checkbox"/>
+                                                                        </td>
+                                                                        <td>01</td>
+                                                                        <td>电台1</td>
+                                                                        <td>
+                                                                            <a class="fa fa-play-circle-o" aria-hidden="true"></a>
+                                                                        </td>
+                                                                        <td>
+                                                                           <a class="fa fa-times" aria-hidden="true"></a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a class="fa fa-cloud-download" aria-hidden="true"></a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <ul class="pagination pagination-sm no-margin">
+                                                                <li class="disabled"><span>&laquo;</span></li>
+                                                                <li class="active"><span>1 <span class="sr-only">(current)</span></span></li>
+                                                                <li><a href="#">2</a></li>
+                                                                <li><a href="#">3</a></li>
+                                                                <li><a href="#">4</a></li>
+                                                                <li><a href="#">5</a></li>
+                                                                <li><a href="#">&raquo;</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div><!-- /tab-content -->
                                                 </div>
-
-                                                <a href="#" data-action="fullscreen" class="orange2">
-                                                    <i class="ace-icon fa fa-expand"></i>
-                                                </a>
-
-                                                <a href="#" data-action="reload">
-                                                    <i class="ace-icon fa fa-refresh"></i>
-                                                </a>
-
-                                                <a href="#" data-action="collapse">
-                                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                        <div class="widget-body">
-                                            <div class="widget-main clearfix">
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-6 col-lg-3 widget-container-col" id="widget-container-col-3">
-                                    <div class="widget-box" id="widget-box-3">
-                                        <div class="widget-header">
-                                            <h5 class="widget-title bigger lighter">
-                                                <i class="ace-icon fa fa-dashboard"></i>
-                                                音频监测面板 section-C
-                                            </h5>
 
-                                            <div class="widget-toolbar">
-                                                <div class="widget-menu">
-                                                    <a href="#" data-rel="tooltip" title=""
-                                                       data-original-title="详细参数页面">
-                                                        <i class="ace-icon fa fa-cog"></i>
-                                                    </a>
-                                                </div>
-
-                                                <a href="#" data-action="fullscreen" class="orange2">
-                                                    <i class="ace-icon fa fa-expand"></i>
-                                                </a>
-
-                                                <a href="#" data-action="reload">
-                                                    <i class="ace-icon fa fa-refresh"></i>
-                                                </a>
-
-                                                <a href="#" data-action="collapse">
-                                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                        <div class="widget-body">
-                                            <div class="widget-main clearfix">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 col-lg-3 widget-container-col" id="widget-container-col-4">
-                                    <div class="widget-box" id="widget-box-4">
-                                        <div class="widget-header">
-                                            <h5 class="widget-title bigger lighter">
-                                                <i class="ace-icon fa fa-dashboard"></i>
-                                                音频监测面板 section-D
-                                            </h5>
-
-                                            <div class="widget-toolbar">
-                                                <div class="widget-menu">
-                                                    <a href="#" data-rel="tooltip" title=""
-                                                       data-original-title="详细参数页面">
-                                                        <i class="ace-icon fa fa-cog"></i>
-                                                    </a>
-                                                </div>
-
-                                                <a href="#" data-action="fullscreen" class="orange2">
-                                                    <i class="ace-icon fa fa-expand"></i>
-                                                </a>
-
-                                                <a href="#" data-action="reload">
-                                                    <i class="ace-icon fa fa-refresh"></i>
-                                                </a>
-
-                                                <a href="#" data-action="collapse">
-                                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                        <div class="widget-body">
-                                            <div class="widget-main clearfix">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
                             </div>
 
-                            <div class="space-10"></div>
+                        </div>
 
-                            <div class="row">
+                        <div class="space-10"></div>
 
-                            </div>
+                        <div class="row">
 
-                            <div class="space-24"></div>
 
-                            <hr/>
-                            <div class="text-center">
-                                <button type="reset" id="reset-widgets"
-                                        class="btn btn-danger btn-white btn-bold btn-round">重置页面布局
-                                </button>
-                            </div>
-                        </div><!-- PAGE CONTENT ENDS -->
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.page-content -->
-        </div>
-    </div><!-- /.main-content -->
+                        </div>
 
-    <% include ../includes/footer.html %>
 
-    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-    </a>
+                        <div class="space-10"></div>
+
+                        <div class="row">
+
+                        </div>
+
+                        <div class="space-24"></div>
+
+                        <hr/>
+                        <div class="text-center">
+                            <button type="reset" id="reset-widgets"
+                                    class="btn btn-danger btn-white btn-bold btn-round">重置页面布局
+                            </button>
+                        </div>
+
+                        <div class="space-32"></div>
+
+                    </div><!-- PAGE CONTENT ENDS -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.page-content -->
+    </div>
+</div><!-- /.main-content -->
+
+<% include ../includes/footer.html %>
+
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+    <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+</a>
 </div><!-- /.main-container -->
 
 <!-- basic scripts -->
 
 <!--[if !IE]> -->
 <script src="/javascripts/Ace_template_js/jquery-2.1.4.min.js"></script>
-
 <!-- <![endif]-->
 
 <!--[if IE]>
@@ -284,11 +381,9 @@
 <!-- page specific plugin scripts -->
 <script src="/javascripts/Ace_template_js/jquery-ui.custom.min.js"></script>
 <script src="/javascripts/Ace_template_js/jquery.ui.touch-punch.min.js"></script>
+<script src="/javascripts/customs/pages/application/meter.js"></script>
 <script src="/bower_components/jPlayer/dist/jplayer/jquery.jplayer.min.js"></script>
 <script src="/bower_components/jPlayer/dist/add-on/jplayer.playlist.min.js"></script>
-<script src="/bower_components/segment/segment.js"></script>
-<script src="/javascripts/customs/pages/index/meter.js"></script>
-<script src="/javascripts/customs/pages/index/audioPlayerBox.js"></script>
 
 <!-- ace scripts -->
 <script src="/javascripts/Ace_template_js/ace-elements.min.js"></script>
@@ -297,8 +392,6 @@
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
     jQuery(function ($) {
-        //segment
-        $(".segment-select").Segment();
         //tooltip
         $('[data-rel=tooltip]').tooltip();
         $('[data-rel=popover]').popover({html: true});
@@ -315,7 +408,7 @@
         $('.scrollable').each(function () {
             var $this = $(this);
             $(this).ace_scroll({
-                size: $this.attr('data-size') || 100,
+                size: $this.attr('data-size') || 100
                 //styleClass: 'scroll-left scroll-margin scroll-thin scroll-dark scroll-light no-track scroll-visible'
             });
         });

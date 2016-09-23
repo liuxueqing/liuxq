@@ -6,11 +6,9 @@ module.exports = {
     mongodb: {
         dbName: "shanxi",
         dbHost: "192.168.1.9",
-        dbPort: 27017
+        dbPort: 27017,
+        DB_USER: "shanxiDbUser",
+        DB_PASS: "2qHc0uPp"
     },
-    email: {
-        host 	    : process.env.EMAIL_HOST || 'smtp.gmail.com',
-        user 	    : process.env.EMAIL_USER || 'your-email-address@gmail.com',
-        password    : process.env.EMAIL_PASS || '1234',
-    }
+    NODE_ENV: "live"
 };

@@ -138,7 +138,6 @@
                 dataType: 'json',
                 success: function (Data) {
                     // 清除所有地图覆盖物（不包括行政区域）
-
                     remove_overlay_markers();
                     var len = Data.length;
                     //console.log(len)
@@ -207,23 +206,18 @@
     function ajax_load_ctrlBox(callback) {
         //初始化加载控制面板数据
         var mapSwitchBox = $("#mapSwitchBox");
-        var controlGroup = mapSwitchBox.find(".control-group");
-        var widgetMain = mapSwitchBox.find(".widget-main");
         $.ajax({
-
             url: "/api/maps/getAllProjInfo",// 后台接口
             data: {},
             type: 'post',
             dataType: 'json',
             success: function (Data) {
-                remove_load_animal(widgetMain);
-                controlGroup.html("");
+                mapSwitchBox.html("");
                 var len = Data.length;
                 //console.log(len)
                 for (var i = 0; i < len; i++) {
-                    controlGroup.append('<div class="checkbox"><label class="block"><input name="siteSwitch" type="checkbox" class="ace input-lg" data-ProjNum=' + Data[i].ProjNum + ' checked><span class="lbl bigger-120"> ' + Data[i].ProjName + '</span> </label></div>')
+                    mapSwitchBox.append('<div class="checkbox"><label class="block"><input name="siteSwitch" type="checkbox" class="ace input-lg" data-ProjNum=' + Data[i].ProjNum + ' checked><span class="lbl bigger-120"> ' + Data[i].ProjName + '</span> </label></div>')
                 }
-
             },
             error: function (e) {
                 console.log(e)
@@ -240,8 +234,7 @@
 
         var siteInfoWindow = $("#siteInfoWindow");
         var siteID = _Data.ID;
-        var beforeTime = 0;  //获取ajax传输前的秒数
-        var successTime = 0; //获取ajax传输成功的秒数
+
         //初始化加载站点详细信息窗口数据
         $.ajax({
             url: "/api/maps/getSiteInfoBySiteID",// 后台接口
@@ -250,28 +243,12 @@
             },
             type: 'post',
             dataType: 'json',
-            beforeSend: function(){
-                remove_load_animal(siteInfoWindow);//移除加载动画
-                add_load_animal(siteInfoWindow);//添加加载动画
-                beforeTime=+new Date();//获取当前秒数
-                console.log(beforeTime);
+            beforeSend: function () {
+                "static" == siteInfoWindow.css("position") && (siteInfoWindow.addClass("position-relative")),
+                    siteInfoWindow.append('<div class="widget-box-overlay"><i class="fa fa-spinner fa-spin fa-3x fa-fw white"></i></div>');
             },
             success: function (Data) {
-               var minute = 0; //计算时间差
-                successTime=+new Date();//获取当前秒数
-                if(successTime>=beforeTime){
-                    minute=successTime-beforeTime;
-                }else{
-                    minute=beforeTime-successTime;
-                }
-                if(minute >= 500) {
-                    siteInfoWindow.html(Data[0].SiteName);
-                }
-                else{
-                    setTimeout(function(){
-                        siteInfoWindow.html(Data[0].SiteName);
-                    },500)
-                }
+                siteInfoWindow.html(Data[0].SiteName);
                 //已经获得了所有数据， 暂时不知道要怎么展示， 先显示一条站点名称；
             },
             error: function (e) {
@@ -280,26 +257,6 @@
             }
         });
     }
-
-    /**
-     * 功能说明： 添加加载动画
-     * 参数说明: e为要添加加载动画的元素
-     * method: POST
-     */
-    function add_load_animal(e){
-        e.append('<div class="widget-box-overlay"><i class="fa fa-spinner fa-spin fa-3x fa-fw white"></i></div>');
-    }
-
-    /**
-     * 功能说明： 删除加载动画
-     * 参数说明: e为所需删除加载动画的元素
-     * method: POST
-     */
-    function remove_load_animal(e){
-        var echild=e.children(".widget-box-overlay");
-        echild.remove();
-    }
-
 
     /**
      * 功能说明： ajax请求后台数据， 获取选中站点的所有设备数据
@@ -311,8 +268,6 @@
         var deviceInfoBox = $("#deviceInfoBox");
         var siteID = _Data.ID;
         var siteName = _Data.SiteName;
-        var beforeTime = 0;  //获取ajax传输前的分钟数
-        var successTime = 0; //获取ajax传输成功的数据
 
         //初始化加载站点详细信息窗口数据
         $.ajax({
@@ -322,49 +277,28 @@
             },
             type: 'post',
             dataType: 'json',
-            beforeSend: function(){
-                remove_load_animal(deviceInfoBox);//移除加载动画
-                add_load_animal(deviceInfoBox);//添加加载动画
-                beforeTime=+new Date();//获取当前秒数
+            beforeSend: function () {
+                "static" == deviceInfoBox.css("position") && (deviceInfoBox.addClass("position-relative")),
+                    deviceInfoBox.append('<div class="widget-box-overlay"><i class="fa fa-spinner fa-spin fa-3x fa-fw white"></i></div>');
             },
             success: function (Data) {
 
                 var _h3_HTML = deviceInfoBox.find("h3");
                 var _ul_HTML = deviceInfoBox.find("ul");
-                var minute = 0; //计算时间差
+
+                _h3_HTML.html("");
+                _ul_HTML.html("");
+
+                var len = Data.length;
+                _h3_HTML.append('<strong>' + siteName + '</strong> 站点设备列表');
+
+                for (var i = 0; i < len; i++) {
+                    _ul_HTML.append('<li class="col-sm-2"><div class="widget-box" ><div class="widget-header"><h5 class="widget-title smaller">设备: ' + Data[i].RegisterDeviceID + '</h5><div class="widget-toolbar"> <span class="badge badge-danger">设备异常</span></div></div><div class="widget-body"><div class="widget-main padding-6"><div class="alert alert-info">  ' + Data[i].RegisterTagID + ' </div></div></div></div></li>')
+                }
+
                 //清除加载动画
-                successTime=+new Date();//获取当前秒数
-                if(successTime>=beforeTime){
-                    minute=successTime-beforeTime;
-                }else{
-                    minute=beforeTime-successTime;
-                }
-                if(minute >= 500) {
-                    remove_load_animal(deviceInfoBox);
-                    _h3_HTML.html("");
-                    _ul_HTML.html("");
-
-                    var len = Data.length;
-                    _h3_HTML.append('<strong>' + siteName + '</strong> 站点设备列表');
-
-                    for (var i = 0; i < len; i++) {
-                        _ul_HTML.append('<li class="col-sm-2"><div class="widget-box" ><div class="widget-header"><h5 class="widget-title smaller">设备: ' + Data[i].RegisterDeviceID + '</h5><div class="widget-toolbar"> <span class="badge badge-danger">设备异常</span></div></div><div class="widget-body"><div class="widget-main padding-6"><div class="alert alert-info">  ' + Data[i].RegisterTagID + ' </div></div></div></div></li>')
-                    }
-                }
-                else{
-                    setTimeout(function(){
-                        remove_load_animal(deviceInfoBox);
-                        _h3_HTML.html("");
-                        _ul_HTML.html("");
-
-                        var len = Data.length;
-                        _h3_HTML.append('<strong>' + siteName + '</strong> 站点设备列表');
-
-                        for (var i = 0; i < len; i++) {
-                            _ul_HTML.append('<li class="col-sm-2"><div class="widget-box" ><div class="widget-header"><h5 class="widget-title smaller">设备: ' + Data[i].RegisterDeviceID + '</h5><div class="widget-toolbar"> <span class="badge badge-danger">设备异常</span></div></div><div class="widget-body"><div class="widget-main padding-6"><div class="alert alert-info">  ' + Data[i].RegisterTagID + ' </div></div></div></div></li>')
-                        }
-                    },500)
-                }
+                deviceInfoBox.removeClass("position-relative");
+                $(".widget-box-overlay").remove();
 
             },
             error: function (e) {
@@ -379,6 +313,8 @@
      * 参数说明: 无
      */
     function loadSiteData(_data) {
+        var siteInfoWindow = $("#siteInfoWindow");
+        siteInfoWindow.html("正在加载数据, 请稍后..");
         ajax_load_siteInfoWindow(_data);
         ajax_load_deviceInfoBox(_data);
     }
@@ -571,7 +507,7 @@
     function addCovering(_data, Cindex) {
         addMarker(_data, Cindex);   // 添加站点图标
         addLabel(_data, Cindex);    // 添加站点文字标签
-        addPolygon(_data, Cindex);       // 添加覆盖范围
+        addElectricField(_data, Cindex);       // 添加覆盖范围
     }
 
     /**
@@ -586,10 +522,9 @@
             var point = new BMap.Point(OHLongitude, OHLatitude);
             // 添加文字标签
             //自定义图标
-            var myIcon = new BMap.Icon("/images/customs/application/site.png", new BMap.Size(40, 40));
-            var marker = new BMap.Marker(point, {icon: myIcon});  // 创建标注
-            //var marker = new BMap.Marker(point);  // 创建标注
-
+            //var myIcon = new BMap.Icon("/images/customs/application/site.png", new BMap.Size(50, 50));
+            //var marker = new BMap.Marker(point, {icon: myIcon});  // 创建标注
+            var marker = new BMap.Marker(point);  // 创建标注
 
             marker.addEventListener('click', function (e) {
                 stopBubble(e);
@@ -614,7 +549,7 @@
      * 功能说明： 场强覆盖范围
      * 参数说明: [_data: 某个站点的全部数据]
      */
-    function addPolygon(_data, Cindex) {
+    function addElectricField(_data, Cindex) {
 
         if (notNull(_data.OHDetail)) {
             var OHDetail = _data.OHDetail.split("&");
@@ -669,6 +604,7 @@
                 border: "none",
                 fontFamily: "微软雅黑"
             });
+
 
             label.addEventListener('click', function (e) {
                 stopBubble(e);
@@ -748,11 +684,11 @@
      * 功能说明： 单击获取点击的经纬度
      * 参数说明: [ppArr: 存储所选坐标点]
      */
-    //var ppArr = "";
-    //map.addEventListener("click", function (e) {
-    //    ppArr = ppArr + e.point.lng + "," + e.point.lat + "&";
-    //    console.log(ppArr)
-    //});
+    var ppArr = "";
+    map.addEventListener("click", function (e) {
+        ppArr = ppArr + e.point.lng + "," + e.point.lat + "&";
+        console.log(ppArr)
+    });
 
 
     /* ********************************************** 基础javascript工具 ****************************************** */

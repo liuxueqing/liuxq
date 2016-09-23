@@ -94,32 +94,42 @@
                                                 <i class="ace-icon fa fa-dashboard"></i>
                                                 音频监测面板 section-A
                                             </h5>
-
+                                            <!-- lxq9-18-->
                                             <div class="widget-toolbar">
-                                                <div class="widget-menu">
-                                                    <a href="#" data-rel="tooltip" title=""
-                                                       data-original-title="详细参数页面">
+                                                <div class="dropdown" style="display: inline">
+                                                    <a href="#" data-action="" class="purple dropdown-toggle" data-toggle="dropdown" data-rel="tooltip" title="历史/实时监听">
+                                                        <i class="fa fa-history" aria-hidden="true"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a href="#NM_57d7618fac9dec0830976e5f" class="active" tabindex="-1" data-toggle="tab">实时监听</a></li>
+                                                        <li><a href="#HM_57d7618fac9dec0830976e5f" tabindex="-1" data-toggle="tab">历史监听</a></li>
+                                                    </ul>
+                                                </div>
+                                                <div  class="widget-menu">
+                                                    <a href="#" data-action="" data-rel="tooltip" title=""
+                                                       data-original-title="设置">
                                                         <i class="ace-icon fa fa-cog"></i>
                                                     </a>
                                                 </div>
-
-                                                <a href="#" data-action="fullscreen" class="orange2">
+                                                <a href="#" data-action="fullscreen" class="orange2" data-rel="tooltip" data-original-title="全屏">
                                                     <i class="ace-icon fa fa-expand"></i>
                                                 </a>
 
-                                                <a href="#" data-action="reload">
+                                                <a href="#" data-action="reload" data-rel="tooltip" data-original-title="刷新">
                                                     <i class="ace-icon fa fa-refresh"></i>
                                                 </a>
 
-                                                <a href="#" data-action="collapse">
+                                                <a href="#" data-action="collapse" data-rel="tooltip" data-original-title="收缩/伸展">
                                                     <i class="ace-icon fa fa-chevron-up"></i>
                                                 </a>
                                             </div>
                                         </div>
 
-                                        <div class="widget-body">
-                                            <div class="widget-main clearfix">
-
+                                        <div class="widget-body tab-content" style="background: red">
+                                            <div class="widget-main tab-pane fade  clearfix" id="NM_57d7618fac9dec0830976e5f">
+                                            </div>
+                                            <div class="widget-main tab-pane fade clearfix" id="HM_57d7618fac9dec0830976e5f">
+                                                历史监听
                                             </div>
                                         </div>
                                     </div>
@@ -129,17 +139,23 @@
                                         <div class="widget-header">
                                             <h5 class="widget-title bigger lighter">
                                                 <i class="ace-icon fa fa-dashboard"></i>
-                                                音频监测面板 section-B
+                                                音频监测面板 section-A
                                             </h5>
-
+                                            <!-- lxq9-18-->
                                             <div class="widget-toolbar">
-                                                <div class="widget-menu">
-                                                    <a href="#" data-rel="tooltip" title=""
+                                                <a href="#" data-action="toggleMonitor" class="purple" data-toggle="dropdown">
+                                                    <i class="fa fa-history" aria-hidden="true"></i>
+                                                </a>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="#">实时监听</a></li>
+                                                    <li><a href="#">历史监听</a></li>
+                                                </ul>
+                                                <div  class="widget-menu">
+                                                    <a href="#" data-action="" data-rel="tooltip" title=""
                                                        data-original-title="详细参数页面">
                                                         <i class="ace-icon fa fa-cog"></i>
                                                     </a>
                                                 </div>
-
                                                 <a href="#" data-action="fullscreen" class="orange2">
                                                     <i class="ace-icon fa fa-expand"></i>
                                                 </a>
@@ -151,12 +167,6 @@
                                                 <a href="#" data-action="collapse">
                                                     <i class="ace-icon fa fa-chevron-up"></i>
                                                 </a>
-                                            </div>
-                                        </div>
-
-                                        <div class="widget-body">
-                                            <div class="widget-main clearfix">
-
                                             </div>
                                         </div>
                                     </div>
@@ -176,7 +186,6 @@
                                                         <i class="ace-icon fa fa-cog"></i>
                                                     </a>
                                                 </div>
-
                                                 <a href="#" data-action="fullscreen" class="orange2">
                                                     <i class="ace-icon fa fa-expand"></i>
                                                 </a>
@@ -198,6 +207,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-xs-6 col-lg-3 widget-container-col" id="widget-container-col-4">
                                     <div class="widget-box" id="widget-box-4">
                                         <div class="widget-header">
@@ -294,6 +304,8 @@
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
     jQuery(function ($) {
+
+
         //tooltip
         $('[data-rel=tooltip]').tooltip();
         $('[data-rel=popover]').popover({html: true});

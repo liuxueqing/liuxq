@@ -8,27 +8,29 @@ var config = require("../../../config/config");
 /*
  ESTABLISH DATABASE CONNECTION
  */
-
 var dbName = config.mongodb.dbName;
 var dbHost = config.mongodb.dbHost;
 var dbPort = config.mongodb.dbPort;
+var DB_USER = config.mongodb.DB_USER;
+var DB_PASS = config.mongodb.DB_PASS;
+var NODE_ENV = config.NODE_ENV;
 
 var db = new MongoDB(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}), {w: 1});
 db.open(function (e, d) {
     if (e) {
         console.log(e);
     } else {
-        if (process.env.NODE_ENV == 'live') {
-            db.authenticate(process.env.DB_USER, process.env.DB_PASS, function (e, res) {
+        if (NODE_ENV == 'live') {
+            db.authenticate(DB_USER, DB_PASS, function (e, res) {
                 if (e) {
                     console.log('mongo :: error: not authenticated', e);
                 }
                 else {
-                    console.log('mongo :: authenticated and connected to database :: "' + dbName + '"');
+                    console.log('mongo :: authenticated and connected to database - LM :: "' + dbName + '"');
                 }
             });
         } else {
-            //console.log('mongo :: connected to database :: "'+dbName+'"');
+            console.log('mongo :: connected to database  without authenticated  - LM :: "' + dbName + '"');
         }
     }
 });
@@ -47,6 +49,14 @@ exports.getAllRecords = function (callback) {
     Log.find().toArray(function (e, res) {
         if (e) callback(e);
         else callback(null, res);
+    });
+};
+
+/* get all log */
+exports.getAllRecordsCount = function (callback) {
+    Log.find().count(function (e, o) {
+        if (e) callback(e);
+        else callback(null, o);
     });
 };
 

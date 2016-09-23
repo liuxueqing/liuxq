@@ -3,55 +3,33 @@ var RP = require('./modules/role-pemission');
 var LM = require('./modules/log-manager');
 var SM = require('./modules/site-manager');
 
+var socket = require("../../config/socket");
+
 var _ = require("underscore")._;
 var svgCaptcha = require('svg-captcha');
 var fs = require('fs');
 var parser = require('ua-parser-js');
 var path = require('path');
+var URL = require('url');
 var moment = require('moment');
 moment.locale('zh-cn');
 
 /* ********************************************** 初始化数据 **************************************************** */
 var leftNavDatas = {};
 
-//拼接站点数据json
-SM.splicingMajorData(function (err, Projs) {
-    var ProjLen = Projs.length;
-    Projs.forEach(function (Proj, ProjIndex) {
-        //获取该项目名称
-        var ProjNum = Proj.ProjNum;
-        SM.getAllSiteInfoByProjNum(ProjNum, function (err, sites) {
-            Proj.sites = sites;
-            var siteLen = sites.length;
-            sites.forEach(function (site, siteIndex) {
-                var SiteID = site.ID;
-                SM.getAllDeviceInfoBySiteID(SiteID, function (err, devices) {
-                    site.devices = devices;
-                    if (ProjIndex == (ProjLen - 1) && siteIndex == (siteLen - 1)) {
-                        //循环结束执行后续操作
-                        SM.updateMajorDatas(Projs, function (e, o) {
-                            if (e) console.log(e);
-                        })
-                    }
-                })
-            })
-        })
-    });
-});///拼接站点数据json - /End
-
 var topNavData = [
     {
-        "NavName": "音频监听",
-        "link": "/user/monitor/"
+        "NavName": "监控主页",
+        "link": "/user/monitor"
     },
     {
         "NavName": "地图主页",
         "link": "/user/map"
     },
-    {
-        "NavName": "报警列表",
-        "link": "/user/alert"
-    },
+    //{
+    //    "NavName": "报警列表",
+    //    "link": "/user/alert"
+    //},
     {
         "NavName": "音频测试",
         "link": "/user/audioTest"
@@ -697,12 +675,98 @@ module.exports = function (app) {
     });
 
     /**
-     * 路由说明： 地图主页
+     * 路由说明： 地图主页 - 获得所有站点资源
      * 鉴权说明： 登陆校验
      * method: POST
      */
     app.post('/api/maps/getAllSiteInfo', auth, function (req, res) {
         SM.getAllSiteInfo(function (err, result) {
+            if (err) {
+                res.json("false");
+                res.end()
+            } else {
+                res.json(result);
+                res.end()
+            }
+        })
+    });
+
+    app.post('/api/maps/getAllProjInfo', auth, function (req, res) {
+        SM.getAllProjInfoName(function (err, result) {
+            if (err) {
+                res.json("false");
+                res.end()
+            } else {
+                res.json(result);
+                res.end()
+            }
+        })
+    });
+
+
+    /**
+     * 路由说明： 地图主页 - 获得所有项目资源
+     * 鉴权说明： 登陆校验
+     * method: POST
+     */
+    app.post('/api/maps/getAllProjInfo', auth, function (req, res) {
+        SM.getAllProjInfoName(function (err, result) {
+            if (err) {
+                res.json("false");
+                res.end()
+            } else {
+                res.json(result);
+                res.end()
+            }
+        })
+    });
+
+    /**
+     * 路由说明： 地图主页 - 获得所选项目的资源
+     * 鉴权说明： 登陆校验
+     * method: POST
+     */
+    app.post('/api/maps/getSiteInfoByProjNumArr', auth, function (req, res) {
+        var selectProjNumArr = req.body['selectProjNumArr'];
+
+        SM.getSiteInfoByProjNumArr(selectProjNumArr, function (err, result) {
+            if (err) {
+                res.json("false");
+                res.end()
+            } else {
+                res.json(result);
+                res.end()
+            }
+        });
+    });
+
+    /**
+     * 路由说明： 地图主页 - 获得当前站点详细信息
+     * 鉴权说明： 登陆校验
+     * method: POST
+     */
+    app.post('/api/maps/getSiteInfoBySiteID', auth, function (req, res) {
+
+        var siteID = req.body['siteID'];
+        SM.getSiteInfoBySiteID(siteID, function (err, result) {
+            if (err) {
+                res.json("false");
+                res.end()
+            } else {
+                res.json(result);
+                res.end()
+            }
+        })
+    });
+
+    /**
+     * 路由说明： 地图主页 - 获得当前站点所有设备详细信息
+     * 鉴权说明： 登陆校验
+     * method: POST
+     */
+    app.post('/api/maps/getAllDevicesInfoBySiteID', auth, function (req, res) {
+        var siteID = req.body['siteID'];
+        SM.getAllDevicesInfoBySiteID(siteID, function (err, result) {
             if (err) {
                 res.json("false");
                 res.end()
@@ -729,6 +793,11 @@ module.exports = function (app) {
      * method: GET
      */
     app.get('/user/monitor/', auth, function (req, res) {
+
+        var pathname = URL.parse(req.url).pathname.replace("/user/", "").replace("/", "");
+        pathname = "/user/" + pathname;
+        //console.log(pathname)
+
         SM.findLeftNavDatas(function (e) {
             leftNavDatas = e;
             res.redirect('/user/monitor/' + leftNavDatas[0].ProjNum + '/all');
@@ -766,380 +835,407 @@ module.exports = function (app) {
     });
 
     /**
-     * 路由说明： 监控主页 - 站点总览
+     * 路由说明： 监控主页 - 设备总览
      * 鉴权说明： 登陆校验, 页面访问权限校验
      * method: GET
      */
-    app.get('/user/monitor/:ProjectID/all', auth, pageAuthority, function (req, res, next) {
+    app.get('/user/monitor/:ProjectID/:SiteID', auth, pageAuthority, function (req, res, next) {
 
+        var pathname = URL.parse(req.url).pathname.replace("/user/", "").replace(/\/.*/g, "");
+        pathname = "/user/" + pathname;
+        //console.log(pathname)
 
         //查询初始化信息
-        SM.findLeftNavDatas(function (e) {
-            var leftNavDatas = e;
-            if (!req.session.user) {
-                // if user is not logged-in redirect back to login page //
-                res.redirect('/login');
-            } else {
-                var currentProjectID = req.params.ProjectID;
-                var currentSiteID = "all";
-                SM.findDataByProIdAndSiteId(currentProjectID, currentSiteID, function (o) {
-                    res.render('./application/index-siteView.html', {
+        SM.findLeftNavDatas(function (leftNavDatas) {
+            var currentProjectID = req.params.ProjectID;
+            var currentSiteID = req.params.SiteID;
+            SM.findDataByProIdAndSiteId(currentProjectID, currentSiteID, function (mainDatas) {
+                SM.getAllDeviceInfoByProjIDandSiteID(currentProjectID, currentSiteID, function (deviceData) {
+                    console.log(deviceData);
+                    res.render('./application/index.html', {
                         title: '山西-吉兆 -- 监控主页',
                         currentProjectID: currentProjectID,
                         currentSiteID: currentSiteID,
                         leftNavDatas: leftNavDatas,
-                        mainDatas: o,
+                        topNavSelected: pathname,
+                        mainDatas: mainDatas,
                         topNavData: topNavData,
+                        deviceData: deviceData,
                         udata: req.session.user
+                    });
+                })
+            });
+        });
+
+    });
+
+    /**
+     * 路由说明： 地图主页
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: GET
+     */
+    app.get('/user/map', auth, pageAuthority, function (req, res, next) {
+        //updateMajorData();  //这个应该放在编辑页面里面
+
+        var pathname = URL.parse(req.url).pathname.replace("/user/", "");
+        pathname = "/user/" + pathname;
+        //console.log(pathname)
+
+        res.render('./application/map', {
+            title: '山西-吉兆 -- 地图主页',
+            udata: req.session.user,
+            topNavData: topNavData,
+            topNavSelected: pathname
+        });
+    });
+
+    /**
+     * 路由说明： 登出平台
+     * 鉴权说明： 无校验
+     * method: GET
+     */
+    app.get('/logout', function (req, res) {
+        // get user-agent header
+        var ua = parser(req.headers['user-agent']);
+        // get use ip address
+        var ip = getClientIp(req);
+        LM.addLog({
+            "type": "login",
+            "name": "登陆日志",
+            "user": req.session.user.user,
+            "IP": ip,
+            "role": req.session.user.Role.name,
+            "result": {
+                "state": "true",
+                "msg": "退出平台!"
+            },
+            "ua": ua
+        });
+        res.clearCookie('user');
+        res.clearCookie('pass');
+        req.session.user = null;
+        req.session.destroy(function (e) {
+            res.redirect('/');
+        });
+    });
+
+
+    /**
+     * 路由说明： 登陆时的svg验证码
+     * 鉴权说明： 无校验
+     * method: GET
+     */
+    app.get('/captcha', function (req, res) {
+        var text = svgCaptcha.randomText();
+        var captcha = svgCaptcha(text);
+        req.session.captcha = text;
+        res.set('Content-Type', 'image/svg+xml');
+        res.status(200).send(captcha);
+    });
+
+
+    /**
+     * 路由说明： 后台管理首页
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: GET
+     */
+    app.get('/admin', auth, pageAuthority, function (req, res) {
+        var dashboardInfo = {};
+        AM.getAllRecordsCount(function (e, a) {
+            dashboardInfo.userNum = a;
+
+            RP.getAllRecordsCount(function (e, b) {
+                dashboardInfo.roleNum = b;
+                LM.getAllRecordsCount(function (e, c) {
+                    dashboardInfo.logNum = c;
+
+                    res.render('./admin/index', {
+                        title: "山西-吉兆 -- 管理首页",
+                        udata: req.session.user,
+                        dashboardInfo: dashboardInfo
+                    });
+                })
+            })
+        });
+    });
+
+    /**
+     * 路由说明： 用户管理
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: GET
+     */
+    app.get('/admin/user', auth, pageAuthority, function (req, res) {
+        res.render('./admin/user', {
+            title: "山西-吉兆 -- 用户管理",
+            udata: req.session.user
+        });
+    });
+
+    /**
+     * 路由说明： 新建用户页面
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: GET
+     */
+    app.get('/admin/user/addUser', pageAuthority, function (req, res) {
+        //获取角色列表
+        RP.getAllRecordsName(function (err, result) {
+            if (err) {
+                console.log(err)
+            } else {
+                res.render('./admin/addUser', {
+                    title: "山西-吉兆 -- 新建用户",
+                    udata: req.session.user,
+                    roleList: result
+                });
+            }
+        })
+    });
+
+    /**
+     * 路由说明： 编辑用户信息页面
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: get
+     */
+    app.get('/admin/user/:_id/edit', auth, pageAuthority, function (req, res) {
+        var _id = req.params._id;       //获得需要编辑的用户id
+        //获取角色列表
+        RP.getAllRecordsName(function (err, result) {
+            var roleList = result;
+            var temp = {};
+            //获取该用户信息
+            AM.getUserInfoById(_id, function (err, o) {
+                req.session.user.initialAccount = o;   //保存待编辑账号Email
+                for (var i = 0; i < roleList.length; i++) {
+                    if (roleList[i].name == o.role) {
+                        temp = roleList[i];
+                        roleList.splice(i, 1)
+                    }
+                }
+                //将用户已有的角色放置到下拉选框的顶部
+                roleList.unshift(temp);
+                res.render('./admin/editUser', {
+                    title: "山西-吉兆 -- 编辑用户",
+                    udata: req.session.user,
+                    roleList: roleList,
+                    accountInfo: o
+                });
+            });
+        });
+    });
+
+    /**
+     * 路由说明： 修改用户密码页面
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: get
+     */
+    app.get('/admin/user/:_id/modify', auth, pageAuthority, function (req, res) {
+        var _id = req.params._id;
+        //获取该用户信息
+        AM.getUserInfoById(_id, function (err, o) {
+            res.render('./admin/modifyPassword', {
+                title: "山西-吉兆 -- 修改密码",
+                udata: req.session.user,
+                accountInfo: o
+            });
+        });
+    });
+
+    /**
+     * 路由说明： 角色管理页面
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: get
+     */
+    app.get('/admin/role', auth, pageAuthority, function (req, res) {
+        res.render('./admin/role', {
+            title: "山西-吉兆 -- 角色管理",
+            udata: req.session.user
+        });
+    });
+
+    /**
+     * 路由说明： 新建角色的页面
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: get
+     */
+    app.get('/admin/role/addRole', auth, pageAuthority, function (req, res) {
+        RP.getAllAccessAndResource(function (err, AllAccessAndResource) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render('./admin/addRole', {
+                    title: "山西-吉兆 -- 新建角色",
+                    udata: req.session.user,
+                    AllAccessAndResource: AllAccessAndResource
+                });
+            }
+        });
+    });
+
+    /**
+     * 路由说明： 角色信息编辑页面
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: get
+     */
+    app.get('/admin/role/:_id/edit', auth, pageAuthority, function (req, res) {
+        var _id = req.params._id;
+        RP.getAllAccessAndResource(function (err, AllAccessAndResource) {
+            if (err) {
+                console.log(err);
+            } else {
+                RP.getAccessAndResourceById(_id, function (err, o) {
+                    req.session.user.initialRole = o[0];   //保存待编辑Role信息
+                    var filter = AllAccessAndResource;
+                    var hasRole = o[0].permissions;
+                    var c1 = _.map(filter, function (data, key) {
+                        return JSON.stringify(data)
+                    });
+                    var c2 = _.map(hasRole, function (data, key) {
+                        return JSON.stringify(data)
+                    });
+                    var ref = _.difference(c1, c2);
+
+                    var AllAccessAndResourceWithoutSelect = _.map(ref, function (data, key) {
+                        return JSON.parse(data)
+                    });
+                    //console.log(AllAccessAndResourceWithoutSelect);
+                    res.render('./admin/editRole', {
+                        title: "山西-吉兆 -- 编辑角色",
+                        udata: req.session.user,
+                        AllAccessAndResource: AllAccessAndResourceWithoutSelect,
+                        selectRoleInfo: o[0]
                     });
                 });
             }
         });
     });
 
-/**
- * 路由说明： 监控主页 - 设备总览
- * 鉴权说明： 登陆校验, 页面访问权限校验
- * method: GET
- */
-app.get('/user/monitor/:ProjectID/:SiteID', auth, pageAuthority, function (req, res, next) {
-
-
-    //查询初始化信息
-    SM.findLeftNavDatas(function (e) {
-        var leftNavDatas = e;
-        if (!req.session.user) {
-            // if user is not logged-in redirect back to login page //
-            res.redirect('/login');
-        } else {
-            var currentProjectID = req.params.ProjectID;
-            var currentSiteID = req.params.SiteID;
-            SM.findDataByProIdAndSiteId(currentProjectID, currentSiteID, function (o) {
-                res.render('./application/index-deviceView.html', {
-                    title: '山西-吉兆 -- 监控主页',
-                    currentProjectID: currentProjectID,
-                    currentSiteID: currentSiteID,
-                    leftNavDatas: leftNavDatas,
-                    mainDatas: o,
-                    topNavData: topNavData,
-                    udata: req.session.user
-                });
-            });
-        }
+    /**
+     * 路由说明： 登录日志页面
+     * 鉴权说明： 登陆校验，页面访问权限校验
+     * method: get
+     */
+    app.get('/admin/log/login', auth, pageAuthority, function (req, res) {
+        res.render('./admin/log-login.html', {
+            title: "山西-吉兆 -- 登陆日志管理",
+            udata: req.session.user
+        });
     });
-});
 
-/**
- * 路由说明： 地图主页
- * 鉴权说明： 登陆校验, 页面访问权限校验
- * method: GET
- */
-app.get('/user/map', auth, pageAuthority, function (req, res, next) {
-    res.render('./application/map', {
-        title: '山西-吉兆 -- 监控主页',
-        udata: req.session.user,
-        topNavData: topNavData
+    /**
+     * 路由说明： 日志管理页面
+     * 鉴权说明： 登陆校验，页面访问权限校验
+     * method: get
+     */
+    app.get('/admin/log/operation', auth, pageAuthority, function (req, res) {
+        res.render('./admin/log-operation.html', {
+            title: "山西-吉兆 -- 日志管理管理",
+            udata: req.session.user
+        });
     });
-});
 
-/**
- * 路由说明： 登出平台
- * 鉴权说明： 无校验
- * method: GET
- */
-app.get('/logout', function (req, res) {
-    // get user-agent header
-    var ua = parser(req.headers['user-agent']);
-    // get use ip address
-    var ip = getClientIp(req);
-    LM.addLog({
-        "type": "login",
-        "name": "登陆日志",
-        "user": req.session.user.user,
-        "IP": ip,
-        "role": req.session.user.Role.name,
-        "result": {
-            "state": "true",
-            "msg": "退出平台!"
-        },
-        "ua": ua
+    /**
+     * 路由说明： 音频测试页面
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: GET
+     */
+    app.get('/user/audioTest', auth, pageAuthority, function (req, res) {
+
+        var pathname = URL.parse(req.url).pathname.replace("/user/", "");
+        pathname = "/user/" + pathname;
+        //console.log(pathname)
+
+        res.render('./application/audioTest', {
+            title: "山西-吉兆 -- 音频测试",
+            udata: req.session.user,
+            topNavData: topNavData,
+            topNavSelected: pathname
+        });
     });
-    res.clearCookie('user');
-    res.clearCookie('pass');
-    req.session.user = null;
-    req.session.destroy(function (e) {
-        res.redirect('/');
+
+    /**
+     * 路由说明： socket测试页面
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: GET
+     */
+    app.get('/user/stest', auth, pageAuthority, function (req, res) {
+
+        var pathname = URL.parse(req.url).pathname.replace("/user/", "");
+        pathname = "/user/" + pathname;
+
+        res.render('./application/websocket', {
+            title: "山西-吉兆 -- 音频测试",
+            udata: req.session.user,
+            topNavData: topNavData,
+            topNavSelected: pathname
+        });
     });
-});
+    /**
+     * 路由说明： 设置页面
+     * 鉴权说明： 登陆校验，页面访问权限校验
+     * method: get
+     */
+    app.get('/admin/setting', auth, pageAuthority, function (req, res) {
+        res.render('./admin/setting', {
+            title: "山西-吉兆 -- 设置",
+            udata: req.session.user
+        });
+    });
 
-
-/**
- * 路由说明： 登陆时的svg验证码
- * 鉴权说明： 无校验
- * method: GET
- */
-app.get('/captcha', function (req, res) {
-    var text = svgCaptcha.randomText();
-    var captcha = svgCaptcha(text);
-    req.session.captcha = text;
-    res.set('Content-Type', 'image/svg+xml');
-    res.status(200).send(captcha);
-});
-
-
-/**
- * 路由说明： 后台管理首页
- * 鉴权说明： 登陆校验, 页面访问权限校验
- * method: GET
- */
-app.get('/admin', auth, pageAuthority, function (req, res) {
-    var dashboardInfo = {};
-    AM.getAllRecords(function (e, a) {
-        dashboardInfo.userNum = a.length;
-
-        RP.getAllRecords(function (e, b) {
-            dashboardInfo.roleNum = b.length
-
-            LM.getAllRecords(function (e, c) {
-                dashboardInfo.logNum = c.length
-
-                res.render('./admin/index', {
-                    title: "山西-吉兆 -- 管理首页",
-                    udata: req.session.user,
-                    dashboardInfo: dashboardInfo
-                });
-            })
+    /**
+     * 路由说明： error unauthorized 用户帐号无权限的提示页面
+     * 鉴权说明： 登陆校验
+     * method: get
+     */
+    app.get('/error-unauthorized', auth, function (req, res) {
+        res.render('error-unauthorized.html', {
+            title: '山西-吉兆 -- 权限错误',
+            topNavData: topNavData,
+            udata: req.session.user
         })
     });
-});
 
-/**
- * 路由说明： 用户管理
- * 鉴权说明： 登陆校验, 页面访问权限校验
- * method: GET
- */
-app.get('/admin/user', auth, pageAuthority, function (req, res) {
-    res.render('./admin/user', {
-        title: "山西-吉兆 -- 用户管理",
-        udata: req.session.user
+    /**
+     * 路由说明： error 404 提示页面
+     * 鉴权说明： 登陆校验
+     * method: get
+     */
+    app.get('*', function (req, res) {
+        res.render('error-404.html', {
+            title: '山西-吉兆 -- 404',
+            topNavData: topNavData,
+            udata: req.session.user
+        })
     });
-});
 
-/**
- * 路由说明： 新建用户页面
- * 鉴权说明： 登陆校验, 页面访问权限校验
- * method: GET
- */
-app.get('/admin/user/addUser', pageAuthority, function (req, res) {
-    //获取角色列表
-    RP.getAllRecordsName(function (err, result) {
-        if (err) {
-            console.log(err)
-        } else {
-            res.render('./admin/addUser', {
-                title: "山西-吉兆 -- 新建用户",
-                udata: req.session.user,
-                roleList: result
+
+    /* ******************************************** 其他 ************************************************ */
+
+    function updateMajorData() {
+        //拼接站点数据json
+        SM.splicingMajorData(function (err, Projs) {
+            var ProjLen = Projs.length;
+            Projs.forEach(function (Proj, ProjIndex) {
+                //获取该项目名称
+                var ProjNum = Proj.ProjNum;
+                SM.getAllSiteInfoByProjNum(ProjNum, function (err, sites) {
+                    Proj.sites = sites;
+                    var siteLen = sites.length;
+                    sites.forEach(function (site, siteIndex) {
+                        var SiteID = site.ID;
+                        SM.getAllDeviceInfoBySiteID(SiteID, function (err, devices) {
+                            site.devices = devices;
+                            if (ProjIndex == (ProjLen - 1) && siteIndex == (siteLen - 1)) {
+                                //循环结束执行后续操作
+                                SM.updateMajorDatas(Projs, function (e, o) {
+                                    if (e) console.log(e);
+                                })
+                            }
+                        })
+                    })
+                })
             });
-        }
-    })
-});
-
-/**
- * 路由说明： 编辑用户信息页面
- * 鉴权说明： 登陆校验, 页面访问权限校验
- * method: get
- */
-app.get('/admin/user/:_id/edit', auth, pageAuthority, function (req, res) {
-    var _id = req.params._id;       //获得需要编辑的用户id
-    //获取角色列表
-    RP.getAllRecordsName(function (err, result) {
-        var roleList = result;
-        var temp = {};
-        //获取该用户信息
-        AM.getUserInfoById(_id, function (err, o) {
-            req.session.user.initialAccount = o;   //保存待编辑账号Email
-            for (var i = 0; i < roleList.length; i++) {
-                if (roleList[i].name == o.role) {
-                    temp = roleList[i];
-                    roleList.splice(i, 1)
-                }
-            }
-            //将用户已有的角色放置到下拉选框的顶部
-            roleList.unshift(temp);
-            res.render('./admin/editUser', {
-                title: "山西-吉兆 -- 编辑用户",
-                udata: req.session.user,
-                roleList: roleList,
-                accountInfo: o
-            });
-        });
-    });
-});
-
-/**
- * 路由说明： 修改用户密码页面
- * 鉴权说明： 登陆校验, 页面访问权限校验
- * method: get
- */
-app.get('/admin/user/:_id/modify', auth, pageAuthority, function (req, res) {
-    var _id = req.params._id;
-    //获取该用户信息
-    AM.getUserInfoById(_id, function (err, o) {
-        res.render('./admin/modifyPassword', {
-            title: "山西-吉兆 -- 修改密码",
-            udata: req.session.user,
-            accountInfo: o
-        });
-    });
-});
-
-/**
- * 路由说明： 角色管理页面
- * 鉴权说明： 登陆校验, 页面访问权限校验
- * method: get
- */
-app.get('/admin/role', auth, pageAuthority, function (req, res) {
-    res.render('./admin/role', {
-        title: "山西-吉兆 -- 角色管理",
-        udata: req.session.user
-    });
-});
-
-/**
- * 路由说明： 新建角色的页面
- * 鉴权说明： 登陆校验, 页面访问权限校验
- * method: get
- */
-app.get('/admin/role/addRole', auth, pageAuthority, function (req, res) {
-    RP.getAllAccessAndResource(function (err, AllAccessAndResource) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render('./admin/addRole', {
-                title: "山西-吉兆 -- 新建角色",
-                udata: req.session.user,
-                AllAccessAndResource: AllAccessAndResource
-            });
-        }
-    });
-});
-
-/**
- * 路由说明： 角色信息编辑页面
- * 鉴权说明： 登陆校验, 页面访问权限校验
- * method: get
- */
-app.get('/admin/role/:_id/edit', auth, pageAuthority, function (req, res) {
-    var _id = req.params._id;
-    RP.getAllAccessAndResource(function (err, AllAccessAndResource) {
-        if (err) {
-            console.log(err);
-        } else {
-            RP.getAccessAndResourceById(_id, function (err, o) {
-                req.session.user.initialRole = o[0];   //保存待编辑Role信息
-                var filter = AllAccessAndResource;
-                var hasRole = o[0].permissions;
-                var c1 = _.map(filter, function (data, key) {
-                    return JSON.stringify(data)
-                });
-                var c2 = _.map(hasRole, function (data, key) {
-                    return JSON.stringify(data)
-                });
-                var ref = _.difference(c1, c2);
-
-                var AllAccessAndResourceWithoutSelect = _.map(ref, function (data, key) {
-                    return JSON.parse(data)
-                });
-                //console.log(AllAccessAndResourceWithoutSelect);
-                res.render('./admin/editRole', {
-                    title: "山西-吉兆 -- 编辑角色",
-                    udata: req.session.user,
-                    AllAccessAndResource: AllAccessAndResourceWithoutSelect,
-                    selectRoleInfo: o[0]
-                });
-            });
-        }
-    });
-});
-
-/**
- * 路由说明： 登录日志页面
- * 鉴权说明： 登陆校验，页面访问权限校验
- * method: get
- */
-app.get('/admin/log/login', auth, pageAuthority, function (req, res) {
-    res.render('./admin/log-login.html', {
-        title: "山西-吉兆 -- 登陆日志管理",
-        udata: req.session.user
-    });
-});
-
-/**
- * 路由说明： 日志管理页面
- * 鉴权说明： 登陆校验，页面访问权限校验
- * method: get
- */
-app.get('/admin/log/operation', auth, pageAuthority, function (req, res) {
-    res.render('./admin/log-operation.html', {
-        title: "山西-吉兆 -- 日志管理管理",
-        udata: req.session.user
-    });
-});
-
-/**
- * 路由说明： 音频测试页面
- * 鉴权说明： 登陆校验, 页面访问权限校验
- * method: GET
- */
-app.get('/user/audioTest', auth, pageAuthority, function (req, res) {
-    res.render('./application/audioTest', {
-        title: "山西-吉兆 -- 音频测试",
-        udata: req.session.user,
-        topNavData: topNavData
-    });
-});
-
-/**
- * 路由说明： 设置页面
- * 鉴权说明： 登陆校验，页面访问权限校验
- * method: get
- */
-app.get('/admin/setting', auth, pageAuthority, function (req, res) {
-    res.render('./admin/setting', {
-        title: "山西-吉兆 -- 设置",
-        udata: req.session.user
-    });
-});
-
-/**
- * 路由说明： error unauthorized 用户帐号无权限的提示页面
- * 鉴权说明： 登陆校验
- * method: get
- */
-app.get('/error-unauthorized', auth, function (req, res) {
-    res.render('error-unauthorized.html', {
-        title: '山西-吉兆 -- 权限错误',
-        topNavData: topNavData,
-        udata: req.session.user
-    })
-});
-
-/**
- * 路由说明： error 404 提示页面
- * 鉴权说明： 登陆校验
- * method: get
- */
-app.get('*', function (req, res) {
-    res.render('error-404.html', {
-        title: '山西-吉兆 -- 404',
-        topNavData: topNavData,
-        udata: req.session.user
-    })
-});
-
-
-/* ******************************************** 其他 ************************************************ */
+        });///拼接站点数据json - /End
+    }
 
 // password reset //
 

@@ -3213,14 +3213,15 @@
 .skin-hn .navbar{
     min-height: 75px;
     line-height: 75px;
-    font-family: 'Microsoft YaHei','Î¢ÈíÑÅºÚ';
+    font-family: 'Microsoft YaHei';
     background-color: #1291a9;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
 }
 .skin-hn .navbar-header>nav>li>a,
 .skin-hn .navbar-nav>li>a{
     padding: 0 12px;
     min-height: 75px;
-    color: #fff;
+    color: #eee;
     font-size: 18px;
     line-height: 75px;
 }
@@ -3230,6 +3231,11 @@
 }
 .skin-hn .navbar .navbar-nav>li {
     border:none ;
+}
+.skin-hn .navbar .navbar-nav>li.active>a{
+    background-color: rgba(0, 0, 0, .1) !important;
+    color: #FFF !important;
+
 }
 .skin-hn .user-info{
     top: 0;

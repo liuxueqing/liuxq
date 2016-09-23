@@ -23,7 +23,7 @@
                 <li class="<%if(b.ProjNum==currentProjectID && currentSiteID == 'all'){%>active<%}%>">
                     <a href='/user/monitor/<%= b.ProjNum %>/all'>
                         <i class="menu-icon fa fa-caret-right"></i>
-                        全部
+                        显示全部
                     </a>
 
                     <b class="arrow site_complex_status" data-alert="1"></b>
@@ -45,7 +45,7 @@
 
     </ul><!-- /.nav-list -->
 
-    <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+    <div class="sidebar-legend" id="sidebar-shortcuts">
         <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
             <button class="btn btn-success">
                 正常

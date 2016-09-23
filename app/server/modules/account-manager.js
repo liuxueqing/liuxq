@@ -13,23 +13,26 @@ var config = require("../../../config/config");
 var dbName = config.mongodb.dbName;
 var dbHost = config.mongodb.dbHost;
 var dbPort = config.mongodb.dbPort;
+var DB_USER = config.mongodb.DB_USER;
+var DB_PASS = config.mongodb.DB_PASS;
+var NODE_ENV = config.NODE_ENV;
 
 var db = new MongoDB(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}), {w: 1});
 db.open(function (e, d) {
     if (e) {
         console.log(e);
     } else {
-        if (process.env.NODE_ENV == 'live') {
-            db.authenticate(process.env.DB_USER, process.env.DB_PASS, function (e, res) {
+        if (NODE_ENV == 'live') {
+            db.authenticate(DB_USER, DB_PASS, function (e, res) {
                 if (e) {
                     console.log('mongo :: error: not authenticated', e);
                 }
                 else {
-                    console.log('mongo :: authenticated and connected to database :: "' + dbName + '"');
+                    console.log('mongo :: authenticated and connected to database - AM :: "' + dbName + '"');
                 }
             });
         } else {
-            //console.log('mongo :: connected to database :: "'+dbName+'"');
+            console.log('mongo :: connected to database  without authenticated - AM :: "'+dbName+'"');
         }
     }
 });
@@ -89,7 +92,6 @@ exports.addNewAccount = function (newData, callback) {
 
 exports.updateAccount = function (newData, callback) {
     accounts.findOne({_id: ObjectId(newData._id)}, function (e, o) {
-        console.log(newData)
         o.name = newData.name;
         o.user = newData.user;
         o.email = newData.email;
@@ -174,6 +176,14 @@ exports.validateResetLink = function (email, passHash, callback) {
 
 exports.getAllRecords = function (callback) {
     accounts.find().toArray(
+        function (e, res) {
+            if (e) callback(e);
+            else callback(null, res);
+        });
+}
+
+exports.getAllRecordsCount = function (callback) {
+    accounts.find().count(
         function (e, res) {
             if (e) callback(e);
             else callback(null, res);

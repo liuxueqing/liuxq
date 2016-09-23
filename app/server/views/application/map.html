@@ -39,7 +39,6 @@
     <![endif]-->
 
     <!-- inline styles related to this page -->
-    <link rel="stylesheet" href="/stylesheets/customs/pages/index/index.css"/>
     <link rel="stylesheet" href="/stylesheets/customs/pages/application/map.css"/>
 
     <!-- baiduMap -->
@@ -57,10 +56,10 @@
 <% include ../includes/topNav.html %>
 
 
-<div id="map" class="m-hunanMap"></div>
+<div id="baiduMap" class="m-hunanMap"></div>
 
-<div class="m-siteInfoWindow map">
-    <div class="widget-box" id="widget-box-9">
+<div class="m-siteInfoWindow">
+    <div class="widget-box position-relative" id="widget-box-9">
         <div class="widget-header">
             <h5 class="widget-title">站点详细信息</h5>
 
@@ -72,18 +71,19 @@
         </div>
 
         <div class="widget-body">
-            <div class="widget-main">
-               站点详细参数
+            <div class="widget-main" id="siteInfoWindow">
+                <div class="widget-box-overlay"><i class="fa fa-spinner fa-spin fa-3x fa-fw white"></i></div>
+                正在加载数据, 请稍后..
             </div>
         </div>
     </div>
 </div>
 
-<div class="m-ctrlBox">
+
+<div class="m-ctrlBox" id="mapSwitchBox">
     <div class="widget-box">
         <div class="widget-header">
             <h4 class="widget-title">地图控制</h4>
-
 
             <div class="widget-toolbar">
                 <a href="#" data-action="collapse">
@@ -94,152 +94,47 @@
 
         <div class="widget-body">
             <div class="widget-main">
-                <div class="control-group">
-                    <div class="checkbox">
-                        <label class="block">
-                            <input name="form-field-checkbox" type="checkbox" class="ace input-lg">
-                            <span class="lbl bigger-120"> 全部</span>
-                        </label>
-                    </div>
-
-                    <div class="checkbox">
-                        <label class="block">
-                            <input name="form-field-checkbox" type="checkbox" class="ace input-lg">
-                            <span class="lbl bigger-120"> 项目1</span>
-                        </label>
-                    </div>
-
-                    <div class="checkbox">
-                        <label class="block">
-                            <input name="form-field-checkbox" type="checkbox" class="ace input-lg">
-                            <span class="lbl bigger-120"> 项目2</span>
-                        </label>
-                    </div>
-
-                    <div class="checkbox">
-                        <label class="block">
-                            <input name="form-field-checkbox" type="checkbox" class="ace input-lg">
-                            <span class="lbl bigger-120"> 项目3</span>
-                        </label>
-                    </div>
+                <div class="widget-box-overlay"><i class="fa fa-spinner fa-spin fa-3x fa-fw white"></i></div>
+                <div class="control-group" >
+                    正在加载数据, 请稍后..
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="m-deviceInfoBox">
-    <h3><i class="fa fa-arrow-down" aria-hidden="true"></i><strong>4648-3</strong> 站点详细设备列表</h3>
+<div class="map-sidebar" style="">
+    <span data-change="launch">图例:</span>
+    <div id="launch">
+        <button class="btn btn-success">
+            正常
+        </button>
 
-    <ul class="list-inline clearfix">
-        <li class="col-sm-2">
-            <div class="widget-box" >
-                <div class="widget-header">
-                    <h5 class="widget-title smaller">XXXX设备</h5>
+        <button class="btn btn-gray">
+            掉线
+        </button>
 
-                    <div class="widget-toolbar">
-                        <span class="badge badge-danger">设备异常</span>
-                    </div>
-                </div>
+        <button class="btn btn-warning">
+            警告
+        </button>
 
-                <div class="widget-body">
-                    <div class="widget-main padding-6">
-                        <div class="alert alert-info"> 设备参数 </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="col-sm-2">
-            <div class="widget-box" >
-                <div class="widget-header">
-                    <h5 class="widget-title smaller">XXXX设备</h5>
+        <button class="btn btn-danger">
+            异常
+        </button>
+    </div>
+</div>
 
-                    <div class="widget-toolbar">
-                        <span class="badge badge-danger">设备异常</span>
-                    </div>
-                </div>
-
-                <div class="widget-body">
-                    <div class="widget-main padding-6">
-                        <div class="alert alert-info"> 设备参数 </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="col-sm-2">
-            <div class="widget-box" >
-                <div class="widget-header">
-                    <h5 class="widget-title smaller">XXXX设备</h5>
-
-                    <div class="widget-toolbar">
-                        <span class="badge badge-danger">设备异常</span>
-                    </div>
-                </div>
-
-                <div class="widget-body">
-                    <div class="widget-main padding-6">
-                        <div class="alert alert-info"> 设备参数 </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="col-sm-2">
-            <div class="widget-box" >
-                <div class="widget-header">
-                    <h5 class="widget-title smaller">XXXX设备</h5>
-
-                    <div class="widget-toolbar">
-                        <span class="badge badge-danger">设备异常</span>
-                    </div>
-                </div>
-
-                <div class="widget-body">
-                    <div class="widget-main padding-6">
-                        <div class="alert alert-info"> 设备参数 </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="col-sm-2">
-            <div class="widget-box" >
-                <div class="widget-header">
-                    <h5 class="widget-title smaller">XXXX设备</h5>
-
-                    <div class="widget-toolbar">
-                        <span class="badge badge-danger">设备异常</span>
-                    </div>
-                </div>
-
-                <div class="widget-body">
-                    <div class="widget-main padding-6">
-                        <div class="alert alert-info"> 设备参数 </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="col-sm-2">
-            <div class="widget-box" >
-                <div class="widget-header">
-                    <h5 class="widget-title smaller">XXXX设备</h5>
-
-                    <div class="widget-toolbar">
-                        <span class="badge badge-success">设备正常</span>
-                    </div>
-                </div>
-
-                <div class="widget-body">
-                    <div class="widget-main padding-6">
-                        <div class="alert alert-info"> 设备参数 </div>
-                    </div>
-                </div>
-            </div>
-        </li>
+<div class="m-deviceInfoBox" id="deviceInfoBox">
+    <h3>正在加载数据, 请稍后..</h3>
+    <ul>
     </ul>
+    <div class="widget-box-overlay"><i class="fa fa-spinner fa-spin fa-3x fa-fw white"></i></div>
 </div>
 
 <div class="navbar-fixed-bottom" role="navigation">
-    <div> Copyright © 2016 - 2017 All Rights Reserved Powered by 智和云</div>
+    <div> Copyright 2016 - 2017 All Rights Reserved Powered by 智和云</div>
 </div>
+
 
 <!-- basic scripts -->
 
@@ -265,30 +160,16 @@
 
 <!-- inline scripts related to this page -->
 <script src="/javascripts/customs/pages/application/baiduMap.js"></script>
-<script type="application/javascript">
-    $(".m-deviceInfoBox>h3").click(function(){
-         var listInline = $(".m-deviceInfoBox");
-        var flag = listInline.css("bottom");
-        if(flag==="0px"){
-            closeListinline(listInline);
-        }
-        else{
-            openListinline(listInline);
-        }
-    });
-        function openListinline(e){
-            var _i =$(".m-deviceInfoBox>h3>i");
-            _i.removeClass("fa-arrow-up");
-            _i.addClass("fa-arrow-down");
-            e.animate({"bottom":"0"},400)
-        }
-    function closeListinline(e){
-        var _i =$(".m-deviceInfoBox>h3>i");
-        _i.removeClass("fa-arrow-down");
-        _i.addClass("fa-arrow-up");
-        e.animate({"bottom":"-175"},400)
+<script type="text/javascript">
+    var launch_bnt=$('[data-change=launch]');
+    var launch = $("#launch");
+    launch_bnt.on("click",function(){
+    if(launch.css("width")=="0px"){
+        launch.animate({width:"220px",height:"100%"},60);
+    }else{
+        launch.animate({width:"0px",height:"100%"},60);
     }
+})
 </script>
-
 </body>
 </html>
