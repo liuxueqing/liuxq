@@ -19,7 +19,7 @@
 /* *****************************- sidebar  -******************************** */
 #sidebar {
     margin-top: 5px;
-    z-index: 1025;
+    z-index: 2;
     background: repeat-x #f7f7f7;
     background-image: linear-gradient(to bottom,#FFF 0,#EEE 100%);
     background-image: -webkit-linear-gradient(top,#FFF 0,#EEE 100%);
@@ -30,7 +30,92 @@
 #ace-settings-container {
     z-index: 1000;
 }
+#sidebar .sidebar-legend{
+    z-index: 1028;
+}
 /* *****************************- 音频面板  -******************************** */
 .widget-main .main-left{float: left;  width: 150px;}
 .widget-main .main-right{margin-left: 150px;/*==等于左边栏宽度==*/}
-/* *****************************- 顶部导航样式（仿hn）  -******************************** */
+/* *****************************- 实时音频监听面板 -******************************** */
+
+.col-lg-3.widget-container-col .tab-content{
+        padding: 3px 5px;
+}
+.widget-main .tab-content .strapping{
+    background: red;
+    position: absolute;
+    top:37px;
+    left: 2px;
+    width: 80px;
+    height: 240px;
+}
+.widget-main  .real-time-data{
+    margin-bottom: 8px;;
+    height: 250px;
+}
+.real-time-data tr td:first-child{
+    min-width: 70px;
+}
+.real-time-data tr td:last-child{
+    max-width: 120px;
+    padding-right: 54px;
+    overflow-x: hidden;
+    white-space: normal;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+}
+.real-time-data tr td:last-child.register-tag{
+    padding-right: 8px;
+}
+.real-time-data .tb-tail{
+    display: inline-block;
+    position: absolute;
+    width: 48px;
+    right: 5px;
+    top:5px;
+    font-size: 11px;
+    color: #108398;
+}
+/* *****************************- 历史音频监听面板 -******************************** */
+.history-time-data td a{
+    cursor: pointer;
+}
+.widget-box-audioMonitoring .widget-main {
+    height: 320px;
+}
+
+/*实时音频监听状态*/
+[data-state='1']{
+    color: #fff;
+    background:#B74635 ;
+}
+[data-state='0']{
+    color: #fff;
+    background:#87b87f;
+}
+.site-states{
+    position: relative;
+    top: 11px;
+    text-align: center;
+}
+.site-states::after{
+    display: inline-block;
+    width: 20px;
+    height: 35px;
+    font-weight: 700;
+
+}
+.site-states[data-state='0']::after{
+    content: "on";
+}
+.site-states[data-state='1']::after{
+    content: "off";
+}
+/*页脚*/
+.footer {
+    position: fixed;
+    width: 100%;;
+    bottom: 0;
+    background: #fff;
+    z-index: 3;
+}

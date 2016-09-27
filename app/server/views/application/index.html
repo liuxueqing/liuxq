@@ -50,16 +50,7 @@
     <![endif]-->
 
     <style>
-        .widget-box-audioMonitoring .widget-main {
-            height: 320px;
-        }
 
-        .footer {
-            position: fixed;
-            width: 100%;;
-            bottom: 0;
-            background: #fff;
-        }
     </style>
 </head>
 
@@ -97,231 +88,488 @@
                     <div class="col-xs-12">
                         <!-- PAGE CONTENT BEGINS -->
                         <div class="invisible" id="main-widget-container">
-                            <div class="row">
 
-                                <div class="col-md-6 col-lg-3 widget-container-col" id="widget-container-col-1">
-                                    <div class="widget-box widget-box-audioMonitoring" id="widget-box-1">
-                                        <div class="widget-header">
+                            <% try{deviceData.forEach(function(a, index){ %>
 
-                                            <div class="widget-toolbar no-border pull-left">
+                            <div class="col-md-6 col-lg-3 widget-container-col" id="widget-container-col-1">
+                                <div class="widget-box widget-box-audioMonitoring" id="widget-box-1">
+                                    <div class="widget-header">
+                                        <div class="widget-toolbar no-border pull-left">
 
-                                                <!-- nav-tabs -->
-                                                <ul class="nav nav-tabs" id="myTab">
-                                                    <li class="active">
-                                                        <a data-toggle="tab" href="#NM_57d7618fac9dec0830976e5f"
-                                                           aria-expanded="true"><i class="ace-icon fa fa-exchange"></i>
-                                                            实时音频监听</a>
-                                                    </li>
-                                                    <li class="">
-                                                        <a data-toggle="tab" href="#HM_57d7618fac9dec0830976e5f"
-                                                           aria-expanded="false"><i class="ace-icon fa fa-history"></i>
-                                                            历史音频监听</a>
-                                                    </li>
-                                                </ul><!-- /nav-tabs -->
-                                            </div>
-
-                                            <div class="widget-toolbar">
-                                                <a href="#" data-action="" data-rel="tooltip" class="purple"
-                                                   data-original-title="历史数据">
-                                                    <i class="fa fa-sticky-note" aria-hidden="true"></i>
-                                                </a>
-                                                <a href="#" data-action="" data-rel="tooltip" class="dark"
-                                                   data-original-title="参数设置">
-                                                    <i class="ace-icon fa fa-cog"></i>
-                                                </a>
-
-                                                <a href="#" data-action="fullscreen" class="pink" data-rel="tooltip"
-                                                   data-original-title="全屏显示">
-                                                    <i class="ace-icon fa fa-expand"></i>
-                                                </a>
-
-                                                <a href="#" data-action="collapse" data-rel="tooltip"
-                                                   data-original-title="折叠 / 收缩">
-                                                    <i class="ace-icon fa fa-chevron-up"></i>
-                                                </a>
-                                            </div>
+                                            <!-- nav-tabs -->
+                                            <ul class="nav nav-tabs" id="myTab">
+                                                <li class="active">
+                                                    <a data-toggle="tab" href="#NM_57d7618fac9dec0830976e5f"
+                                                       aria-expanded="true"><i class="ace-icon fa fa-exchange"></i>
+                                                        实时音频监听</a>
+                                                </li>
+                                                <li class="">
+                                                    <a data-toggle="tab" href="#HM_57d7618fac9dec0830976e5f"
+                                                       aria-expanded="false"><i class="ace-icon fa fa-history"></i>
+                                                        历史音频监听</a>
+                                                </li>
+                                            </ul><!-- /nav-tabs -->
                                         </div>
+                                        <span class="site-states" data-state="0"></span>
+                                        <div class="widget-toolbar">
+                                            <a href="#" data-action="" data-rel="tooltip" class="purple"
+                                               data-original-title="历史数据">
+                                                <i class="fa fa-sticky-note" aria-hidden="true"></i>
+                                            </a>
+                                            <a href="#" data-action="" data-rel="tooltip" class="dark"
+                                               data-original-title="载入数据库">
+                                                <i class="fa fa-paper-plane"></i>
+                                            </a>
 
-                                        <div class="widget-body">
-                                            <div class="widget-main padding-6">
-                                                <!-- tab-content -->
-                                                <div class="tab-content">
-                                                    <div id="NM_57d7618fac9dec0830976e5f" class="tab-pane active">
-                                                        <div class="media">
-                                                            <a class="media-left" href="#">
-                                                                <img src="/images/customs/application/rule.png" alt="...">
-                                                                <div class="strapping">
-                                                                    <div id="meter"></div>
-                                                                </div>
-                                                            </a>
-                                                            <div class="media-body">
-                                                                <div class="real-time-data">
-                                                                    <div class="table-responsive">
-                                                                        <table class="table table-bordered no-margin-bottom">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <td>数据名称</td>
-                                                                                    <td>数据参数</td>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td>实时列表</td>
-                                                                                    <td>实时列表</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>实时列表</td>
-                                                                                    <td>实时列表</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>实时列表</td>
-                                                                                    <td>实时列表</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>实时列表</td>
-                                                                                    <td>实时列表</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>实时列表</td>
-                                                                                    <td>实时列表</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>实时列表</td>
-                                                                                    <td>实时列表</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>实时列表</td>
-                                                                                    <td>实时列表</td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                </div>
-                                                                   <button class="btn btn-block btn-info btn-sm">
-                                                                       <i class="fa fa-play" aria-hidden="true"></i>
-                                                                       播放</button>
-                                                            </div>
+                                            <a href="#" data-action="fullscreen" class="pink" data-rel="tooltip"
+                                               data-original-title="全屏显示">
+                                                <i class="ace-icon fa fa-expand"></i>
+                                            </a>
+
+                                            <a href="#" data-action="collapse" data-rel="tooltip"
+                                               data-original-title="折叠 / 收缩">
+                                                <i class="ace-icon fa fa-chevron-up"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-body">
+                                        <div class="widget-main padding-6">
+                                            <!-- tab-content -->
+                                            <div class="tab-content">
+                                                <div id="NM_57d7618fac9dec0830976e5f" class="tab-pane active">
+                                                    <div class="fixed-width-l clearfix">
+                                                        <div class="fw-left" href="#" title="音频左右声道">
+                                                            <img src="/images/customs/application/rule.png"
+                                                                 alt="...">
+                                                            <div class="strapping"></div>
                                                         </div>
+                                                        <div class="fw-right">
+                                                            <div class="fw-right-content">
+                                                                <div class="real-time-data">
+                                                                    <table class="table table-bordered no-margin-bottom" style="">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <td>数据名称</td>
+                                                                            <td>数据参数</td>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td>设备ID</td>
+                                                                            <td class="register-tag" title="<%= a.RegisterTagID %>"><%= a.RegisterTagID %></td>
+                                                                        </tr>
+                                                                        <tr >
+                                                                            <td>频率</td>
+                                                                            <td class="position-relative" title="<%= a.RegisterDeviceID %>">
+                                                                                <%= a.RegisterDeviceID %>
+                                                                                <div class="tb-tail">
+                                                                                    <button class="btn btn-minier btn-yellow "><i class="ace-icon fa fa-cog"></i>设置</button>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
 
+                                                                        <tr>
+                                                                            <td>温度</td>
+                                                                            <td class="position-relative">温度<span class="tb-tail">c</span></td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td>湿度</td>
+                                                                            <td class="position-relative">温度 <span class="tb-tail">cnp</span></td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td>场强</td>
+                                                                            <td class="position-relative">温度<span class="tb-tail">cnp</span></td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td>信噪比</td>
+                                                                            <td  class="position-relative">温度<span class="tb-tail">cnp</span></td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <button class="btn btn-block btn-info btn-sm">
+                                                                    <i class="fa fa-play" aria-hidden="true"></i>
+                                                                    播放
+                                                                </button>
+                                                            </div>
+
+                                                        </div>
                                                     </div>
 
-                                                    <div id="HM_57d7618fac9dec0830976e5f" class="tab-pane">
-                                                        <div class="history-time-data">
-                                                            <table id="simple-table" class="table table-hover">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <td>
-                                                                           选项
-                                                                        </td>
-                                                                        <td>序号</td>
-                                                                        <td>电台名称</td>
-                                                                        <td>播放</td>
-                                                                        <td>删除</td>
-                                                                        <td>下载</td>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <input type="checkbox"/>
-                                                                        </td>
-                                                                        <td>01</td>
-                                                                        <td>电台1</td>
-                                                                        <td>
-                                                                            <a class="fa fa-play-circle-o" aria-hidden="true"></a>
-                                                                        </td>
-                                                                        <td>
-                                                                           <a class="fa fa-times" aria-hidden="true"></a>
-                                                                        </td>
-                                                                        <td>
-                                                                            <a class="fa fa-cloud-download" aria-hidden="true"></a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <input type="checkbox"/>
-                                                                        </td>
-                                                                        <td>01</td>
-                                                                        <td>电台1</td>
-                                                                        <td>
-                                                                            <a class="fa fa-play-circle-o" aria-hidden="true"></a>
-                                                                        </td>
-                                                                        <td>
-                                                                           <a class="fa fa-times" aria-hidden="true"></a>
-                                                                        </td>
-                                                                        <td>
-                                                                            <a class="fa fa-cloud-download" aria-hidden="true"></a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <input type="checkbox"/>
-                                                                        </td>
-                                                                        <td>01</td>
-                                                                        <td>电台1</td>
-                                                                        <td>
-                                                                            <a class="fa fa-play-circle-o" aria-hidden="true"></a>
-                                                                        </td>
-                                                                        <td>
-                                                                           <a class="fa fa-times" aria-hidden="true"></a>
-                                                                        </td>
-                                                                        <td>
-                                                                            <a class="fa fa-cloud-download" aria-hidden="true"></a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <input type="checkbox"/>
-                                                                        </td>
-                                                                        <td>01</td>
-                                                                        <td>电台1</td>
-                                                                        <td>
-                                                                            <a class="fa fa-play-circle-o" aria-hidden="true"></a>
-                                                                        </td>
-                                                                        <td>
-                                                                           <a class="fa fa-times" aria-hidden="true"></a>
-                                                                        </td>
-                                                                        <td>
-                                                                            <a class="fa fa-cloud-download" aria-hidden="true"></a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <input type="checkbox"/>
-                                                                        </td>
-                                                                        <td>01</td>
-                                                                        <td>电台1</td>
-                                                                        <td>
-                                                                            <a class="fa fa-play-circle-o" aria-hidden="true"></a>
-                                                                        </td>
-                                                                        <td>
-                                                                           <a class="fa fa-times" aria-hidden="true"></a>
-                                                                        </td>
-                                                                        <td>
-                                                                            <a class="fa fa-cloud-download" aria-hidden="true"></a>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <ul class="pagination pagination-sm no-margin">
-                                                                <li class="disabled"><span>&laquo;</span></li>
-                                                                <li class="active"><span>1 <span class="sr-only">(current)</span></span></li>
-                                                                <li><a href="#">2</a></li>
-                                                                <li><a href="#">3</a></li>
-                                                                <li><a href="#">4</a></li>
-                                                                <li><a href="#">5</a></li>
-                                                                <li><a href="#">&raquo;</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div><!-- /tab-content -->
                                                 </div>
+
+                                                <div id="HM_57d7618fac9dec0830976e5f" class="tab-pane">
+                                                    <div class="history-time-data">
+                                                        <table id="simple-table" class="table table-hover">
+                                                            <thead>
+                                                            <tr>
+                                                                <td>
+                                                                    选项
+                                                                </td>
+                                                                <td>序号</td>
+                                                                <td>电台名称</td>
+                                                                <td>播放</td>
+                                                                <td>删除</td>
+                                                                <td>下载</td>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="checkbox"/>
+                                                                </td>
+                                                                <td>01</td>
+                                                                <td>电台1</td>
+                                                                <td>
+                                                                    <a class="fa fa-play-circle-o"
+                                                                       aria-hidden="true"></a>
+                                                                </td>
+                                                                <td>
+                                                                    <a class="fa fa-trash-o" aria-hidden="true"></a>
+                                                                </td>
+                                                                <td>
+                                                                    <a class="fa fa-cloud-download"
+                                                                       aria-hidden="true"></a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="checkbox"/>
+                                                                </td>
+                                                                <td>01</td>
+                                                                <td>电台1</td>
+                                                                <td>
+                                                                    <a class="fa fa-play-circle-o"
+                                                                       aria-hidden="true"></a>
+                                                                </td>
+                                                                <td>
+                                                                    <a class="fa fa-trash-o" aria-hidden="true"></a>
+                                                                </td>
+                                                                <td>
+                                                                    <a class="fa fa-cloud-download"
+                                                                       aria-hidden="true"></a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="checkbox"/>
+                                                                </td>
+                                                                <td>01</td>
+                                                                <td>电台1</td>
+                                                                <td>
+                                                                    <a class="fa fa-play-circle-o"
+                                                                       aria-hidden="true"></a>
+                                                                </td>
+                                                                <td>
+                                                                    <a class="fa fa-trash-o" aria-hidden="true"></a>
+                                                                </td>
+                                                                <td>
+                                                                    <a class="fa fa-cloud-download"
+                                                                       aria-hidden="true"></a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="checkbox"/>
+                                                                </td>
+                                                                <td>01</td>
+                                                                <td>电台1</td>
+                                                                <td>
+                                                                    <a class="fa fa-play-circle-o"
+                                                                       aria-hidden="true"></a>
+                                                                </td>
+                                                                <td>
+                                                                    <a class="fa fa-trash-o" aria-hidden="true"></a>
+                                                                </td>
+                                                                <td>
+                                                                    <a class="fa fa-cloud-download"
+                                                                       aria-hidden="true"></a>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="checkbox"/>
+                                                                </td>
+                                                                <td>01</td>
+                                                                <td>电台1</td>
+                                                                <td>
+                                                                    <a class="fa fa-play-circle-o"
+                                                                       aria-hidden="true"></a>
+                                                                </td>
+                                                                <td>
+                                                                    <a class="fa fa-trash-o" aria-hidden="true"></a>
+                                                                </td>
+                                                                <td>
+                                                                    <a class="fa fa-cloud-download"
+                                                                       aria-hidden="true"></a>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <ul class="pagination pagination-sm no-margin">
+                                                            <li class="disabled"><span>&laquo;</span></li>
+                                                            <li class="active"><span>1 <span
+                                                                    class="sr-only">(current)</span></span>
+                                                            </li>
+                                                            <li><a href="#">2</a></li>
+                                                            <li><a href="#">3</a></li>
+                                                            <li><a href="#">4</a></li>
+                                                            <li><a href="#">5</a></li>
+                                                            <li><a href="#">&raquo;</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div><!-- /tab-content -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
+
+                            <% })}catch(err) {console.log(err)} %>
+
+
+
+
+                            <!--<div class="row">-->
+
+                            <!--<div class="col-md-6 col-lg-3 widget-container-col" id="widget-container-col-1">-->
+                            <!--<div class="widget-box widget-box-audioMonitoring" id="widget-box-1">-->
+                            <!--<div class="widget-header">-->
+
+                            <!--<div class="widget-toolbar no-border pull-left">-->
+
+                            <!--&lt;!&ndash; nav-tabs &ndash;&gt;-->
+                            <!--<ul class="nav nav-tabs" id="myTab">-->
+                            <!--<li class="active">-->
+                            <!--<a data-toggle="tab" href="#NM_57d7618fac9dec0830976e5f"-->
+                            <!--aria-expanded="true"><i class="ace-icon fa fa-exchange"></i>-->
+                            <!--实时音频监听</a>-->
+                            <!--</li>-->
+                            <!--<li class="">-->
+                            <!--<a data-toggle="tab" href="#HM_57d7618fac9dec0830976e5f"-->
+                            <!--aria-expanded="false"><i class="ace-icon fa fa-history"></i>-->
+                            <!--历史音频监听</a>-->
+                            <!--</li>-->
+                            <!--</ul>&lt;!&ndash; /nav-tabs &ndash;&gt;-->
+                            <!--</div>-->
+
+                            <!--<div class="widget-toolbar">-->
+                            <!--<a href="#" data-action="" data-rel="tooltip" class="purple"-->
+                            <!--data-original-title="历史数据">-->
+                            <!--<i class="fa fa-sticky-note" aria-hidden="true"></i>-->
+                            <!--</a>-->
+                            <!--<a href="#" data-action="" data-rel="tooltip" class="dark"-->
+                            <!--data-original-title="参数设置">-->
+                            <!--<i class="ace-icon fa fa-cog"></i>-->
+                            <!--</a>-->
+
+                            <!--<a href="#" data-action="fullscreen" class="pink" data-rel="tooltip"-->
+                            <!--data-original-title="全屏显示">-->
+                            <!--<i class="ace-icon fa fa-expand"></i>-->
+                            <!--</a>-->
+
+                            <!--<a href="#" data-action="collapse" data-rel="tooltip"-->
+                            <!--data-original-title="折叠 / 收缩">-->
+                            <!--<i class="ace-icon fa fa-chevron-up"></i>-->
+                            <!--</a>-->
+                            <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="widget-body">-->
+                            <!--<div class="widget-main padding-6">-->
+                            <!--&lt;!&ndash; tab-content &ndash;&gt;-->
+                            <!--<div class="tab-content">-->
+                            <!--<div id="NM_57d7618fac9dec0830976e5f" class="tab-pane active">-->
+                            <!--<div class="media">-->
+                            <!--<div class="media-left" href="#" title="音频左右声道">-->
+                            <!--<img src="/images/customs/application/rule.png"-->
+                            <!--alt="...">-->
+                            <!--<div class="strapping"></div>-->
+                            <!--</div>-->
+                            <!--<div class="media-body">-->
+                            <!--<div class="real-time-data">-->
+                            <!--<div class="table-responsive">-->
+                            <!--<table class="table table-bordered no-margin-bottom">-->
+                            <!--<thead>-->
+                            <!--<tr>-->
+                            <!--<td>数据名称</td>-->
+                            <!--<td>数据参数</td>-->
+                            <!--</tr>-->
+                            <!--</thead>-->
+                            <!--<tbody>-->
+                            <!--<tr>-->
+                            <!--<td>实时列表</td>-->
+                            <!--<td>实时列表</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                            <!--<td>实时列表</td>-->
+                            <!--<td>实时列表</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                            <!--<td>实时列表</td>-->
+                            <!--<td>实时列表</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                            <!--<td>实时列表</td>-->
+                            <!--<td>实时列表</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                            <!--<td>实时列表</td>-->
+                            <!--<td>实时列表</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                            <!--<td>实时列表</td>-->
+                            <!--<td>实时列表</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                            <!--<td>实时列表</td>-->
+                            <!--<td>实时列表</td>-->
+                            <!--</tr>-->
+                            <!--</tbody>-->
+                            <!--</table>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<button class="btn btn-block btn-info btn-sm">-->
+                            <!--<i class="fa fa-play" aria-hidden="true"></i>-->
+                            <!--播放-->
+                            <!--</button>-->
+                            <!--</div>-->
+                            <!--</div>-->
+
+                            <!--</div>-->
+
+                            <!--<div id="HM_57d7618fac9dec0830976e5f" class="tab-pane">-->
+                            <!--<div class="history-time-data">-->
+                            <!--<table id="simple-table" class="table table-hover">-->
+                            <!--<thead>-->
+                            <!--<tr>-->
+                            <!--<td>-->
+                            <!--选项-->
+                            <!--</td>-->
+                            <!--<td>序号</td>-->
+                            <!--<td>电台名称</td>-->
+                            <!--<td>播放</td>-->
+                            <!--<td>删除</td>-->
+                            <!--<td>下载</td>-->
+                            <!--</tr>-->
+                            <!--</thead>-->
+                            <!--<tbody>-->
+                            <!--<tr>-->
+                            <!--<td>-->
+                            <!--<input type="checkbox"/>-->
+                            <!--</td>-->
+                            <!--<td>01</td>-->
+                            <!--<td>电台1</td>-->
+                            <!--<td>-->
+                            <!--<a class="fa fa-play-circle-o"-->
+                            <!--aria-hidden="true"></a>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                            <!--<a class="fa fa-trash-o" aria-hidden="true"></a>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                            <!--<a class="fa fa-cloud-download"-->
+                            <!--aria-hidden="true"></a>-->
+                            <!--</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                            <!--<td>-->
+                            <!--<input type="checkbox"/>-->
+                            <!--</td>-->
+                            <!--<td>01</td>-->
+                            <!--<td>电台1</td>-->
+                            <!--<td>-->
+                            <!--<a class="fa fa-play-circle-o"-->
+                            <!--aria-hidden="true"></a>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                            <!--<a class="fa fa-trash-o" aria-hidden="true"></a>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                            <!--<a class="fa fa-cloud-download"-->
+                            <!--aria-hidden="true"></a>-->
+                            <!--</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                            <!--<td>-->
+                            <!--<input type="checkbox"/>-->
+                            <!--</td>-->
+                            <!--<td>01</td>-->
+                            <!--<td>电台1</td>-->
+                            <!--<td>-->
+                            <!--<a class="fa fa-play-circle-o"-->
+                            <!--aria-hidden="true"></a>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                            <!--<a class="fa fa-trash-o" aria-hidden="true"></a>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                            <!--<a class="fa fa-cloud-download"-->
+                            <!--aria-hidden="true"></a>-->
+                            <!--</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                            <!--<td>-->
+                            <!--<input type="checkbox"/>-->
+                            <!--</td>-->
+                            <!--<td>01</td>-->
+                            <!--<td>电台1</td>-->
+                            <!--<td>-->
+                            <!--<a class="fa fa-play-circle-o"-->
+                            <!--aria-hidden="true"></a>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                            <!--<a class="fa fa-trash-o" aria-hidden="true"></a>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                            <!--<a class="fa fa-cloud-download"-->
+                            <!--aria-hidden="true"></a>-->
+                            <!--</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                            <!--<td>-->
+                            <!--<input type="checkbox"/>-->
+                            <!--</td>-->
+                            <!--<td>01</td>-->
+                            <!--<td>电台1</td>-->
+                            <!--<td>-->
+                            <!--<a class="fa fa-play-circle-o"-->
+                            <!--aria-hidden="true"></a>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                            <!--<a class="fa fa-trash-o" aria-hidden="true"></a>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                            <!--<a class="fa fa-cloud-download"-->
+                            <!--aria-hidden="true"></a>-->
+                            <!--</td>-->
+                            <!--</tr>-->
+                            <!--</tbody>-->
+                            <!--</table>-->
+                            <!--<ul class="pagination pagination-sm no-margin">-->
+                            <!--<li class="disabled"><span>&laquo;</span></li>-->
+                            <!--<li class="active"><span>1 <span class="sr-only">(current)</span></span>-->
+                            <!--</li>-->
+                            <!--<li><a href="#">2</a></li>-->
+                            <!--<li><a href="#">3</a></li>-->
+                            <!--<li><a href="#">4</a></li>-->
+                            <!--<li><a href="#">5</a></li>-->
+                            <!--<li><a href="#">&raquo;</a></li>-->
+                            <!--</ul>-->
+                            <!--</div>-->
+                            <!--</div>&lt;!&ndash; /tab-content &ndash;&gt;-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+
+
+                            <!--</div>-->
 
                         </div>
 
@@ -368,6 +616,7 @@
 
 <!--[if !IE]> -->
 <script src="/javascripts/Ace_template_js/jquery-2.1.4.min.js"></script>
+
 <!-- <![endif]-->
 
 <!--[if IE]>
@@ -381,7 +630,6 @@
 <!-- page specific plugin scripts -->
 <script src="/javascripts/Ace_template_js/jquery-ui.custom.min.js"></script>
 <script src="/javascripts/Ace_template_js/jquery.ui.touch-punch.min.js"></script>
-<script src="/javascripts/customs/pages/application/meter.js"></script>
 <script src="/bower_components/jPlayer/dist/jplayer/jquery.jplayer.min.js"></script>
 <script src="/bower_components/jPlayer/dist/add-on/jplayer.playlist.min.js"></script>
 
@@ -426,8 +674,27 @@
 
         $(window).on('resize.scroll_reset', function () {
             $('.scrollable-horizontal').ace_scroll('reset');
+//            自适应实时监听面板
+            var box_width = $(".widget-container-col").width();
+            if(box_width>320){
+                $(".fw-left").css("display","block");
+                $(".fw-right-content").css("margin-left","110px")
+            }else{
+                $(".fw-left").css("display","none");
+                $(".fw-right-content").css("margin-left","0")
+            }
         });
-
+//        当插入页边距时实时监听面板设置
+        $("#ace-settings-add-container").on('click',function(){
+            var widgetContainer = $(".widget-container-col");
+            if( widgetContainer.hasClass("col-lg-3")){
+                widgetContainer.removeClass("col-lg-3");
+                widgetContainer.addClass("col-lg-6");
+            }else{
+                widgetContainer.removeClass("col-lg-6");
+                widgetContainer.addClass("col-lg-3");
+            }
+        });
 
         $('#id-checkbox-vertical').prop('checked', false).on('click', function () {
             $('#widget-toolbox-1').toggleClass('toolbox-vertical')

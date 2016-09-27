@@ -10,5 +10,9 @@ module.exports = {
         DB_USER: "shanxiDbUser",
         DB_PASS: "2qHc0uPp"
     },
+    tcpSocket: {
+        HOST: "123.57.215.156",
+        PORT: 8904
+    },
     NODE_ENV: "live"
 };

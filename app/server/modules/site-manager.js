@@ -2,6 +2,7 @@ var MongoDB = require('mongodb').Db;
 var ObjectId = require('mongodb').ObjectID;
 var Server = require('mongodb').Server;
 var config = require("../../../config/config");
+var _ = require("underscore")._;
 
 /*
  ESTABLISH DATABASE CONNECTION
@@ -210,22 +211,42 @@ exports.findDataByProIdAndSiteId = function (ProjNum, siteID, callback) {
 //传入当前选中站点的项目ID 和 站点 ID 用来查出对应的所有设备数据
 exports.getAllDeviceInfoByProjIDandSiteID = function (ProjID, siteID, callback) {
 
+    var devicesInfo = [];   //用于存储找到的设备信息
+
     if (siteID === "all") {
-        var devicesInfo = [];
         NsOHBasicSite.find({"ProjectID": ProjID}, {"_id": 0, "SiteNum": 1}).toArray(function (err, sitesNumArry) {
             if (err) {
                 callback(err)
             } else {
-                var len = sitesNumArry.length;
-                sitesNumArry.forEach(function (item, index) {
+
+                var lastSiteNum = _.last(sitesNumArry);
+                var sitesNumArryIndex = sitesNumArry.length -1;
+
+                //该项目下有n个站点， 循环查询
+                sitesNumArry.forEach(function (item, index, self) {
+
                     NsOHBasicDevice.find({"SiteID": item.SiteNum}, {"_id": 0}).toArray(function (err, deviceInfo) {
 
-                        console.log(deviceInfo);
-                        devicesInfo.concat(deviceInfo);
-                        console.log(devicesInfo);
+                        if (err) {
+                            callback(err)
+                        } else {
+                            if (deviceInfo.length > 0) {
+                                //如果查询到设备信息
+                                devicesInfo.push(deviceInfo);
 
-                        if (index == len - 1) {
-                            callback(devicesInfo);
+                                //传入第一个循环 最后一个站点，  传入当前站点, 传入第二个循环的下标
+                                if (breakOutTest(lastSiteNum, item, index, sitesNumArryIndex)) {
+                                    devicesInfo = _.flatten(devicesInfo);
+                                    callback(devicesInfo);
+                                }
+                            } else {
+                                //查询的设备数为空 不做处理;
+                                //传入第一个循环 最后一个站点，  传入当前站点, 传入第二个循环的下标
+                                if (breakOutTest(lastSiteNum, item, index, sitesNumArryIndex)) {
+                                    devicesInfo = _.flatten(devicesInfo);
+                                    callback(devicesInfo);
+                                }
+                            }
                         }
                     });
                 });
@@ -241,3 +262,9 @@ exports.getAllDeviceInfoByProjIDandSiteID = function (ProjID, siteID, callback) 
     }
 };
 
+
+//使用underscore 作为比较
+
+function breakOutTest(lastSiteNum, item, index, sitesNumArryIndex) {
+    return _.isEqual(lastSiteNum, item) && (index == sitesNumArryIndex)
+}

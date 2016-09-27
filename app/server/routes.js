@@ -851,7 +851,6 @@ module.exports = function (app) {
             var currentSiteID = req.params.SiteID;
             SM.findDataByProIdAndSiteId(currentProjectID, currentSiteID, function (mainDatas) {
                 SM.getAllDeviceInfoByProjIDandSiteID(currentProjectID, currentSiteID, function (deviceData) {
-                    console.log(deviceData);
                     res.render('./application/index.html', {
                         title: '山西-吉兆 -- 监控主页',
                         currentProjectID: currentProjectID,
