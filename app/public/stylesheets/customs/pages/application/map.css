@@ -109,7 +109,7 @@ body, html,#baiduMap {width: 100%;height: 100%;overflow: hidden;margin:0;font-fa
 
 /*这是卫星图与普通地图切换模块*/
 .BMap_noprint.anchorTR{
-    bottom: 10px!important;
+    bottom: 25px!important;
     top: auto!important;
 }
 .BMap_noprint.anchorTR > div > div {
@@ -143,7 +143,7 @@ body, html,#baiduMap {width: 100%;height: 100%;overflow: hidden;margin:0;font-fa
 .map-sidebar{
     position: absolute;
     padding: 4px 6px;
-    bottom: 230px;
+    bottom: 25px;
     left: 8px;
     height: 46px;
     overflow: hidden;

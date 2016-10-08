@@ -1,7 +1,9 @@
+var fs = require('fs');
 var MongoDB = require('mongodb').Db;
 var ObjectId = require('mongodb').ObjectID;
 var Server = require('mongodb').Server;
 var config = require("../../../config/config");
+var chokidar = require("../../../config/chokidar");
 var _ = require("underscore")._;
 
 /*
@@ -220,7 +222,7 @@ exports.getAllDeviceInfoByProjIDandSiteID = function (ProjID, siteID, callback) 
             } else {
 
                 var lastSiteNum = _.last(sitesNumArry);
-                var sitesNumArryIndex = sitesNumArry.length -1;
+                var sitesNumArryIndex = sitesNumArry.length - 1;
 
                 //该项目下有n个站点， 循环查询
                 sitesNumArry.forEach(function (item, index, self) {
@@ -268,3 +270,63 @@ exports.getAllDeviceInfoByProjIDandSiteID = function (ProjID, siteID, callback) 
 function breakOutTest(lastSiteNum, item, index, sitesNumArryIndex) {
     return _.isEqual(lastSiteNum, item) && (index == sitesNumArryIndex)
 }
+
+
+//传入当前选中站点的项目ID 和 站点 ID 用来查出对应的所有设备数据
+exports.getAllHistoricalAudioDataByDeviceID = function (deviceID, currentPage, pageSize, callback) {
+
+    var filePath = './config/historicalAudioMp3List.json';//历史音频目录下所有设备ID对应的音频播放列表文件;
+
+    var resultObj = {};
+
+    resultObj.deviceID = deviceID;
+
+    fs.readFile(filePath, function (err, data) {
+        if (err) {
+            resultObj.deviceID = deviceID;
+            resultObj.currentPage = currentPage;
+            resultObj.pageTotal = 0;
+            resultObj.Mp3ListArry = [];
+            callback(err, resultObj);
+        } else {
+            var jsonObj = JSON.parse(data);
+
+            try {
+
+                if (jsonObj[deviceID]) {
+
+                    resultObj.deviceID = deviceID;
+                    resultObj.currentPage = currentPage;
+
+                    var pageTotal = jsonObj[deviceID].length;
+                    resultObj.pageTotal = pageTotal;
+
+                    var DeviceMp3ListAll = jsonObj[deviceID];
+
+                    if (pageTotal <= pageSize) {
+                        resultObj.Mp3ListArry = DeviceMp3ListAll;
+                        callback(null, resultObj);
+                    } else {
+                        var startIndex = (currentPage - 1) * pageSize;
+
+                        if (currentPage == (Math.floor(pageTotal / pageSize) + 1)) {
+                            resultObj.Mp3ListArry = DeviceMp3ListAll.slice(startIndex);
+                            callback(null, resultObj);
+                        } else {
+                            resultObj.Mp3ListArry = DeviceMp3ListAll.slice(startIndex, startIndex + pageSize);
+                            callback(null, resultObj);
+                        }
+                    }
+
+                }
+
+            } catch (err) {
+                console.log('该设备ID对应的历史音频数据不存在！');
+                callback(err, []);
+            }
+        }
+
+    });
+
+
+};

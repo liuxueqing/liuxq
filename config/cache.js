@@ -2,13 +2,13 @@
  * Created by Liuwei on 2016/9/20.
  */
 
-//缓存容器
+//全局缓存容器
 
 global.GLOBAL_CACHE = {};
 
 
 // Get 方法, 获得缓存数据
-exports.get = function (deviceID) {
+GLOBAL_CACHE.get = function (deviceID) {
     var _cache = GLOBAL_CACHE;
 
     // 如果存在该值
@@ -24,6 +24,7 @@ exports.get = function (deviceID) {
 
             // 如果已经过期
         } else if (expire && curTime - insertTime > expire) {
+            console.log("deviceID: " + deviceID +" 数据已过期");
             //返回空数据
             return null
         }
@@ -36,7 +37,7 @@ exports.get = function (deviceID) {
 
 
 // Set 方法, 插入数据到缓存（2种情况： ①新插入、 ②已存在）
-exports.set = function (deviceID, value, expire) {
+GLOBAL_CACHE.set = function (deviceID, value, expire) {
     // 缓存对象
     var _cache = GLOBAL_CACHE;
 
@@ -46,6 +47,7 @@ exports.set = function (deviceID, value, expire) {
         // 重新赋值
         _cache[deviceID].value = value;
         _cache[deviceID].expire = expire;
+        _cache[deviceID].insertTime = +new Date();
 
         // 如果新插入缓存
     } else {

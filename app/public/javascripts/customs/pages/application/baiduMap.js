@@ -5,10 +5,10 @@
 (function () {
 
 
-    $("#baiduMap").height($(window).height() - 75 - 220);
+    $("#baiduMap").height($(window).height() - 75);
 
     $(window).resize(function () {
-        $("#baiduMap").height($(window).height() - 75 - 220);
+        $("#baiduMap").height($(window).height() - 75);
     });
 
 
@@ -20,8 +20,8 @@
      * 地图数据设置
      * 参数说明: 无
      */
-    var center = [112.458621, 36.109298];     // 设置中心点坐标
-    var Zoom = 6;      // 和地图级别
+    var center = [112.458621, 37.609298];     // 设置中心点坐标
+    var Zoom = 8;      // 和地图级别
     var CurrentProvincial = "山西省";     // 设置行政区域
     var enableScrollWheelZoom = true;       //开启鼠标滚轮缩放
     var fillColor = "rgba(226,239,238,0.75)";  // 地图遮罩层填充颜色
@@ -94,10 +94,10 @@
         ajax_load_mapMarker(function () {
             ajax_load_ctrlBox();
             ajax_load_siteInfoWindow(allSiteDataCache[0]);
-            ajax_load_deviceInfoBox(allSiteDataCache[0]);
+            //ajax_load_deviceInfoBox(allSiteDataCache[0]);
             addSiteSelected(polygonCache[0], polygonCache);
-            map.setViewport(markerPointCache);
-            panTo_currentMarkerPoint(allSiteDataCache[0]);
+            //map.setViewport(markerPointCache);
+            //panTo_currentMarkerPoint(allSiteDataCache[0]);
         });
 
 
@@ -148,7 +148,7 @@
                         addCovering(Data[i], i);     // 根据数据添加地图覆盖物
                     }
                     ajax_load_siteInfoWindow(allSiteDataCache[0]);
-                    ajax_load_deviceInfoBox(allSiteDataCache[0]);
+                    //ajax_load_deviceInfoBox(allSiteDataCache[0]);
                     addSiteSelected(polygonCache[0], polygonCache);
                     panTo_currentMarkerPoint(allSiteDataCache[0]);
                 },
@@ -306,72 +306,72 @@
      * 参数说明: 无
      * method: POST
      */
-    function ajax_load_deviceInfoBox(_Data, callback) {
-
-        var deviceInfoBox = $("#deviceInfoBox");
-        var siteID = _Data.ID;
-        var siteName = _Data.SiteName;
-        var beforeTime = 0;  //获取ajax传输前的分钟数
-        var successTime = 0; //获取ajax传输成功的数据
-
-        //初始化加载站点详细信息窗口数据
-        $.ajax({
-            url: "/api/maps/getAllDevicesInfoBySiteID",// 后台接口
-            data: {
-                "siteID": siteID
-            },
-            type: 'post',
-            dataType: 'json',
-            beforeSend: function(){
-                remove_load_animal(deviceInfoBox);//移除加载动画
-                add_load_animal(deviceInfoBox);//添加加载动画
-                beforeTime=+new Date();//获取当前秒数
-            },
-            success: function (Data) {
-
-                var _h3_HTML = deviceInfoBox.find("h3");
-                var _ul_HTML = deviceInfoBox.find("ul");
-                var minute = 0; //计算时间差
-                //清除加载动画
-                successTime=+new Date();//获取当前秒数
-                if(successTime>=beforeTime){
-                    minute=successTime-beforeTime;
-                }else{
-                    minute=beforeTime-successTime;
-                }
-                if(minute >= 500) {
-                    remove_load_animal(deviceInfoBox);
-                    _h3_HTML.html("");
-                    _ul_HTML.html("");
-
-                    var len = Data.length;
-                    _h3_HTML.append('<strong>' + siteName + '</strong> 站点设备列表');
-
-                    for (var i = 0; i < len; i++) {
-                        _ul_HTML.append('<li class="col-sm-2"><div class="widget-box" ><div class="widget-header"><h5 class="widget-title smaller">设备: ' + Data[i].RegisterDeviceID + '</h5><div class="widget-toolbar"> <span class="badge badge-danger">设备异常</span></div></div><div class="widget-body"><div class="widget-main padding-6"><div class="alert alert-info">  ' + Data[i].RegisterTagID + ' </div></div></div></div></li>')
-                    }
-                }
-                else{
-                    setTimeout(function(){
-                        remove_load_animal(deviceInfoBox);
-                        _h3_HTML.html("");
-                        _ul_HTML.html("");
-
-                        var len = Data.length;
-                        _h3_HTML.append('<strong>' + siteName + '</strong> 站点设备列表');
-
-                        for (var i = 0; i < len; i++) {
-                            _ul_HTML.append('<li class="col-sm-2"><div class="widget-box" ><div class="widget-header"><h5 class="widget-title smaller">设备: ' + Data[i].RegisterDeviceID + '</h5><div class="widget-toolbar"> <span class="badge badge-danger">设备异常</span></div></div><div class="widget-body"><div class="widget-main padding-6"><div class="alert alert-info">  ' + Data[i].RegisterTagID + ' </div></div></div></div></li>')
-                        }
-                    },500)
-                }
-
-            },
-            error: function (e) {
-                console.log(e)
-            }
-        });
-    }
+    //function ajax_load_deviceInfoBox(_Data, callback) {
+    //
+    //    var deviceInfoBox = $("#deviceInfoBox");
+    //    var siteID = _Data.ID;
+    //    var siteName = _Data.SiteName;
+    //    var beforeTime = 0;  //获取ajax传输前的分钟数
+    //    var successTime = 0; //获取ajax传输成功的数据
+    //
+    //    //初始化加载站点详细信息窗口数据
+    //    $.ajax({
+    //        url: "/api/maps/getAllDevicesInfoBySiteID",// 后台接口
+    //        data: {
+    //            "siteID": siteID
+    //        },
+    //        type: 'post',
+    //        dataType: 'json',
+    //        beforeSend: function(){
+    //            remove_load_animal(deviceInfoBox);//移除加载动画
+    //            add_load_animal(deviceInfoBox);//添加加载动画
+    //            beforeTime=+new Date();//获取当前秒数
+    //        },
+    //        success: function (Data) {
+    //
+    //            var _h3_HTML = deviceInfoBox.find("h3");
+    //            var _ul_HTML = deviceInfoBox.find("ul");
+    //            var minute = 0; //计算时间差
+    //            //清除加载动画
+    //            successTime=+new Date();//获取当前秒数
+    //            if(successTime>=beforeTime){
+    //                minute=successTime-beforeTime;
+    //            }else{
+    //                minute=beforeTime-successTime;
+    //            }
+    //            if(minute >= 500) {
+    //                remove_load_animal(deviceInfoBox);
+    //                _h3_HTML.html("");
+    //                _ul_HTML.html("");
+    //
+    //                var len = Data.length;
+    //                _h3_HTML.append('<strong>' + siteName + '</strong> 站点设备列表');
+    //
+    //                for (var i = 0; i < len; i++) {
+    //                    _ul_HTML.append('<li class="col-sm-2"><div class="widget-box" ><div class="widget-header"><h5 class="widget-title smaller">设备: ' + Data[i].RegisterDeviceID + '</h5><div class="widget-toolbar"> <span class="badge badge-danger">设备异常</span></div></div><div class="widget-body"><div class="widget-main padding-6"><div class="alert alert-info">  ' + Data[i].RegisterTagID + ' </div></div></div></div></li>')
+    //                }
+    //            }
+    //            else{
+    //                setTimeout(function(){
+    //                    remove_load_animal(deviceInfoBox);
+    //                    _h3_HTML.html("");
+    //                    _ul_HTML.html("");
+    //
+    //                    var len = Data.length;
+    //                    _h3_HTML.append('<strong>' + siteName + '</strong> 站点设备列表');
+    //
+    //                    for (var i = 0; i < len; i++) {
+    //                        _ul_HTML.append('<li class="col-sm-2"><div class="widget-box" ><div class="widget-header"><h5 class="widget-title smaller">设备: ' + Data[i].RegisterDeviceID + '</h5><div class="widget-toolbar"> <span class="badge badge-danger">设备异常</span></div></div><div class="widget-body"><div class="widget-main padding-6"><div class="alert alert-info">  ' + Data[i].RegisterTagID + ' </div></div></div></div></li>')
+    //                    }
+    //                },500)
+    //            }
+    //
+    //        },
+    //        error: function (e) {
+    //            console.log(e)
+    //        }
+    //    });
+    //}
 
 
     /**
@@ -380,7 +380,7 @@
      */
     function loadSiteData(_data) {
         ajax_load_siteInfoWindow(_data);
-        ajax_load_deviceInfoBox(_data);
+        //ajax_load_deviceInfoBox(_data);
     }
 
 

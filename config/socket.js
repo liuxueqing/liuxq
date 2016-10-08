@@ -1,10 +1,12 @@
 /**
  * Created by Liuwei on 2016/9/19.
  */
+var ARM = require('../app/server/modules/alertRules-manager');
+
 var net = require('net');
 var moment = require('moment');
 var config = require("./config");
-var cache = require("./cache");
+require("./cache");
 
 
 var HOST = config.tcpSocket.HOST;
@@ -21,7 +23,7 @@ nodeServer.connect(PORT, HOST, function () {
 
     console.log('CONNECTED TO: ' + HOST + ':' + PORT);
     // 建立连接后立即向服务器发送数据，服务器将收到这些数据
-    nodeServer.write('0028{"login":"who","pwd":"xxxx"}');   // server login
+    nodeServer.write('[START0028]{"login":"who","pwd":"xxxx"}[END]');   // server login
 
 });
 
@@ -105,7 +107,7 @@ function reconnectToTcpSocketServer() {
         console.log('RE-CONNECTED TO: ' + HOST + ':' + PORT);
 
         // 建立连接后立即向服务器发送数据，服务器将收到这些数据
-        nodeServer.write('0028{"login":"who","pwd":"xxxx"}');   // server login
+        nodeServer.write('[START0028]{"login":"who","pwd":"xxxx"}[END]');   // server login
 
     });
 
@@ -204,8 +206,7 @@ function splicingDataPackage(dataPackageStr) {
 
             } else {
                 //console.log("共计收到： " + countNum + " 条完整的socket数据");
-
-                addToCache(result);
+                addToCacheAndStorage(result);
             }
 
         } else {
@@ -215,7 +216,7 @@ function splicingDataPackage(dataPackageStr) {
 
         //接收到心跳包， 则回送响应包
         function sendAResponsePackage() {
-            //nodeServer.write('[START0020]{"keepAlive":"true"}[END]');   // server login
+            nodeServer.write('[START0020]{"keepAlive":"true"}[END]');   // server login
         }
 
         //判断拼接后的数据是否为心跳包！
@@ -225,16 +226,121 @@ function splicingDataPackage(dataPackageStr) {
         }
 
         //将模块处理后的最终数据 送入缓存模块！
-        function addToCache(result) {
+        function addToCacheAndStorage(result) {
             //去掉标识位置， 获得最终数据！
             var _finalResult = result.replace(/^\[(START)\d{4}\]/, "").replace(/\[END\]$/, "");
-            var deviceID = _finalResult.match(/"deviceID" : \"(\w{35})\"/)[0].replace(/^"deviceID" : \"/, "").replace('"', "");   //设备ID 35位
-            var expire = 1000 * 60 * 5; //5分钟没数据 即清空缓存， 页面可以直观得到显示！
 
-            //此处为写入缓存模块代码
-            cache.set(deviceID, _finalResult, expire);
-            countNum++; //接收计数器+1
-            //console.log(countNum);
+            alertVerification(_finalResult);
+        }
+
+
+        function alertVerification(_finalResult) {
+
+            var deviceID = _finalResult.match(/"deviceID" : \"(\w{35})\"/)[0].replace(/^"deviceID" : \"/, "").replace('"', "");   //设备ID 35位
+            var _finalResultObj = JSON.parse(_finalResult);
+            var _deviceDataObj = _finalResultObj.deviceData;
+            var alertRulesObj = {};
+
+            //通过设备ID 查找对应的 报警规则!
+            ARM.getAlertRulesByDeviceID(deviceID, function (err, res) {
+
+                if (err) {
+                    console.log(err)
+                } else {
+
+                    addAlertRules(res[0]);   //将查询出来的报警规则与最终数据集合组合
+
+                    function addAlertRules(alertRulesObj) {
+                        if (alertRulesObj) {
+                            var len = Object.getOwnPropertyNames(alertRulesObj).length;
+
+                            var i = 1;
+
+
+                            var normal = 1;   //正常
+                            var warning = 2;   //警告
+                            var danger = 3;   //异常
+                            var offline = 4;   //掉线
+
+                            for (var key in _deviceDataObj) {
+
+                                if (alertRulesObj.hasOwnProperty(key)) {
+                                    try {
+                                        //从报警规则 对象中 获取对应key的报警规则， 数组的第一位是min ，  第二位是max
+
+                                        var value = parseFloat(_deviceDataObj[key].value);
+                                        var min = parseFloat(alertRulesObj[key].value[0]);
+                                        var max = parseFloat(alertRulesObj[key].value[1]);
+
+                                        if (len == i) {
+                                            if (value >= min && value <= max) {
+                                                //console.log("正常");
+                                                _finalResultObj.deviceData[key].alarmStatus = normal;
+                                                //等待循环结束后， 将带有参数是否报警的状态值集合送入缓存！
+
+                                                var _finalResultStr = JSON.stringify(_finalResultObj);
+                                                var expire = 1000 * 60 * 5; //5分钟没数据 即清空缓存， 页面可以直观得到显示！
+
+                                                //此处为写入缓存模块代码
+                                                GLOBAL_CACHE.set(deviceID, _finalResultStr, expire);
+                                                addDataToHistoricalDatabase(_finalResultObj);  //写入数据库
+                                                countNum++; //接收计数器+1
+                                                //console.log(countNum);
+                                            } else {
+                                                //console.log("超出范围");
+                                                _finalResultObj.deviceData[key].alarmStatus = danger;
+                                                //等待循环结束后， 将带有参数是否报警的状态值集合送入缓存！
+
+                                                var _finalResultStr = JSON.stringify(_finalResultObj);
+                                                var expire = 1000 * 60 * 5; //5分钟没数据 即清空缓存， 页面可以直观得到显示！
+
+                                                //此处为写入缓存模块代码
+                                                GLOBAL_CACHE.set(deviceID, _finalResultStr, expire);
+                                                addDataToHistoricalDatabase(_finalResultObj);  //写入数据库
+                                                countNum++; //接收计数器+1
+                                                //console.log(countNum);
+
+                                                _finalResultStr = null;//释放内存
+                                            }
+                                        } else {
+                                            if (value >= min && value <= max) {
+                                                //console.log("正常");
+                                                _finalResultObj.deviceData[key].alarmStatus = normal;
+                                                i++;
+                                            } else {
+                                                //console.log("超出范围");
+                                                _finalResultObj.deviceData[key].alarmStatus = danger;
+                                                i++;
+                                            }
+                                        }
+
+
+                                    } catch (err) {
+                                        console.log(err);
+                                    }
+                                }
+                            }
+                        } else {
+                            console.log("报警规则未配置!");
+
+                            //不进行报警规则验证， 直接添加到缓存！
+                            var _finalResultStr = JSON.stringify(_finalResultObj);
+
+
+                            //此处为写入缓存模块代码
+                            GLOBAL_CACHE.set(deviceID, _finalResultStr, expire);
+
+                            addDataToHistoricalDatabase(_finalResultObj);  //写入数据库
+                        }
+
+                        //
+                        //写入数据库
+                        function addDataToHistoricalDatabase(data) {
+                            ARM.addDataToHistoricalDatabase(data);
+                        }
+                    }
+                }
+            });
         }
     }
 }

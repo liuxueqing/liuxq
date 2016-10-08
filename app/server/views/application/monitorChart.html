@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title><%= title %></title>
+
+    <meta name="description" content="Draggabble Widget Boxes with Persistent Position and strObje"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/font-awesome.min.css"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/font-awesome.min.css"/>
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/jquery-ui.min.css"/>
+    <link href="/bower_components/pickadate/css/classic.css" type="text/css" rel="stylesheet"/>
+    <link href="/bower_components/pickadate/css/classic.date.css" type="text/css" rel="stylesheet"/>
+    <link href="/bower_components/pickadate/css/classic.time.css" type="text/css" rel="stylesheet"/>
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/fonts.googleapis.com.css"/>
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace.min.css" class="ace-main-stylesheet"
+          id="main-ace-style"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-part2.min.css" class="ace-main-stylesheet"/>
+    <![endif]-->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-skins.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-rtl.min.css"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-ie.min.css"/>
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+    <link rel="stylesheet" href="/stylesheets/customs/pages/application/monitorChart.css"/>
+
+    <!-- ace settings handler -->
+    <script src="/javascripts/Ace_template_js/ace-extra.min.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="/javascripts/Ace_template_js/html5shiv.min.js"></script>
+    <script src="/javascripts/Ace_template_js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="no-skin">
+
+<!--导航条-->
+<!-- template topNav -->
+<div id="navbar" class="navbar navbar-default ace-save-state navbar-fixed-top">
+    <div class="navbar-container ace-save-state" id="navbar-container">
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+            <span class="sr-only">Toggle sidebar</span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="navbar-header pull-left">
+            <a href="/" class="navbar-brand">
+                <!--<small>-->
+                <!--<i class="fa fa-cloud"></i>-->
+                <!--山西-吉兆 FM监听系统-->
+                <!--</small>-->
+                <img src="/images/customs/application/logo.png" alt=""/>
+            </a>
+        </div>
+
+        <div class="navbar-header pull-left">
+            <h3 style="color: #fff;height: 100%;margin: 0;padding: 0;line-height: 75px;font-weight: bold;">设备ID —— [<%=
+                deviceID %>] —— 场强信噪比当日趋势图</h3>
+        </div>
+    </div><!-- /template topNav -->
+</div>
+
+<div class="main-container">
+    <div class="main-content-inner">
+        <div class="main-content-inner">
+            <div class="page-content">
+                <div class="header-seach">
+                    <div class="row">
+                        <div class="search-area well col-xs-12">
+                            <div>
+                                <div class="pull-left">
+                                    <b class="text-primary">日期设置：</b>
+                                    &nbsp;
+                                    <div id="toggle-result-format" class="btn-group btn-overlap" data-toggle="buttons">
+                                        <label title="Today" class="btn btn-white btn-success active"
+                                               data-class="btn-success" aria-pressed="true">
+                                            <input type="radio" value="2" autocomplete="off"/>
+                                            今天
+                                        </label>
+
+                                        <label title="Yesterday" class="btn btn-white btn-grey"
+                                               data-class="btn-primary">
+                                            <input type="radio" value="1" checked="" autocomplete="off"/>
+                                            昨天
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="input-group pull-right date-wrap">
+                                    <input class="form-control input-mask-date datepicker drop-date-picker"
+                                           type="text"/>
+                                        <span class="input-group-btn Js_selectDate">
+                                            <button class="btn btn-sm btn-default" type="button">
+                                                <i class="ace-icon fa fa-calendar bigger-110"></i>
+                                            </button>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <input id="selectTime" type="text" style="display: none"/>
+
+                <div id="strObjInfo"></div>
+                <div class="chart-dom" id="Js_charts"></div>
+
+            </div>
+            <!-- /.page-content -->
+        </div>
+
+    </div>
+</div>
+
+<% include ../includes/footer.html %>
+
+<!--[if !IE]> -->
+<script src="/javascripts/Ace_template_js/jquery-2.1.4.min.js"></script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script src="/javascripts/Ace_template_js/jquery-1.11.3.min.js"></script>
+<![endif]-->
+<script type="text/javascript">
+    if ('ontouchstart' in document.documentElement) document.write("<script src='/javascripts/Ace_template_js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+</script>
+<script src="/javascripts/Ace_template_js/bootstrap.min.js"></script>
+
+<!-- page specific plugin scripts -->
+<script src="/bower_components/eCharts/3.2.3/echarts.min.js"></script>
+<script src="/bower_components/pickadate/js/legacy.js"></script>
+<script src="/bower_components/pickadate/js/picker.js"></script>
+<script src="/bower_components/pickadate/js/picker.date.js"></script>
+<script src="/bower_components/moment/moment.js"></script>
+
+<!-- ace scripts -->
+<script src="/javascripts/Ace_template_js/ace-elements.min.js"></script>
+<script src="/javascripts/Ace_template_js/ace.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+
+        Ajax_Load_Chart("<%=deviceID %>", date = moment().format("YYYY-MM-DD"));
+
+        datepicker();
+
+        var myChart_sitePage = null;
+
+        //日期控件
+        function datepicker() {
+            //初始化部分
+            $('.datepicker').pickadate({
+                // Strings and translations
+                monthsFull: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                monthsShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                weekdaysFull: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+                weekdaysShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+                showMonthsShort: true,
+
+                // Buttons
+                today: '今天',
+                clear: false,
+                close: '关闭',
+
+                // Accessibility labels
+                labelMonthNext: '下一月',
+                labelMonthPrev: '上一月',
+                labelMonthSelect: '选择月份',
+                labelYearSelect: '选择年份',
+
+                // Formats
+                format: '选择：yyyy/mm/dd',
+                formatSubmit: 'yyyy/mm/dd',
+                hiddenPrefix: undefined,
+                hiddenSuffix: '_submit',
+                hiddenName: undefined,
+
+                // First day of the week
+                firstDay: '周一',
+
+                // Date limits
+                min: [2016, 8, 1],
+                max: true
+
+            });
+
+            //控制部分
+            var get_date = "";  //得到日期
+            var $input = $('.datepicker').pickadate();  //      实例化日期参数
+            var picker = $input.pickadate('picker');
+            picker.set('select', moment());
+            //    点击“今天”、“昨天”按钮时得到日期
+            $(".search-area label").on("click", (function () { // 在页面任意位置点击而触发此事件
+                var _value = $(this).children().val();       // e.target表示被点击的目标
+                var date = "";
+                if (_value == "2") {
+                    date = moment().format("YYYY-MM-DD");
+                }
+                else if (_value == "1") {
+                    date = moment().subtract(1, 'days').format("YYYY-MM-DD");
+                    picker.set('select', date);
+                    myChart_sitePage.clear();
+                }
+                //处理过的日期送入AJAX模块
+                Ajax_Load_Chart("07WxacTCHY7giNmpKetxn8tNDQcBhOLfBfk", date);
+            }));
+
+            //    关闭日期插件时得到日期
+            picker.on("close", function () {
+                get_date = picker.get('select', 'yyyy-mm-dd');
+                //处理过的日期送入AJAX模块
+                Ajax_Load_Chart("07WxacTCHY7giNmpKetxn8tNDQcBhOLfBfk", get_date);
+            });
+
+            //    点击日历按钮时日期插件打开
+            $(".Js_selectDate").on("click", (function () {
+                setTimeout(function () {
+                    picker.open();
+                }, 20)
+            }));
+        }
+
+        //生成图标代码， 传入由后台请求得到的数据
+        function setEcharts(strObj) {
+            // 基于准备好的dom，初始化echarts实例
+            myChart_sitePage = echarts.init(document.getElementById('Js_charts'));
+            var timeData = strObj.date;
+            var RoomHum = strObj.RoomHum;
+            var FMReceiveRSSI = strObj.FMReceiveRSSI;
+            var AvgFMReceiveSNR = strObj.RoomTemp;
+            var FMReceiveSNR = strObj.FMReceiveSNR;
+            var option = {
+                title: {
+                    text: '场强信噪比当日趋势图',
+                    subtext: '历史数据',
+                    x: 'center'
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        animation: false
+                    }
+                },
+                legend: {
+                    data: ['湿度', '温度'],
+                    x: 'left',
+                    top: 40
+                },
+                toolbox: {
+                    right: '10%',
+                    top: 40,
+                    feature: {
+                        dataZoom: {},
+                        restore: {},
+                        dataView: {},
+                        saveAsImage: {}
+                    }
+                },
+                dataZoom: [
+                    {
+                        show: true,
+                        realtime: true,
+                        orient: 'horizontal',
+                        start: 0,
+                        end: 100,
+                        xAxisIndex: [0, 1]
+                    },
+                    {
+                        type: 'inside',
+                        realtime: true,
+                        start: 0,
+                        end: 100,
+                        xAxisIndex: [0, 1]
+                    }
+                ],
+                grid: [{
+                    left: 50,
+                    right: 50,
+                    top: 100,
+                    height: '35%'
+                }, {
+                    left: 50,
+                    right: 50,
+                    top: '56%',
+                    height: '35%'
+                }],
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: false,
+                        axisLine: {onZero: true},
+                        data: timeData
+                    },
+                    {
+                        gridIndex: 1,
+                        type: 'category',
+                        boundaryGap: false,
+                        axisLine: {onZero: true},
+                        data: timeData,
+                        position: 'top'
+                    }
+                ],
+                yAxis: [
+                    {
+                        name: '湿度',
+                        type: 'value',
+                        scale: true,
+                        min: 0,
+                        max: 100,
+                        nameTextStyle: {
+                            color: 'red',
+                            fontWeight: 'bold'
+                        }
+                    },
+                    {
+                        gridIndex: 1,
+                        name: '温度',
+                        type: 'value',
+                        scale: true,
+                        min: 0,
+                        max: 50,
+                        inverse: true,
+                        nameTextStyle: {
+                            color: 'blue',
+                            fontWeight: 'bold'
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name: '湿度',
+                        type: 'line',
+                        symbolSize: 8,
+                        itemStyle: {
+                            normal: {
+                                color: '#CC0033',
+                                witch: 1,
+                                opacity: 1
+                            }
+                        },
+                        hoverAnimation: false,
+                        areaStyle: {normal: {}},
+                        data: FMReceiveRSSI
+                    },
+                    {
+                        name: '湿度',
+                        type: 'line',
+                        symbolSize: 8,
+                        itemStyle: {
+                            normal: {
+                                color: '#CC0033',
+                                witch: 1,
+                                opacity: 0.2
+                            }
+                        },
+                        hoverAnimation: false,
+                        data: RoomHum
+                    },
+                    {
+                        name: '信噪比',
+                        type: 'line',
+                        xAxisIndex: 1,
+                        yAxisIndex: 1,
+                        symbolSize: 8,
+                        itemStyle: {
+                            normal: {
+                                color: '#91c7ae',
+                                witch: 1,
+                                opacity: 0.2
+                            }
+                        },
+                        hoverAnimation: false,
+                        areaStyle: {normal: {}},
+                        data: FMReceiveSNR
+                    },
+                    {
+                        name: '温度',
+                        type: 'line',
+                        xAxisIndex: 1,
+                        yAxisIndex: 1,
+                        symbolSize: 8,
+                        itemStyle: {
+                            normal: {
+                                color: '#91c7ae',
+                                witch: 1,
+                                opacity: 0.2
+                            }
+                        },
+                        hoverAnimation: false,
+                        data: AvgFMReceiveSNR
+                    }
+                ]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart_sitePage.setOption(option);
+            window.onresize = myChart_sitePage.resize;
+        }
+
+        //ajax请求， 传入设备ID， 传入选择日期
+        function Ajax_Load_Chart(deviceID, date) {
+            $.ajax({
+                type: "POST",
+                url: "/api/charts/getChartDataByDeviceID",
+                data: {deviceID: deviceID, date: date},
+                dataType: "json",
+                success: function (data) {
+                    if (data[0]) {
+                        setEcharts(data[0]);
+                    } else {
+
+                        var strObj = {
+                            "date": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],//场强
+                            "RoomHum": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],//信噪比
+                            "FMReceiveRSSI": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],//时间
+                            "RoomTemp": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],//场强均值
+                            "FMReceiveSNR": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]//信噪比均值
+                        };
+
+
+                        setEcharts(strObj);
+                    }
+                }
+            });
+        }
+    });
+
+</script>
+</body>
+</html>

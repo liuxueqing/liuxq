@@ -1,0 +1,32 @@
+/*搜索条样式设置*/
+.header-seach{
+    margin-left: -8px;
+    margin-right: -8px;
+}
+.header-seach .well{
+    padding: 8px 19px;
+    margin-bottom: 10px;
+}
+.header-seach .search-area>div{
+    width: 408px;
+}
+.header-seach .input-group{
+    width: 220px;
+}
+.search-area input{
+    width: 100%;
+    height: 100%;
+
+}
+.chart-dom{
+    width: 100%;
+    height: 700px
+}
+
+.footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background: #fff;
+    z-index: 1024;
+}

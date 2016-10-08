@@ -174,7 +174,7 @@ exports.deleteRole = function (id, callback) {
 };
 
 exports.getAllAccessAndResource = function (callback) {
-    accessAndResource.find().toArray(function (e, res) {
+    accessAndResource.find().sort({"belongTo": 1}).toArray(function (e, res) {
         if (e) callback(e);
         else callback(null, res);
     });

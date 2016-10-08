@@ -14,5 +14,6 @@ module.exports = {
         HOST: "123.57.215.156",
         PORT: 8904
     },
+    historicalAudioDataPath: "./app/public/historicalAudioData",//历史音频存放地址!
     NODE_ENV: "live"
 };

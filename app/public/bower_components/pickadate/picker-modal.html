@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>pickadate test</title>
+    <!-- 弹出框 -->
+    <link href="css/default.css" rel="stylesheet">
+    <link href="css/default.date.css" rel="stylesheet">
+    <link href="css/default.time.css" rel="stylesheet">
+</head>
+<style>
+    .date-wrap,
+    .time-wrap{
+        position: relative;
+    }
+</style>
+<body>
+
+<div class="date-wrap">
+    <label>这是一个下拉日期控件： </label>
+    <input class="datepicker drop-date-picker">
+</div>
+
+<div class="time-wrap">
+    <label>这是一个下拉时间控件： </label>
+    <input class="timepicker drop-time-picker">
+</div>
+
+<script src="../jQuery/2.2/jquery-2.2.0.min.js"></script>
+<!-- 兼容性补丁 -->
+<script src="js/legacy.js"></script>
+<!-- 主程序 -->
+<script src="js/picker.js"></script>
+<!-- date -->
+<script src="js/picker.date.js"></script>
+<!-- time -->
+<script src="js/picker.time.js"></script>
+
+<script>
+    //启用选择日期控件
+
+    $('.datepicker').pickadate({
+        // Strings and translations
+        monthsFull: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+        monthsShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+        weekdaysFull: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+        weekdaysShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+        showMonthsShort: true,
+
+        // Buttons
+        today: '今天',
+        clear: '清除',
+        close: '关闭',
+
+        // Accessibility labels
+        labelMonthNext: '下一月',
+        labelMonthPrev: '上一月',
+        labelMonthSelect: '选择月份',
+        labelYearSelect: '选择年份',
+
+        // Formats
+        format: '查看：yyyy/mm/dd 的数据资料',
+        formatSubmit: 'yyyy/mm/dd',
+        hiddenPrefix: undefined,
+        hiddenSuffix: '_submit',
+        hiddenName: undefined,
+
+        // First day of the week
+        firstDay: '周一',
+
+        // Date limits
+        min: [2016, 5, 1],
+        max: true
+    });
+
+    //启用选择时间控件
+
+    $('.timepicker').pickatime({
+        // Translations and clear button
+        clear: 'Clear',
+
+    // Formats
+        format: 'h:i A',
+        formatLabel: undefined,
+        formatSubmit: undefined,
+        hiddenPrefix: undefined,
+        hiddenSuffix: '_submit',
+
+    // Editable input
+        editable: undefined,
+
+    // Time intervals
+        interval: 30,
+
+    // Time limits
+        min: undefined,
+        max: undefined,
+
+    // Root picker container
+        container: undefined,
+
+    // Hidden input container
+        containerHidden: undefined,
+
+    // Close on a user action
+        closeOnSelect: true,
+        closeOnClear: true,
+
+    // Events
+        onStart: undefined,
+        onRender: undefined,
+        onOpen: undefined,
+        onClose: undefined,
+        onSet: undefined,
+        onStop: undefined,
+
+    // Classes
+        klass: {
+
+            // The element states
+            input: 'picker__input',
+            active: 'picker__input--active',
+
+            // The root picker and states *
+            picker: 'picker picker--time',
+            opened: 'picker--opened',
+            focused: 'picker--focused',
+
+            // The picker holder
+            holder: 'picker__holder',
+
+            // The picker frame, wrapper, and box
+            frame: 'picker__frame',
+            wrap: 'picker__wrap',
+            box: 'picker__box',
+
+            // List of times
+            list: 'picker__list',
+            listItem: 'picker__list-item',
+
+            // Time states
+            disabled: 'picker__list-item--disabled',
+            selected: 'picker__list-item--selected',
+            highlighted: 'picker__list-item--highlighted',
+            viewset: 'picker__list-item--viewset',
+            now: 'picker__list-item--now',
+
+            // Clear button
+            buttonClear: 'picker__button--clear'
+        }
+    })
+</script>
+</body>
+</html>

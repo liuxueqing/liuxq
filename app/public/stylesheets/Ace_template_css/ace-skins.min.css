@@ -3210,82 +3210,74 @@
     display: none !important
 }
 
-.skin-hn .navbar{
+.navbar{
     min-height: 75px;
     line-height: 75px;
     font-family: 'Microsoft YaHei';
     background-color: #1291a9;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
 }
-.skin-hn .navbar-header>nav>li>a,
-.skin-hn .navbar-nav>li>a{
+.navbar .navbar-header>nav>li>a,
+.navbar .navbar-nav>li>a{
     padding: 0 12px;
     min-height: 75px;
     color: #eee;
-    font-size: 18px;
     line-height: 75px;
 }
-.skin-hn .navbar-header .navbar-brand {
+ .navbar-header .navbar-brand {
     padding-top: 9px;
     padding-bottom: 8px;
 }
-.skin-hn .navbar .navbar-nav>li {
-    border:none ;
-}
-.skin-hn .navbar .navbar-nav>li.active>a{
+ .navbar .navbar-nav>li.active>a{
     background-color: rgba(0, 0, 0, .1) !important;
     color: #FFF !important;
-
 }
-.skin-hn .user-info{
+.navbar .user-info{
     top: 0;
     vertical-align: middle;
     font-size: 14px;
 }
-.skin-hn .ace-nav>li>a>.fa-bell{
+ .ace-nav>li>a>.fa-bell{
     color: #D15B47;
 }
-.skin-hn .ace-nav>li.purple>a {
+ .ace-nav>li.purple>a {
     background-color: #cedfde;
 }
-.skin-hn .ace-nav>li.light-blue>a {
-     background-color:  #1291a9;
-}
-.skin-hn .ace-nav>li{
+ .ace-nav>li{
     height: 75px;
     line-height: 75px;
 }
 
 
 @media only screen and (max-width: 991px) {
-    .skin-hn .navbar{
+     .navbar{
         font-size: 62.5%;
         min-height: 45px;
         line-height: 45px;
     }
-    .skin-hn .ace-nav>li{
-        height: 45px;
+    .navbar .ace-nav>li{
+        height: 47px;
     }
-    .skin-hn .navbar-header a,
-    .skin-hn .navbar-nav>li>a{
+    .navbar .navbar-header a,
+    .navbar .navbar-nav>li>a{
         min-height: 45px;
         line-height: 45px;
     }
-    .skin-hn .navbar-header .navbar-brand {
+    .navbar .navbar-header .navbar-brand {
         padding-top: 0;
         padding-bottom: 0;
     }
-    .skin-hn .navbar-header .navbar-brand img{
+    .navbar .navbar-header .navbar-brand img{
         display: inline-block;
         height: 40px;
     }
-    .skin-hn .navbar-header a, .skin-hn .navbar-nav>li>a{
+    .navbar .navbar-header a, .navbar .navbar-nav>li>a{
         font-size: 2.2em;
     }
-    .skin-hn .ace-nav .light-blue .user-menu a{
+    .navbar .ace-nav .light-blue .user-menu a{
         font-size: 1.0em;
     }
-    .skin-hn .user-info {
+    .navbar .user-info {
         font-size: 0.8em;
     }
 }

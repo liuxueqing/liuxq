@@ -114,10 +114,13 @@ exports.getOperationLogByPagination = function (newData, callback) {
             callback(err)
         } else {
             //计算数据总数
-            Log.find({"type": "operation"}).toArray(function (e, res) {
-                var totalPages = Math.ceil(res.length / rows);
-                var jsonArray = {rows: rs, total: totalPages};
-                callback(jsonArray)
+            Log.find({"type": "operation"}).count(function (e, count) {
+                if (e) callback(e);
+                else {
+                    var totalPages = Math.ceil(count / rows);
+                    var jsonArray = {rows: rs, total: totalPages};
+                    callback(jsonArray)
+                }
             });
         }
     });
