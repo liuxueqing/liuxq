@@ -147,6 +147,14 @@ exports.getSiteInfoBySiteID = function (siteID, callback) {
     })
 };
 
+exports.getSiteInfoById = function (_id, callback) {
+    NsOHBasicSite.findOne({"_id": ObjectId(_id)}, function (e, o) {
+        if (e) {
+            callback(e, null);
+        } else callback(null, o)
+    })
+}
+
 exports.getAllDevicesInfoBySiteID = function (siteID, callback) {
     NsOHBasicDevice.find({"SiteID": siteID}, {_id: 0}).toArray(function (err, o) {
         if (err) {
@@ -361,23 +369,126 @@ exports.getProjectByProjNum = function (ProjNum, callback) {
     });
 }
 
-exports.addNewProject = function (newData, callback) {
-    NsOHBasicProject.findOne({user: newData.user}, function (e, o) {
+exports.getProjectByProjName = function (ProjName, callback) {
+    NsOHBasicProject.findOne({ProjName: ProjName}, function (e, o) {
+        callback(o);
+    });
+}
+
+exports.getSiteBySiteNum = function (SiteNum, callback) {
+    NsOHBasicSite.findOne({SiteNum: SiteNum}, function (e, o) {
+        callback(o);
+    });
+}
+
+exports.getSiteBySiteName = function (SiteName, callback) {
+    NsOHBasicSite.findOne({SiteName: SiteName}, function (e, o) {
+        callback(o);
+    });
+}
+
+exports.addNewSite = function (newData, callback) {
+    NsOHBasicSite.findOne({
+        $or: [
+            {ID: newData.ID},
+            {SiteNum: newData.SiteNum},
+            {SiteName: newData.SiteName}
+        ]
+    }, function (e, o) {
         if (o) {
-            callback('username-taken');
+            callback('Project-taken');
         } else {
-            NsOHBasicProject.findOne({email: newData.email}, function (e, o) {
-                if (o) {
-                    callback('email-taken');
-                } else {
-                    saltAndHash(newData.pass, function (hash) {
-                        newData.pass = hash;
-                        // append date stamp when record was created //
-                        newData.date = moment().format('YYYY MMMM Do, a h:mm:ss');
-                        NsOHBasicProject.insert(newData, {safe: true}, callback);
-                    });
-                }
-            });
+            NsOHBasicSite.insert(newData, {safe: true}, callback);
         }
+    });
+}
+
+exports.getProjectBy_id = function (_id, callback) {
+    NsOHBasicProject.findOne({_id: ObjectId(_id)}, function (e, o) {
+        callback(o);
+    });
+}
+
+exports.getSiteBy_id = function (_id, callback) {
+    NsOHBasicSite.findOne({_id: ObjectId(_id)}, function (e, o) {
+        NsOHBasicProject.findOne({ProjNum: o.ProjectID}, {_id: 0, ProjName: 1}, function (e, result) {
+            if (result) {
+                o.ProjName = result.ProjName;
+                callback(o);
+            } else {
+                o.ProjName = "未选择项目...";
+                callback(o);
+            }
+        });
+    });
+}
+
+exports.addNewProj = function (newData, callback) {
+    NsOHBasicProject.findOne({
+        $or: [
+            {ID: newData.ID},
+            {ProjNum: newData.ProjNum},
+            {ProjName: newData.ProjName}
+        ]
+    }, function (e, o) {
+        if (o) {
+            callback('Project-taken');
+        } else {
+            NsOHBasicProject.insert(newData, {safe: true}, callback);
+        }
+    });
+}
+
+exports.getProjInfoById = function (_id, callback) {
+    NsOHBasicProject.findOne({"_id": ObjectId(_id)}, function (e, o) {
+        if (e) {
+            callback(e, null);
+        } else callback(null, o)
+    })
+}
+
+exports.deleteProj = function (_id, callback) {
+    NsOHBasicProject.remove({_id: ObjectId(_id)}, callback);
+}
+
+exports.deleteSite = function (_id, callback) {
+    NsOHBasicSite.remove({_id: ObjectId(_id)}, callback);
+}
+
+exports.checkProjByProjNumAndInitialProjNum = function (ProjNum, initialProjNum, callback) {
+
+    //比对数据库中、除原账号以外是否存在其他相同账号！
+    if (ProjNum == initialProjNum) {
+        callback(null);
+    } else {
+        NsOHBasicProject.findOne({"ProjNum": ProjNum}, function (err, o) {
+            if (err) {
+                callback(null);
+            }
+            if (!o) {
+                callback(null)
+            } else {
+                callback(o)
+            }
+        })
+    }
+};
+
+exports.updateProj = function (newData, callback) {
+    NsOHBasicProject.findOne({_id: ObjectId(newData._id)}, function (e, o) {
+        o.ID = newData.ID;
+        o.ProjNum = newData.ProjNum;
+        o.ProjName = newData.ProjName;
+        o.ContactName = newData.ContactName;
+        o.ContactMobile = newData.ContactMobile;
+        o.ContactTel = newData.ContactTel;
+        o.ContactEmail = newData.ContactEmail;
+        o.OHNotes = newData.OHNotes;
+        //o.creator 	= newData.creator;
+
+        NsOHBasicProject.save(o, {safe: true}, function (e) {
+            if (e) callback(e);
+            else callback(null, o);
+        });
     });
 }

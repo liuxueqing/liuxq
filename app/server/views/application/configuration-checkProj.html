@@ -21,7 +21,8 @@
     <link rel="stylesheet" href="/stylesheets/Ace_template_css/fonts.googleapis.com.css"/>
 
     <!-- ace styles -->
-    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace.min.css" class="ace-main-stylesheet"
+          id="main-ace-style"/>
 
     <!--[if lte IE 9]>
     <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-part2.min.css" class="ace-main-stylesheet"/>
@@ -34,7 +35,6 @@
     <![endif]-->
 
     <!-- inline styles related to this page -->
-    <link rel="stylesheet" href="/stylesheets/customs/pages/application/addProject.css"/>
 
     <!-- ace settings handler -->
     <script src="/javascripts/Ace_template_js/ace-extra.min.js"></script>
@@ -116,6 +116,8 @@
             <li class="hover">
                 <a href="/user/configuration/devices">
                     <i class="menu-icon fa fa-cube"></i>
+
+
                     <span class="menu-text"> 设备管理 </span>
                 </a>
                 <b class="arrow"></b>
@@ -130,7 +132,7 @@
                 <% include ../includes/ace-settings-container.html %>
 
                 <div class="page-header">
-                    <h1> 项目管理 - 新建项目</h1>
+                    <h1>项目管理 </h1>
                 </div><!-- /.page-header -->
 
                 <div id="sidebar2" class="sidebar responsive menu-min ace-save-state">
@@ -181,116 +183,127 @@
                 <div class="row">
                     <div class="col-xs-12">
 
-                        <form class="form-horizontal" role="form" id="addProjForm">
-
-                            <div class="clearfix form-actions">
-                                基本资料
+                        <div class="widget-box">
+                            <div class="widget-header">
+                                <h4 class="widget-title">查看项目</h4>
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="ipt_ProjNum">
-                                    项目编号 </label>
+                            <div class="widget-body" style="display: block;">
+                                <div class="widget-main">
+                                    <form class="form-horizontal" role="form" id="addProjForm">
 
-                                <div class="col-sm-9 random-access">
-                                    <input type="text" id="ipt_ProjNum" name="ProjNum"
-                                           placeholder="8位随机数字"
-                                           class="col-xs-12 col-sm-5 ">
-                                    <span >
-                                        <button class="btn btn-sm btn-primary btn-reset Js_error_bnt" type="button">
-                                            随机取数
-                                        </button>
-                                    </span>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="ipt_id">
+                                                项目_id </label>
+
+                                            <div class="col-sm-9">
+                                                <input id="ipt_id" type="text" name="_id"
+                                                       placeholder="8位随机数字"
+                                                       class="col-xs-12 col-sm-5"
+                                                       value="<%= ProjObj._id %>" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="ipt_ProjNum">
+                                                项目编号 </label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" id="ipt_ProjNum" name="ProjNum"
+                                                       placeholder="8位随机数字"
+                                                       class="col-xs-12 col-sm-5" readonly
+                                                       value="<%= ProjObj.ProjNum %>">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="ipt_ProjName">
+                                                项目名称 </label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" id="ipt_ProjName" name="ProjName"
+                                                       placeholder=""
+                                                       class="col-xs-12 col-sm-5" readonly
+                                                       value="<%= ProjObj.ProjName %>">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right"
+                                                   for="ipt_ContactName">
+                                                项目联系人 </label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" id="ipt_ContactName" name="ContactName"
+                                                       placeholder=""
+                                                       class="col-xs-12 col-sm-5" readonly
+                                                       value="<%= ProjObj.ContactName %>">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right"
+                                                   for="ipt_ContactMobile">
+                                                联系人手机 </label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" id="ipt_ContactMobile" name="ContactMobile"
+                                                       placeholder=""
+                                                       class="col-xs-12 col-sm-5" readonly
+                                                       value="<%= ProjObj.ContactMobile %>">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="ipt_ContactTel">
+                                                联系人电话 </label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" id="ipt_ContactTel" name="ContactTel"
+                                                       placeholder=""
+                                                       class="col-xs-12 col-sm-5" readonly
+                                                       value="<%= ProjObj.ContactTel %>">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right"
+                                                   for="ipt_ContactEmail">
+                                                联系人邮箱 </label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" id="ipt_ContactEmail" name="ContactEmail"
+                                                       placeholder=""
+                                                       class="col-xs-12 col-sm-5" readonly
+                                                       value="<%= ProjObj.ContactEmail %>">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="ipt_OHNotes">
+                                                备注 </label>
+
+                                            <div class="col-sm-9">
+                                                <textarea id="ipt_OHNotes" rows="2" class="col-xs-12 col-sm-5"
+                                                          name="OHNotes" maxlength="100" placeholder=""
+                                                          readonly ><%= ProjObj.OHNotes %></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="clearfix form-actions">
+                                            <div class="col-md-offset-3 col-md-9">
+                                                &nbsp; &nbsp; &nbsp;
+                                                <button class="btn" type="reset" id="btnGoBack">
+                                                    <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                    返回
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </form>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="ipt_ProjName">
-                                    项目名称 </label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" id="ipt_ProjName" name="ProjName"
-                                           placeholder=""
-                                           class="col-xs-12 col-sm-5">
-                                </div>
-                            </div>
-
-                            <div class="clearfix form-actions">
-                                联系人资料
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="ipt_ContactName">
-                                    项目联系人 </label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" id="ipt_ContactName" name="ContactName"
-                                           placeholder=""
-                                           class="col-xs-12 col-sm-5">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="ipt_ContactMobile">
-                                    联系人手机 </label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" id="ipt_ContactMobile" name="ContactMobile"
-                                           placeholder=""
-                                           class="col-xs-12 col-sm-5">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="ipt_ContactTel">
-                                    联系人电话 </label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" id="ipt_ContactTel" name="ContactTel"
-                                           placeholder=""
-                                           class="col-xs-12 col-sm-5">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="ipt_ContactEmail">
-                                    联系人邮箱 </label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" id="ipt_ContactEmail" name="ContactEmail"
-                                           placeholder=""
-                                           class="col-xs-12 col-sm-5">
-                                </div>
-                            </div>
-
-                            <div class="clearfix form-actions">
-                                项目备注
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="ipt_OHNotes">
-                                    备注 </label>
-
-                                <div class="col-sm-9">
-                                    <textarea id="ipt_OHNotes" rows="2" class="col-xs-12 col-sm-5" name="OHNotes" maxlength="100" placeholder="描述..."></textarea>
-                                </div>
-                            </div>
-
-                            <div class="clearfix form-actions">
-                                <div class="col-md-offset-3 col-md-9">
-                                    <button class="btn btn-info" type="submit">
-                                        <i class="ace-icon fa fa-check bigger-110"></i>
-                                        添加
-                                    </button>
-
-                                    &nbsp; &nbsp; &nbsp;
-                                    <button class="btn" type="reset">
-                                        <i class="ace-icon fa fa-undo bigger-110"></i>
-                                        取消
-                                    </button>
-                                </div>
-                            </div>
-
-                        </form>
+                        </div>
 
                     </div>
                 </div>
@@ -306,7 +319,8 @@
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">提示信息</h4>
                 </div>
                 <div class="modal-body"></div>
@@ -368,7 +382,12 @@
         $('#sidebar2[data-sidebar-scroll=true]').ace_sidebar_scroll('reset', true);
     })
 
+    $(document).ready(function () {
+        $("#btnGoBack").on("click", function () {
+            history.back();
+        })
+    })
+
 </script>
-<script src="/javascripts/customs/pages/application/addProj.js"></script>
 </body>
 </html>

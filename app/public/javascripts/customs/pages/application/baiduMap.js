@@ -102,9 +102,7 @@
 
 
         //地图切换按钮控制加载数据
-        setTimeout(function () {
-            ctrlBox();
-        }, 100)
+        ctrlBox();
 
     }
 
@@ -117,7 +115,7 @@
 
         var mapSwitchBox = $("#mapSwitchBox");
 
-        $('input[name="siteSwitch').change(function () {
+        mapSwitchBox.on('change', function () {
             jqchk();
         });
 
@@ -126,8 +124,6 @@
             $('input[name="siteSwitch"]:checked').each(function () {
                 chk_value.push($(this).data("projnum"));
             });
-
-            console.log(chk_value);
 
             $.ajax({
                 url: "/api/maps/getSiteInfoByProjNumArr",// 后台接口
@@ -250,27 +246,27 @@
             },
             type: 'post',
             dataType: 'json',
-            beforeSend: function(){
+            beforeSend: function () {
                 remove_load_animal(siteInfoWindow);//移除加载动画
                 add_load_animal(siteInfoWindow);//添加加载动画
-                beforeTime=+new Date();//获取当前秒数
+                beforeTime = +new Date();//获取当前秒数
                 console.log(beforeTime);
             },
             success: function (Data) {
-               var minute = 0; //计算时间差
-                successTime=+new Date();//获取当前秒数
-                if(successTime>=beforeTime){
-                    minute=successTime-beforeTime;
-                }else{
-                    minute=beforeTime-successTime;
+                var minute = 0; //计算时间差
+                successTime = +new Date();//获取当前秒数
+                if (successTime >= beforeTime) {
+                    minute = successTime - beforeTime;
+                } else {
+                    minute = beforeTime - successTime;
                 }
-                if(minute >= 500) {
+                if (minute >= 500) {
                     siteInfoWindow.html(Data[0].SiteName);
                 }
-                else{
-                    setTimeout(function(){
+                else {
+                    setTimeout(function () {
                         siteInfoWindow.html(Data[0].SiteName);
-                    },500)
+                    }, 500)
                 }
                 //已经获得了所有数据， 暂时不知道要怎么展示， 先显示一条站点名称；
             },
@@ -286,7 +282,7 @@
      * 参数说明: e为要添加加载动画的元素
      * method: POST
      */
-    function add_load_animal(e){
+    function add_load_animal(e) {
         e.append('<div class="widget-box-overlay"><i class="fa fa-spinner fa-spin fa-3x fa-fw white"></i></div>');
     }
 
@@ -295,8 +291,8 @@
      * 参数说明: e为所需删除加载动画的元素
      * method: POST
      */
-    function remove_load_animal(e){
-        var echild=e.children(".widget-box-overlay");
+    function remove_load_animal(e) {
+        var echild = e.children(".widget-box-overlay");
         echild.remove();
     }
 

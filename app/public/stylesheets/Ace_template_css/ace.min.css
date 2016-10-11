@@ -1166,6 +1166,10 @@ pre.prettyprint {
     color: #FFF
 }
 
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover{
+    background: #2c5976;
+}
+
 @media only screen and (min-width: 992px) {
     .navbar-container {
         padding-left: 10px;

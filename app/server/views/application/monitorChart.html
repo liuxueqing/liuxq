@@ -168,8 +168,7 @@
 
     $(document).ready(function () {
 
-
-        Ajax_Load_Chart("<%=deviceID %>", date = moment().format("YYYY-MM-DD"));
+        Ajax_Load_Chart("<%=deviceID %>", moment().format("YYYY-MM-DD"));
 
         datepicker();
 
@@ -231,15 +230,14 @@
                     myChart_sitePage.clear();
                 }
                 //处理过的日期送入AJAX模块
-                Ajax_Load_Chart("07WxacTCHY7giNmpKetxn8tNDQcBhOLfBfk", date);
+                Ajax_Load_Chart("<%=deviceID %>", date);
             }));
 
-            //    关闭日期插件时得到日期
-            picker.on("close", function () {
+            //    关闭设置日期的时候得到日期
+            picker.on("set", function () {
                 get_date = picker.get('select', 'yyyy-mm-dd');
-                //处理过的日期送入AJAX模块
-                Ajax_Load_Chart("07WxacTCHY7giNmpKetxn8tNDQcBhOLfBfk", get_date);
-                console.log(get_date);
+                console.log(get_date)
+                Ajax_Load_Chart("<%=deviceID %>", get_date);
             });
 
             //    点击日历按钮时日期插件打开
@@ -248,11 +246,13 @@
                     picker.open();
                 }, 20)
             }));
-            return get_date;
         }
 
         //生成图标代码， 传入由后台请求得到的数据
-        function setEcharts(strObj) {
+        function setEcharts(strObj, date) {
+
+            console.log(date)
+
             // 基于准备好的dom，初始化echarts实例
             myChart_sitePage = echarts.init(document.getElementById('Js_charts'));
             var timeData = strObj.date;
@@ -260,11 +260,10 @@
             var FMReceiveRSSI = strObj.FMReviceRSSI;
             var RoomTemp = strObj.RoomTemp;
             var FMReceiveSNR = strObj.FMReviceSNR;
-            var data = datepicker();
             var option = {
                 title: {
                     text: '场强信噪比当日趋势图',
-                    subtext: data,
+                    subtext: date,
                     x: 'center'
                 },
                 tooltip: {
@@ -274,7 +273,7 @@
                     }
                 },
                 legend: {
-                    data: ['湿度', '温度','场强','信噪比'],
+                    data: ['湿度', '温度', '场强', '信噪比'],
                     x: 'left',
                     top: 40
                 },
@@ -336,50 +335,50 @@
                 ],
                 yAxis: [
                     {
-                        name: '湿度',
+                        name: '湿度 %',
                         type: 'value',
                         scale: true,
                         min: -40,
                         max: 80,
                         nameTextStyle: {
-                            color: 'red',
+                            color: '#91c7ae',
                             fontWeight: 'bold'
                         }
                     },
                     {
                         gridIndex: 1,
-                        name: '场强',
+                        name: '场强 N/C',
                         type: 'value',
                         scale: true,
                         min: 0,
                         max: 25,
                         inverse: true,
                         nameTextStyle: {
-                            color: 'blue',
+                            color: '#69a5ac',
                             fontWeight: 'bold'
                         }
                     },
                     {
-                        name: '温度',
+                        name: '温度 ℃',
                         type: 'value',
                         scale: true,
                         min: -40,
                         max: 80,
                         nameTextStyle: {
-                            color: 'red',
+                            color: '#d48265',
                             fontWeight: 'bold'
                         }
                     },
                     {
                         gridIndex: 1,
-                        name: '信噪比',
+                        name: '信噪比 dB',
                         type: 'value',
                         scale: true,
                         min: 0,
                         max: 5,
                         inverse: true,
                         nameTextStyle: {
-                            color: 'blue',
+                            color: '#CC0033',
                             fontWeight: 'bold'
                         }
                     }
@@ -461,11 +460,11 @@
                 dataType: "json",
                 success: function (data) {
                     if (data[0]) {
-                        setEcharts(data[0]);
+                        setEcharts(data[0],date);
                     } else {
 
                         var strObj = {
-                            "date": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],//时间
+                            "date": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],//场强
                             "RoomHum": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],//湿度
                             "FMReceiveRSSI": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],//场强
                             "RoomTemp": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],//温度
@@ -473,7 +472,7 @@
                         };
 
 
-                        setEcharts(strObj);
+                        setEcharts(strObj, date);
                     }
                 }
             });

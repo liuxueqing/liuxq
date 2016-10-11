@@ -110,7 +110,7 @@
 
             <li class="active open hover">
                 <a href="/user/configuration/sites">
-                    <i class="menu-icon fa  fa-university"></i>
+                    <i class="menu-icon fa fa-university"></i>
                     <span class="menu-text"> 站点管理 </span>
                 </a>
                 <b class="arrow"></b>
@@ -135,7 +135,7 @@
                 <% include ../includes/ace-settings-container.html %>
 
                 <div class="page-header">
-                    <h1>站点管理 </h1>
+                    <h1>站点管理 - 站点列表 </h1>
                 </div><!-- /.page-header -->
 
                 <div id="sidebar2" class="sidebar responsive menu-min ace-save-state">
@@ -143,7 +143,7 @@
 
                         <li class="open">
                             <a href="#" class="dropdown-toggle">
-                                <i class="menu-icon fa  fa-university"></i>
+                                <i class="menu-icon fa fa-university"></i>
                                                 <span class="menu-text">
                                                     站点管理
                                                 </span>
@@ -155,7 +155,7 @@
 
                             <ul class="submenu nav-show" style="display: block;">
                                 <li class="">
-                                    <a href="/user/configuration/projects">
+                                    <a href="/user/configuration/sites">
                                         <i class="menu-icon fa fa-caret-right"></i>
                                         站点列表
                                     </a>
@@ -335,7 +335,7 @@
 
         function addButton(cellvalue, options, rowObject) {
 
-            var temp = '<a href="/user/configuration/sites/' + cellvalue + '/edit" class="btn btn-default btn-minier">编辑</a>&nbsp;<a href="/user/configuration/sites/' + cellvalue + '/del" class="btn btn-danger btn-minier J_del">删除</a>';
+            var temp = '<a href="/user/configuration/sites/' + cellvalue + '/view" class="btn btn-default btn-minier">查看</a>&nbsp;<a href="/user/configuration/sites/' + cellvalue + '/edit" class="btn btn-info btn-minier">编辑</a>&nbsp;<a href="/user/configuration/sites/' + cellvalue + '/del" class="btn btn-danger btn-minier J_del">删除</a>';
 
 
             return temp
@@ -344,16 +344,14 @@
         jQuery(grid_selector).jqGrid({
             datatype: "local",
             height: 500,
-            colNames: ['_id', 'SiteNum', 'SiteName', 'ProjectID', 'OHLongitude', 'OHLatitude', 'WeatherID', 'OHDetail', '操作'],
+            colNames: ['_id', '站点名称', '站点编号', '所属项目编号', '站点坐标（经度）', '站点坐标（纬度）', '操作'],
             colModel: [
                 {name: '_id', index: '_id', width: 60, editable: true, sorttype: "text"},
-                {name: 'SiteNum', index: 'SiteNum', width: 60, editable: true, sorttype: "text"},
-                {name: 'SiteName', index: 'SiteName', width: 60, editable: true, sorttype: "text",formatter: highlight},
-                {name: 'ProjectID', index: 'ProjectID', width: 60, editable: true, sorttype: "text"},
-                {name: 'OHLongitude', index: 'OHLongitude', width: 60, editable: true, sorttype: "text"},
-                {name: 'OHLatitude', index: 'OHLatitude', width: 60, editable: true, sorttype: "text"},
-                {name: 'WeatherID', index: 'WeatherID', width: 60, editable: true, sorttype: "text"},
-                {name: 'OHDetail', index: 'OHDetail', width: 60, editable: true, sorttype: "text"},
+                {name: 'SiteName', index: '站点名称', width: 60, editable: true, sorttype: "text", formatter: highlight},
+                {name: 'SiteNum', index: '站点编号', width: 60, editable: true, sorttype: "text"},
+                {name: 'ProjectID', index: '所属项目编号', width: 60, editable: true, sorttype: "text"},
+                {name: 'OHLongitude', index: '站点坐标（经度）', width: 60, editable: true, sorttype: "text"},
+                {name: 'OHLatitude', index: '站点坐标（纬度）', width: 60, editable: true, sorttype: "text"},
                 {
                     name: '_id',
                     index: '操作',
@@ -679,9 +677,7 @@
         var msg = null;//删除列表项目右下角提示信息
 
         //延时执行， 等待Dom先生成
-        setInterval(function () {
-            $(".J_del").on("click", J_del);
-        }, 20);
+        $("#grid-table").on("click", ".J_del", J_del);
 
         function J_del(event) {
             var WhetherToDelete = false;
@@ -728,9 +724,6 @@
                             //先清除， 再重新加载数据！
                             $("#grid-table").jqGrid("clearGridData");
                             fetchGridData();
-                            setTimeout(function () {
-                                $(".J_del").on("click", J_del);
-                            }, 20)
                         },
                         //调用出错执行的函数
                         error: function (e) {

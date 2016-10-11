@@ -134,7 +134,7 @@
                 <% include ../includes/ace-settings-container.html %>
 
                 <div class="page-header">
-                    <h1>项目管理 </h1>
+                    <h1> 项目管理 - 项目列表</h1>
                 </div><!-- /.page-header -->
 
                 <div id="sidebar2" class="sidebar responsive menu-min ace-save-state">
@@ -343,7 +343,7 @@
         jQuery(grid_selector).jqGrid({
             datatype: "local",
             height: 500,
-            colNames: ['_id', '项目名称', '项目联系人', '备注', 'ProjNum', '操作'],
+            colNames: ['_id', '项目名称', '项目联系人', '备注', '操作'],
             colModel: [
                 {
                     name: '_id',
@@ -358,7 +358,6 @@
                 {name: 'ProjName', index: '项目名称', width: 60, editable: false, sorttype: "text", formatter: highlight},
                 {name: 'ContactName', index: '项目联系人', width: 60, editable: true, sorttype: "text"},
                 {name: 'OHNotes', index: '备注', width: 120, editable: true, sorttype: "text"},
-                {name: 'ProjNum', index: 'ProjNum', width: 60, editable: true, sorttype: "text"},
                 {
                     name: '_id',
                     index: '操作',
@@ -389,8 +388,6 @@
                     enableTooltips(table);
                 }, 0);
             },
-
-            editurl: "/admin/user/updateAccount",
             caption: "",
             reloadAfterSubmit: true,
             checkOnSubmit: true
@@ -684,11 +681,9 @@
         var msg = null;//删除列表项目右下角提示信息
 
         //延时执行， 等待Dom先生成
-        setInterval(function () {
-            $(".J_del").on("click", J_del);
-        }, 20);
+        $("#grid-table").on("click", ".J_del", J_del);
 
-        function J_del(event) {
+        function J_del() {
             var WhetherToDelete = false;
             var url = $(this).attr("href");
 
@@ -733,9 +728,6 @@
                             //先清除， 再重新加载数据！
                             $("#grid-table").jqGrid("clearGridData");
                             fetchGridData();
-                            setTimeout(function () {
-                                $(".J_del").on("click", J_del);
-                            }, 20)
                         },
                         //调用出错执行的函数
                         error: function (e) {
@@ -755,6 +747,7 @@
             return false;//阻止链接跳转
         }
     });
+
 
 </script>
 

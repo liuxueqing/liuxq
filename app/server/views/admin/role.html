@@ -709,10 +709,7 @@
                 alert("Please Select Row");
         });
 
-        //延时执行， 等待Dom先生成
-        setInterval(function () {
-            $(".J_del").on("click", J_del);
-        }, 20);
+        $("#grid-table").on("click", ".J_del", J_del);
 
         function J_del(event) {
             var WhetherToDelete = false;
@@ -758,9 +755,6 @@
                             //先清除， 再重新加载数据！
                             $("#grid-table").jqGrid("clearGridData");
                             fetchGridData();
-                            setTimeout(function () {
-                                $(".J_del").on("click", J_del);
-                            }, 20)
                         },
                         //调用出错执行的函数
                         error: function (e) {

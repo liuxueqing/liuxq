@@ -853,8 +853,25 @@ module.exports = function (app) {
      * 鉴权说明： 登陆校验
      * method: post
      */
-    app.post('/user/configuration/projects/checkConfirm', auth, function (req, res) {
+    app.post('/user/configuration/projects/checkProjNum', auth, function (req, res) {
         SM.getProjectByProjNum(req.body['ProjNum'], function (o) {
+            if (o) {
+                res.write("false");
+                res.end()
+            } else {
+                res.write("true");
+                res.end()
+            }
+        });
+    });
+
+    /**
+     * 路由说明： 检查ProjName是否存在的数据API
+     * 鉴权说明： 登陆校验
+     * method: post
+     */
+    app.post('/user/configuration/projects/checkProjName', auth, function (req, res) {
+        SM.getProjectByProjName(req.body['ProjName'], function (o) {
             if (o) {
                 res.write("false");
                 res.end()
@@ -872,13 +889,184 @@ module.exports = function (app) {
      */
     app.post('/user/configuration/projects/addProj', auth, function (req, res) {
         var ProjNum = req.body['ProjNum'];
-        var ProjName = req.body['ProjName'];;
-        var name = req.body['name'];
-        var pass = req.body['pass'];
-        var creator = req.session.user.user;
+        var ProjName = req.body['ProjName'];
+        var ID = ProjNum;
+        var ContactName = req.body['ContactName'];
+        var ContactMobile = req.body['ContactMobile'];
+        var ContactTel = req.body['ContactTel'];
+        var ContactEmail = req.body['ContactEmail'];
+        var OHNotes = req.body['OHNotes'];
+        var CreatorID = req.session.user.user;
+        var CreatedTime = moment().format('YYYY MMMM Do, a h:mm:ss');
+        //未使用的参数
+        var StartDate = '';
+        var ProjLinks = '';
+        var ParentID = '';
+        var CntOrder = '';
+        var CntState = '';
+        var LastUpdateUserID = '';
+        var LastUpdateTime = '';
+        var CurrentVersion = '';
+        // get user-agent header
+        var ua = parser(req.headers['user-agent']);
+        // get use ip address
+        var ip = getClientIp(req);
+        SM.addNewProj({
+            "ID": ID,
+            "ProjNum": ProjNum,
+            "ProjName": ProjName,
+            "StartDate": StartDate,
+            "ContactName": ContactName,
+            "ContactMobile": ContactMobile,
+            "ContactTel": ContactTel,
+            "ContactEmail": ContactEmail,
+            "OHNotes": OHNotes,
+            "ProjLinks": ProjLinks,
+            "ParentID": ParentID,
+            "CntOrder": CntOrder,
+            "CntState": CntState,
+            "CreatorID": CreatorID,
+            "CreatedTime": CreatedTime,
+            "LastUpdateUserID": LastUpdateUserID,
+            "LastUpdateTime": LastUpdateTime,
+            "CurrentVersion": CurrentVersion
+        }, function (err) {
+            if (err) {
+                res.json("false");
+                res.end();
+            } else {
+                LM.addLog({
+                    "type": "operation",
+                    "name": "操作日志",
+                    "user": req.session.user.user,
+                    "IP": ip,
+                    "role": req.session.user.role,
+                    "result": {
+                        "state": "true",
+                        "msg": "[" + req.session.user.user + "]新建项目[" + ProjName + "]"
+                    },
+                    "ua": ua
+                });
+                res.json("true");
+                res.end();
+            }
+        })
+    });
+
+    /**
+     * 路由说明： 删除项目资源数据API
+     * 鉴权说明： 登陆校验
+     * method: post
+     */
+    app.post('/user/configuration/projects/:_id/del', auth, function (req, res) {
+        var oper = req.body['oper'];
+        var _id = req.params._id;
+        // get user-agent header
+        var ua = parser(req.headers['user-agent']);
+        // get use ip address
+        var ip = getClientIp(req);
+        if (oper == 'del') {
+            //进行删除操作
+            SM.deleteProj(_id, function (e) {
+                if (e) {
+                    console.log(e)
+                } else {
+                    res.status(200).json("true");
+                    res.end();
+                    updateMajorData();  //这个应该放在编辑页面里面
+                    LM.addLog({
+                        "type": "operation",
+                        "name": "操作日志",
+                        "user": req.session.user.user,
+                        "IP": ip,
+                        "role": req.session.user.role,
+                        "result": {
+                            "state": "true",
+                            "msg": "[" + req.session.user.user + "]删除了_id为[" + _id + "]的项目"
+                        },
+                        "ua": ua
+                    });
+                }
+            })
+        }
+        else {
+            res.status(400).json("false");
+        }
+    });
+
+    /**
+     * 路由说明： 当编辑项目的时候，检查项目信息是否重复（可以是原项目）的数据API
+     * 鉴权说明： 登陆校验
+     * method: post
+     */
+    app.post('/user/configuration/projects/checkEditConfirm', auth, function (req, res) {
+        var initialProjNum = req.session.user.initialProjNum;
+        SM.checkProjByProjNumAndInitialProjNum(req.body['ProjNum'], initialProjNum, function (o) {
+            if (o) {
+                res.write("false");
+                res.end()
+            } else {
+                res.write("true");
+                res.end()
+            }
+        });
+    });
+
+    /**
+     * 路由说明： 编辑项目信息的数据API
+     * 鉴权说明： 登陆校验
+     * method: post
+     */
+    app.post('/user/configuration/projects/editProj', auth, function (req, res) {
+        var _id = req.body['_id'];
+        var ProjNum = req.body['ProjNum'];
+        var ProjName = req.body['ProjName'];
+        var ID = ProjNum;
+        var ContactName = req.body['ContactName'];
+        var ContactMobile = req.body['ContactMobile'];
+        var ContactTel = req.body['ContactTel'];
+        var ContactEmail = req.body['ContactEmail'];
+        var OHNotes = req.body['OHNotes'];
+
+        // get user-agent header
+        var ua = parser(req.headers['user-agent']);
+        // get use ip address
+        var ip = getClientIp(req);
 
 
-
+        //编辑用户并设置角色
+        SM.updateProj({
+            "_id": _id,
+            "ID": ID,
+            "ProjNum": ProjNum,
+            "ProjName": ProjName,
+            "ContactName": ContactName,
+            "ContactMobile": ContactMobile,
+            "ContactTel": ContactTel,
+            "ContactEmail": ContactEmail,
+            "OHNotes": OHNotes
+        }, function (e) {
+            if (e) {
+                res.json("false");
+                res.end();
+            } else {
+                LM.addLog({
+                    "type": "operation",
+                    "name": "操作日志",
+                    "user": req.session.user.user,
+                    "IP": ip,
+                    "role": req.session.user.role,
+                    "result": {
+                        "state": "true",
+                        "msg": "[" + req.session.user.user + "]编辑了_id为[" + _id + "]的项目"
+                    },
+                    "ua": ua
+                });
+                res.json("true");
+                res.end();
+                updateMajorData();  //这个应该放在编辑页面里面
+            }
+        });
     });
 
     /**
@@ -890,6 +1078,200 @@ module.exports = function (app) {
         SM.getAllSitesRecords(function (err, result) {
             res.json(result);
             res.end();
+        })
+    });
+
+    /**
+     * 路由说明： 删除站点资源数据API
+     * 鉴权说明： 登陆校验
+     * method: post
+     */
+    app.post('/user/configuration/sites/:_id/del', auth, function (req, res) {
+        var oper = req.body['oper'];
+        var _id = req.params._id;
+        // get user-agent header
+        var ua = parser(req.headers['user-agent']);
+        // get use ip address
+        var ip = getClientIp(req);
+        if (oper == 'del') {
+            SM.deleteSite(_id, function (e) {
+                if (e) {
+                    console.log(e)
+                } else {
+                    updateMajorData();  //这个应该放在编辑页面里面
+                    LM.addLog({
+                        "type": "operation",
+                        "name": "操作日志",
+                        "user": req.session.user.user,
+                        "IP": ip,
+                        "role": req.session.user.role,
+                        "result": {
+                            "state": "true",
+                            "msg": "[" + req.session.user.user + "]删除了_id为[" + _id + "]的站点"
+                        },
+                        "ua": ua
+                    });
+                    res.status(200).json("true");
+                    res.end();
+                }
+            })
+        }
+        else {
+            res.status(400).json("false");
+        }
+    });
+
+    /**
+     * 路由说明： 检查SiteNum是否存在的数据API
+     * 鉴权说明： 登陆校验
+     * method: post
+     */
+    app.post('/user/configuration/sites/checkSiteNum', auth, function (req, res) {
+        SM.getSiteBySiteNum(req.body['SiteNum'], function (o) {
+            if (o) {
+                res.write("false");
+                res.end()
+            } else {
+                res.write("true");
+                res.end()
+            }
+        });
+    });
+
+    /**
+     * 路由说明： 检查SiteName是否存在的数据API
+     * 鉴权说明： 登陆校验
+     * method: post
+     */
+    app.post('/user/configuration/sites/checkSiteName', auth, function (req, res) {
+        SM.getSiteBySiteName(req.body['SiteName'], function (o) {
+            if (o) {
+                res.write("false");
+                res.end()
+            } else {
+                res.write("true");
+                res.end()
+            }
+        });
+    });
+
+    /**
+     * 路由说明： 新建站点数据API
+     * 鉴权说明： 登陆校验
+     * method: post
+     */
+    app.post('/user/configuration/sites/addSite', auth, function (req, res) {
+        var SiteNum = req.body['SiteNum'];
+        var ID = SiteNum;
+        var SiteName = req.body['SiteName'];
+        var ProjectID = req.body['ProjectID'];
+        var ContactName = req.body['ContactName'];
+        var ContactMobile = req.body['ContactMobile'];
+        var ContactTel = req.body['ContactTel'];
+        var ContactEmail = req.body['ContactEmail'];
+        var SiteAddress = req.body['SiteAddress'];
+        var OHLongitude = req.body['OHLongitude'];
+        var OHLatitude = req.body['OHLatitude'];
+        var OHAltitude = req.body['OHAltitude'];
+        var OHNotes = req.body['OHNotes'];
+        var CreatorID = req.session.user.user;
+        var CreatedTime = moment().format('YYYY MMMM Do, a h:mm:ss');
+        // get user-agent header
+        var ua = parser(req.headers['user-agent']);
+        // get use ip address
+        var ip = getClientIp(req);
+        SM.addNewSite({
+            "ID": ID,
+            "SiteNum": SiteNum,
+            "SiteName": SiteName,
+            "Logo": null,
+            "ProjectID": ProjectID,
+            "SiteClass": "01",
+            "SiteType": "03",
+            "StartDate": "",
+            "ContactName": ContactName,
+            "ContactMobile": ContactMobile,
+            "ContactTel": ContactTel,
+            "ContactEmail": ContactEmail,
+            "SiteAddress": SiteAddress,
+            "CollType": "OHm-SELF",
+            "CollName": null,
+            "CollPort485": null,
+            "CollPort232": null,
+            "CollPhoneNum": null,
+            "CollIP": null,
+            "OHLongitude": OHLongitude,
+            "OHLatitude": OHLatitude,
+            "OHAltitude": OHAltitude,
+            "TowerHeight": null,
+            "SitePower": null,
+            "SiteGrids": null,
+            "WeatherID": "changsha",
+            "OHPhotos": null,
+            "Prog1FQY": null,
+            "Prog1Name": null,
+            "Prog2FQY": null,
+            "Prog2Name": null,
+            "Prog3FQY": null,
+            "Prog3Name": null,
+            "MONBeginHour": null,
+            "MONBeginMinute": null,
+            "MONEndHour": null,
+            "MONEndMinute": null,
+            "TUEBeginHour": null,
+            "TUEBeginMinute": null,
+            "TUEEndHour": null,
+            "TUEEndMinute": null,
+            "WEDBeginHour": null,
+            "WEDBeginMinute": null,
+            "WEDEndHour": null,
+            "WEDEndMinute": null,
+            "THUBeginHour": null,
+            "THUBeginMinute": null,
+            "THUEndHour": null,
+            "THUEndMinute": null,
+            "FRIBeginHour": null,
+            "FRIBeginMinute": null,
+            "FRIEndHour": null,
+            "FRIEndMinute": null,
+            "SATBeginHour": null,
+            "SATBeginMinute": null,
+            "SATEndHour": null,
+            "SATEndMinute": null,
+            "SUNBeginHour": null,
+            "SUNBeginMinute": null,
+            "SUNEndHour": null,
+            "SUNEndMinute": null,
+            "OHNotes": null,
+            "OHDetail": null,
+            "CntOrder": 1.02,
+            "CntState": 1,
+            "CreatorID": CreatorID,
+            "CreatedTime": CreatedTime,
+            "LastUpdateUserID": null,
+            "LastUpdateTime": null,
+            "CurrentVersion": 1
+        }, function (err) {
+            if (err) {
+                res.json("false");
+                res.end();
+            } else {
+                LM.addLog({
+                    "type": "operation",
+                    "name": "操作日志",
+                    "user": req.session.user.user,
+                    "IP": ip,
+                    "role": req.session.user.role,
+                    "result": {
+                        "state": "true",
+                        "msg": "[" + req.session.user.user + "]新建站点[" + SiteName + "]"
+                    },
+                    "ua": ua
+                });
+                res.json("true");
+                res.end();
+                updateMajorData();  //这个应该放在编辑页面里面
+            }
         })
     });
 
@@ -1353,6 +1735,47 @@ module.exports = function (app) {
     });
 
     /**
+     * 路由说明： 台站配置页面 - 项目管理 - 查看项目
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: GET
+     */
+    app.get('/user/configuration/projects/:_id/view', auth, function (req, res) {
+        var _id = req.params._id;
+        var pathname = "/user/" + "configuration";
+
+
+        SM.getProjectBy_id(_id, function (ProjObj) {
+            res.render('./application/configuration-checkProj', {
+                title: "山西-吉兆 -- 查看项目",
+                udata: req.session.user,
+                topNavData: topNavData,
+                topNavSelected: pathname,
+                ProjObj: ProjObj
+            });
+        })
+    });
+
+    /**
+     * 路由说明： 台站配置页面 - 项目管理 - 编辑项目
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: GET
+     */
+    app.get('/user/configuration/projects/:_id/edit', auth, function (req, res) {
+        var _id = req.params._id;
+        var pathname = "/user/" + "configuration";
+        SM.getProjectBy_id(_id, function (ProjObj) {
+            req.session.user.initialProjNum = ProjObj.ProjNum;   //保存待编辑项目ProjNum信息
+            res.render('./application/configuration-editProj', {
+                title: "山西-吉兆 -- 编辑项目",
+                udata: req.session.user,
+                topNavData: topNavData,
+                topNavSelected: pathname,
+                ProjObj: ProjObj
+            });
+        })
+    });
+
+    /**
      * 路由说明： 台站配置页面 - 站点管理
      * 鉴权说明： 登陆校验, 页面访问权限校验
      * method: GET
@@ -1367,6 +1790,44 @@ module.exports = function (app) {
             topNavData: topNavData,
             topNavSelected: pathname
         });
+    });
+
+    /**
+     * 路由说明： 台站配置页面 - 项目管理 - 新建站点
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: GET
+     */
+    app.get('/user/configuration/sites/addSite', auth, function (req, res) {
+        var pathname = "/user/" + "configuration";
+
+        SM.getAllProjInfoName(function (err, Projs) {
+            res.render('./application/configuration-addSite', {
+                title: "山西-吉兆 -- 新建项目",
+                udata: req.session.user,
+                topNavData: topNavData,
+                topNavSelected: pathname,
+                Projs: Projs
+            });
+        });
+    });
+
+    /**
+     * 路由说明： 台站配置页面 - 项目管理 - 查看站点
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: GET
+     */
+    app.get('/user/configuration/sites/:_id/view', auth, function (req, res) {
+        var _id = req.params._id;
+        var pathname = "/user/" + "configuration";
+        SM.getSiteBy_id(_id, function (SiteObj) {
+            res.render('./application/configuration-checkSite', {
+                title: "山西-吉兆 -- 查看站点",
+                udata: req.session.user,
+                topNavData: topNavData,
+                topNavSelected: pathname,
+                SiteObj: SiteObj
+            });
+        })
     });
 
     /**

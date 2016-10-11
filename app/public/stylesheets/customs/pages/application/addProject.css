@@ -17,3 +17,21 @@
     position: relative;
     left: -78px;
 }
+
+@media screen and (max-width: 767px) {
+    .random-access {
+        display: table;
+        width: 100%;
+    }
+
+    .random-access span {
+        display: table-cell;
+        width: 57px;
+    }
+
+    .random-access .btn-reset {
+        left: 0;
+        height: 34px;
+    }
+}
+

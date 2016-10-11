@@ -16,12 +16,14 @@
     <link rel="stylesheet" href="/stylesheets/Ace_template_css/jquery-ui.min.css"/>
     <link rel="stylesheet" href="/stylesheets/Ace_template_css/bootstrap-datepicker3.min.css"/>
     <link rel="stylesheet" href="/stylesheets/Ace_template_css/ui.jqgrid.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/chosen.min.css"/>
 
     <!-- text fonts -->
     <link rel="stylesheet" href="/stylesheets/Ace_template_css/fonts.googleapis.com.css"/>
 
     <!-- ace styles -->
-    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace.min.css" class="ace-main-stylesheet"
+          id="main-ace-style"/>
 
     <!--[if lte IE 9]>
     <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-part2.min.css" class="ace-main-stylesheet"/>
@@ -34,7 +36,7 @@
     <![endif]-->
 
     <!-- inline styles related to this page -->
-    <link rel="stylesheet" href="/stylesheets/customs/pages/application/addProject.css"/>
+    <link rel="stylesheet" href="/stylesheets/customs/pages/application/addSite.css"/>
 
     <!-- ace settings handler -->
     <script src="/javascripts/Ace_template_js/ace-extra.min.js"></script>
@@ -97,7 +99,7 @@
         </div><!-- /.sidebar-shortcuts -->
 
         <ul class="nav nav-list">
-            <li class="active open hover">
+            <li class="hover">
                 <a href="/user/configuration/projects">
                     <i class="menu-icon fa fa-sitemap"></i>
                     <span class="menu-text"> 项目管理 </span>
@@ -105,7 +107,7 @@
                 <b class="arrow"></b>
             </li>
 
-            <li class="hover">
+            <li class="active open hover">
                 <a href="/user/configuration/sites">
                     <i class="menu-icon fa fa-university"></i>
                     <span class="menu-text"> 站点管理 </span>
@@ -116,6 +118,8 @@
             <li class="hover">
                 <a href="/user/configuration/devices">
                     <i class="menu-icon fa fa-cube"></i>
+
+
                     <span class="menu-text"> 设备管理 </span>
                 </a>
                 <b class="arrow"></b>
@@ -130,7 +134,7 @@
                 <% include ../includes/ace-settings-container.html %>
 
                 <div class="page-header">
-                    <h1> 项目管理 - 新建项目</h1>
+                    <h1>站点管理 - 新建站点 </h1>
                 </div><!-- /.page-header -->
 
                 <div id="sidebar2" class="sidebar responsive menu-min ace-save-state">
@@ -138,9 +142,9 @@
 
                         <li class="open">
                             <a href="#" class="dropdown-toggle">
-                                <i class="menu-icon fa fa-sitemap"></i>
+                                <i class="menu-icon fa fa-university"></i>
                                                 <span class="menu-text">
-                                                    项目管理
+                                                    站点管理
                                                 </span>
 
                                 <b class="arrow fa fa-angle-down"></b>
@@ -150,17 +154,17 @@
 
                             <ul class="submenu nav-show" style="display: block;">
                                 <li class="">
-                                    <a href="/user/configuration/projects">
+                                    <a href="/user/configuration/sites">
                                         <i class="menu-icon fa fa-caret-right"></i>
-                                        项目列表
+                                        站点列表
                                     </a>
 
                                     <b class="arrow"></b>
                                 </li>
                                 <li class="">
-                                    <a href="/user/configuration/projects/addProj">
+                                    <a href="/user/configuration/sites/addSite">
                                         <i class="menu-icon fa fa-caret-right"></i>
-                                        添加项目
+                                        添加站点
                                     </a>
 
                                     <b class="arrow"></b>
@@ -181,22 +185,23 @@
                 <div class="row">
                     <div class="col-xs-12">
 
-                        <form class="form-horizontal" role="form" id="addProjForm">
+                        <form class="form-horizontal" role="form" id="addSiteForm">
 
                             <div class="clearfix form-actions">
-                                基本资料
+                                站点基本信息
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="ipt_ProjNum">
-                                    项目编号 </label>
+                                <label class="col-sm-3 control-label no-padding-right" for="ipt_SiteNum">
+                                    站点编号 </label>
 
                                 <div class="col-sm-9 random-access">
-                                    <input type="text" id="ipt_ProjNum" name="ProjNum"
+                                    <input type="text" id="ipt_SiteNum" name="SiteNum"
                                            placeholder="8位随机数字"
-                                           class="col-xs-12 col-sm-5 ">
-                                    <span >
-                                        <button class="btn btn-sm btn-primary btn-reset Js_error_bnt" type="button">
+                                           class="col-xs-12 col-sm-5">
+                                    <span>
+                                        <button class="btn btn-sm btn-primary btn-reset Js_error_bnt"
+                                                type="button">
                                             随机取数
                                         </button>
                                     </span>
@@ -204,23 +209,101 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="ipt_ProjName">
-                                    项目名称 </label>
+                                <label class="col-sm-3 control-label no-padding-right" for="ipt_SiteName">
+                                    站点名称 </label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" id="ipt_ProjName" name="ProjName"
+                                    <input type="text" id="ipt_SiteName" name="SiteName"
+                                           placeholder=""
+                                           class="col-xs-12 col-sm-5">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="slt_ProjectID">
+                                    所属项目 </label>
+
+                                <div class="col-sm-9">
+                                    <div class="col-xs-12 col-sm-5" style="padding: 0;">
+                                        <select class="chosen-select " id="slt_ProjectID" name="ProjectID" data-placeholder="请选择所属项目...">
+                                            <option value=""></option>
+                                            <% Projs.forEach(function(a){ %>
+                                            <option value="<%= a.ProjNum %>"> <%= a.ProjName %></option>
+                                            <% }) %>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="clearfix form-actions">
+                                站点位置信息
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="ipt_SiteAddress">
+                                    站点地址 </label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" id="ipt_SiteAddress" name="SiteAddress"
+                                           placeholder=""
+                                           class="col-xs-12 col-sm-5">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="ipt_OHLongitude">
+                                    站点坐标(经度) </label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" id="ipt_OHLongitude" name="OHLongitude"
+                                           placeholder=""
+                                           class="col-xs-12 col-sm-5">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="ipt_OHLatitude">
+                                    站点坐标(纬度) </label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" id="ipt_OHLatitude" name="OHLatitude"
+                                           placeholder=""
+                                           class="col-xs-12 col-sm-5">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right" for="ipt_OHAltitude">
+                                    站点坐标(海拔) </label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" id="ipt_OHAltitude" name="OHAltitude"
+                                           placeholder=""
+                                           class="col-xs-12 col-sm-5">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"
+                                       for="ipt_OHDetail">
+                                    站点场强覆盖区域坐标集 </label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" id="ipt_OHDetail" name="OHDetail"
                                            placeholder=""
                                            class="col-xs-12 col-sm-5">
                                 </div>
                             </div>
 
                             <div class="clearfix form-actions">
-                                联系人资料
+                                联系人信息
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="ipt_ContactName">
-                                    项目联系人 </label>
+                                    联系人姓名 </label>
 
                                 <div class="col-sm-9">
                                     <input type="text" id="ipt_ContactName" name="ContactName"
@@ -253,7 +336,7 @@
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="ipt_ContactEmail">
-                                    联系人邮箱 </label>
+                                    联系人Email </label>
 
                                 <div class="col-sm-9">
                                     <input type="text" id="ipt_ContactEmail" name="ContactEmail"
@@ -263,7 +346,7 @@
                             </div>
 
                             <div class="clearfix form-actions">
-                                项目备注
+                                站点描述
                             </div>
 
                             <div class="form-group">
@@ -271,7 +354,8 @@
                                     备注 </label>
 
                                 <div class="col-sm-9">
-                                    <textarea id="ipt_OHNotes" rows="2" class="col-xs-12 col-sm-5" name="OHNotes" maxlength="100" placeholder="描述..."></textarea>
+                                                <textarea id="ipt_OHNotes" rows="2" class="col-xs-12 col-sm-5"
+                                                          name="OHNotes" maxlength="100" placeholder="描述..."></textarea>
                                 </div>
                             </div>
 
@@ -306,7 +390,8 @@
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">提示信息</h4>
                 </div>
                 <div class="modal-body"></div>
@@ -340,6 +425,7 @@
 <!-- page specific plugin scripts -->
 <script src="/bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="/bower_components/jquery-validation/dist/localization/messages_zh.js"></script>
+<script src="/javascripts/Ace_template_js/chosen.jquery.min.js"></script>
 
 <!-- ace scripts -->
 <script src="/javascripts/Ace_template_js/ace-elements.min.js"></script>
@@ -366,9 +452,49 @@
 
         $('#sidebar2[data-sidebar-hover=true]').ace_sidebar_hover('reset');
         $('#sidebar2[data-sidebar-scroll=true]').ace_sidebar_scroll('reset', true);
+
+        if (!ace.vars['touch']) {
+            $('.chosen-select').chosen({
+                no_results_text: "没有找到",
+                allow_single_deselect: true
+            });
+            //resize the chosen on window resize
+
+            setTimeout(function () {
+                $('.chosen-select').each(function () {
+                    var $this = $(this);
+                    $this.next().css({'width': $this.parent().width()});
+                })
+            }, 50);
+
+            $(window)
+                    .off('resize.chosen')
+                    .on('resize.chosen', function () {
+                        $('.chosen-select').each(function () {
+                            var $this = $(this);
+                            $this.next().css({'width': $this.parent().width()});
+                        })
+                    }).trigger('resize.chosen');
+            //resize chosen on sidebar collapse/expand
+            $(document).on('settings.ace.chosen', function (e, event_name, event_val) {
+                if (event_name != 'sidebar_collapsed') return;
+                $('.chosen-select').each(function () {
+                    var $this = $(this);
+                    $this.next().css({'width': $this.parent().width()});
+                })
+            });
+
+
+            $('#chosen-multiple-style .btn').on('click', function (e) {
+                var target = $(this).find('input[type=radio]');
+                var which = parseInt(target.val());
+                if (which == 2) $('#form-field-select-4').addClass('tag-input-style');
+                else $('#form-field-select-4').removeClass('tag-input-style');
+            });
+        }
     })
 
 </script>
-<script src="/javascripts/customs/pages/application/addProj.js"></script>
+<script src="/javascripts/customs/pages/application/addSite.js"></script>
 </body>
 </html>
