@@ -330,3 +330,54 @@ exports.getAllHistoricalAudioDataByDeviceID = function (deviceID, currentPage, p
 
 
 };
+
+exports.getAllProjectsRecords = function (callback) {
+    NsOHBasicProject.find().toArray(
+        function (e, res) {
+            if (e) callback(e);
+            else callback(null, res);
+        });
+};
+
+exports.getAllSitesRecords = function (callback) {
+    NsOHBasicSite.find().toArray(
+        function (e, res) {
+            if (e) callback(e);
+            else callback(null, res);
+        });
+};
+
+exports.getAllDevicesRecords = function (callback) {
+    NsOHBasicDevice.find().toArray(
+        function (e, res) {
+            if (e) callback(e);
+            else callback(null, res);
+        });
+};
+
+exports.getProjectByProjNum = function (ProjNum, callback) {
+    NsOHBasicProject.findOne({ProjNum: ProjNum}, function (e, o) {
+        callback(o);
+    });
+}
+
+exports.addNewProject = function (newData, callback) {
+    NsOHBasicProject.findOne({user: newData.user}, function (e, o) {
+        if (o) {
+            callback('username-taken');
+        } else {
+            NsOHBasicProject.findOne({email: newData.email}, function (e, o) {
+                if (o) {
+                    callback('email-taken');
+                } else {
+                    saltAndHash(newData.pass, function (hash) {
+                        newData.pass = hash;
+                        // append date stamp when record was created //
+                        newData.date = moment().format('YYYY MMMM Do, a h:mm:ss');
+                        NsOHBasicProject.insert(newData, {safe: true}, callback);
+                    });
+                }
+            });
+        }
+    });
+}

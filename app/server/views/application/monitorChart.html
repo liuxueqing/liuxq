@@ -239,6 +239,7 @@
                 get_date = picker.get('select', 'yyyy-mm-dd');
                 //处理过的日期送入AJAX模块
                 Ajax_Load_Chart("07WxacTCHY7giNmpKetxn8tNDQcBhOLfBfk", get_date);
+                console.log(get_date);
             });
 
             //    点击日历按钮时日期插件打开
@@ -247,6 +248,7 @@
                     picker.open();
                 }, 20)
             }));
+            return get_date;
         }
 
         //生成图标代码， 传入由后台请求得到的数据
@@ -255,13 +257,14 @@
             myChart_sitePage = echarts.init(document.getElementById('Js_charts'));
             var timeData = strObj.date;
             var RoomHum = strObj.RoomHum;
-            var FMReceiveRSSI = strObj.FMReceiveRSSI;
-            var AvgFMReceiveSNR = strObj.RoomTemp;
-            var FMReceiveSNR = strObj.FMReceiveSNR;
+            var FMReceiveRSSI = strObj.FMReviceRSSI;
+            var RoomTemp = strObj.RoomTemp;
+            var FMReceiveSNR = strObj.FMReviceSNR;
+            var data = datepicker();
             var option = {
                 title: {
                     text: '场强信噪比当日趋势图',
-                    subtext: '历史数据',
+                    subtext: data,
                     x: 'center'
                 },
                 tooltip: {
@@ -271,7 +274,7 @@
                     }
                 },
                 legend: {
-                    data: ['湿度', '温度'],
+                    data: ['湿度', '温度','场强','信噪比'],
                     x: 'left',
                     top: 40
                 },
@@ -279,7 +282,9 @@
                     right: '10%',
                     top: 40,
                     feature: {
-                        dataZoom: {},
+                        dataZoom: {
+                            yAxisIndex: 'none'
+                        },
                         restore: {},
                         dataView: {},
                         saveAsImage: {}
@@ -334,8 +339,8 @@
                         name: '湿度',
                         type: 'value',
                         scale: true,
-                        min: 0,
-                        max: 100,
+                        min: -40,
+                        max: 80,
                         nameTextStyle: {
                             color: 'red',
                             fontWeight: 'bold'
@@ -343,11 +348,35 @@
                     },
                     {
                         gridIndex: 1,
-                        name: '温度',
+                        name: '场强',
                         type: 'value',
                         scale: true,
                         min: 0,
-                        max: 50,
+                        max: 25,
+                        inverse: true,
+                        nameTextStyle: {
+                            color: 'blue',
+                            fontWeight: 'bold'
+                        }
+                    },
+                    {
+                        name: '温度',
+                        type: 'value',
+                        scale: true,
+                        min: -40,
+                        max: 80,
+                        nameTextStyle: {
+                            color: 'red',
+                            fontWeight: 'bold'
+                        }
+                    },
+                    {
+                        gridIndex: 1,
+                        name: '信噪比',
+                        type: 'value',
+                        scale: true,
+                        min: 0,
+                        max: 5,
                         inverse: true,
                         nameTextStyle: {
                             color: 'blue',
@@ -362,28 +391,43 @@
                         symbolSize: 8,
                         itemStyle: {
                             normal: {
-                                color: '#CC0033',
+                                color: '#91c7ae',
                                 witch: 1,
                                 opacity: 1
                             }
                         },
                         hoverAnimation: false,
-                        areaStyle: {normal: {}},
-                        data: FMReceiveRSSI
+                        data: RoomHum
                     },
                     {
-                        name: '湿度',
+                        name: '场强',
                         type: 'line',
+                        xAxisIndex: 1,
+                        yAxisIndex: 1,
                         symbolSize: 8,
                         itemStyle: {
                             normal: {
-                                color: '#CC0033',
+                                color: '#69a5ac',
                                 witch: 1,
                                 opacity: 0.2
                             }
                         },
                         hoverAnimation: false,
-                        data: RoomHum
+                        data: FMReceiveRSSI
+                    },
+                    {
+                        name: '温度',
+                        type: 'line',
+                        symbolSize: 8,
+                        itemStyle: {
+                            normal: {
+                                color: '#d48265',
+                                witch: 1,
+                                opacity: 0.2
+                            }
+                        },
+                        hoverAnimation: false,
+                        data: RoomTemp
                     },
                     {
                         name: '信噪比',
@@ -393,30 +437,13 @@
                         symbolSize: 8,
                         itemStyle: {
                             normal: {
-                                color: '#91c7ae',
+                                color: '#CC0033',
                                 witch: 1,
                                 opacity: 0.2
                             }
                         },
                         hoverAnimation: false,
-                        areaStyle: {normal: {}},
                         data: FMReceiveSNR
-                    },
-                    {
-                        name: '温度',
-                        type: 'line',
-                        xAxisIndex: 1,
-                        yAxisIndex: 1,
-                        symbolSize: 8,
-                        itemStyle: {
-                            normal: {
-                                color: '#91c7ae',
-                                witch: 1,
-                                opacity: 0.2
-                            }
-                        },
-                        hoverAnimation: false,
-                        data: AvgFMReceiveSNR
                     }
                 ]
             };
@@ -438,11 +465,11 @@
                     } else {
 
                         var strObj = {
-                            "date": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],//场强
-                            "RoomHum": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],//信噪比
-                            "FMReceiveRSSI": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],//时间
-                            "RoomTemp": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],//场强均值
-                            "FMReceiveSNR": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]//信噪比均值
+                            "date": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],//时间
+                            "RoomHum": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],//湿度
+                            "FMReceiveRSSI": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],//场强
+                            "RoomTemp": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],//温度
+                            "FMReceiveSNR": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]//信噪比
                         };
 
 

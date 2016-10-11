@@ -836,6 +836,75 @@ module.exports = function (app) {
         })
     });
 
+    /**
+     * 路由说明： 台站管理 - 获取项目列表
+     * 鉴权说明： 登陆校验
+     * method: POST
+     */
+    app.post('/api/configuration/projects/getAllRecords', auth, function (req, res, next) {
+        SM.getAllProjectsRecords(function (err, result) {
+            res.json(result);
+            res.end();
+        })
+    });
+
+    /**
+     * 路由说明： 检查ProjNum是否存在的数据API
+     * 鉴权说明： 登陆校验
+     * method: post
+     */
+    app.post('/user/configuration/projects/checkConfirm', auth, function (req, res) {
+        SM.getProjectByProjNum(req.body['ProjNum'], function (o) {
+            if (o) {
+                res.write("false");
+                res.end()
+            } else {
+                res.write("true");
+                res.end()
+            }
+        });
+    });
+
+    /**
+     * 路由说明： 新建项目数据API
+     * 鉴权说明： 登陆校验
+     * method: post
+     */
+    app.post('/user/configuration/projects/addProj', auth, function (req, res) {
+        var ProjNum = req.body['ProjNum'];
+        var ProjName = req.body['ProjName'];;
+        var name = req.body['name'];
+        var pass = req.body['pass'];
+        var creator = req.session.user.user;
+
+
+
+    });
+
+    /**
+     * 路由说明： 台站管理 - 获取站点列表
+     * 鉴权说明： 登陆校验
+     * method: POST
+     */
+    app.post('/api/configuration/sites/getAllRecords', auth, function (req, res, next) {
+        SM.getAllSitesRecords(function (err, result) {
+            res.json(result);
+            res.end();
+        })
+    });
+
+    /**
+     * 路由说明： 台站管理 - 获取设备列表
+     * 鉴权说明： 登陆校验
+     * method: POST
+     */
+    app.post('/api/configuration/devices/getAllRecords', auth, function (req, res, next) {
+        SM.getAllDevicesRecords(function (err, result) {
+            res.json(result);
+            res.end();
+        })
+    });
+
     /* ********************************************** 页面级路由 **************************************************** */
     /**
      * 路由说明： 主页路径跳转路由
@@ -1250,17 +1319,73 @@ module.exports = function (app) {
      * method: GET
      */
     app.get('/user/configuration', auth, pageAuthority, function (req, res) {
+        res.redirect('/user/configuration/projects');
+    });
 
-        var pathname = URL.parse(req.url).pathname.replace("/user/", "");
-        pathname = "/user/" + pathname;
-
-        res.render('./application/configuration', {
-            title: "山西-吉兆 -- 台站管理",
+    /**
+     * 路由说明： 台站配置页面 - 项目管理
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: GET
+     */
+    app.get('/user/configuration/projects', auth, function (req, res) {
+        var pathname = "/user/" + "configuration";
+        res.render('./application/configuration-projects', {
+            title: "山西-吉兆 -- 项目管理",
             udata: req.session.user,
             topNavData: topNavData,
             topNavSelected: pathname
         });
     });
+
+    /**
+     * 路由说明： 台站配置页面 - 项目管理 - 新建项目
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: GET
+     */
+    app.get('/user/configuration/projects/addProj', auth, function (req, res) {
+        var pathname = "/user/" + "configuration";
+        res.render('./application/configuration-addProj', {
+            title: "山西-吉兆 -- 新建项目",
+            udata: req.session.user,
+            topNavData: topNavData,
+            topNavSelected: pathname
+        });
+    });
+
+    /**
+     * 路由说明： 台站配置页面 - 站点管理
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: GET
+     */
+    app.get('/user/configuration/sites', auth, function (req, res) {
+
+        var pathname = "/user/" + "configuration";
+
+        res.render('./application/configuration-sites', {
+            title: "山西-吉兆 -- 站点管理",
+            udata: req.session.user,
+            topNavData: topNavData,
+            topNavSelected: pathname
+        });
+    });
+
+    /**
+     * 路由说明： 台站配置页面 - 设备管理
+     * 鉴权说明： 登陆校验, 页面访问权限校验
+     * method: GET
+     */
+    app.get('/user/configuration/devices', auth, function (req, res) {
+
+        var pathname = "/user/" + "configuration";
+
+        res.render('./application/configuration-devices', {
+            title: "山西-吉兆 -- 设备管理",
+            udata: req.session.user,
+            topNavData: topNavData,
+            topNavSelected: pathname
+        });
+    });
+
     /**
      * 路由说明： 设置页面
      * 鉴权说明： 登陆校验，页面访问权限校验

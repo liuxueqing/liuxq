@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title><%= title %></title>
+
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/font-awesome.min.css"/>
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/bootstrap-datepicker3.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ui.jqgrid.min.css"/>
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/fonts.googleapis.com.css"/>
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace.min.css" class="ace-main-stylesheet"
+          id="main-ace-style"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-part2.min.css" class="ace-main-stylesheet"/>
+    <![endif]-->
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-skins.min.css"/>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-rtl.min.css"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="/stylesheets/Ace_template_css/ace-ie.min.css"/>
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+    <link rel="stylesheet" href="/stylesheets/customs/pages/application/addProjact.css"/>
+    <!-- ace settings handler -->
+    <script src="/javascripts/Ace_template_js/ace-extra.min.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="/javascripts/Ace_template_js/html5shiv.min.js"></script>
+    <script src="/javascripts/Ace_template_js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="no-skin">
+<% include ../includes/topNav.html %>
+
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.loadState('main-container')
+        } catch (e) {
+        }
+    </script>
+
+    <div id="sidebar" class="sidebar      h-sidebar                navbar-collapse collapse          ace-save-state">
+        <script type="text/javascript">
+            try {
+                ace.settings.loadState('sidebar')
+            } catch (e) {
+            }
+        </script>
+
+        <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+            <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                <button class="btn btn-success">
+                    <i class="ace-icon fa fa-signal"></i>
+                </button>
+
+                <button class="btn btn-info">
+                    <i class="ace-icon fa fa-pencil"></i>
+                </button>
+
+                <button class="btn btn-warning">
+                    <i class="ace-icon fa fa-users"></i>
+                </button>
+
+                <button class="btn btn-danger">
+                    <i class="ace-icon fa fa-cogs"></i>
+                </button>
+            </div>
+
+            <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                <span class="btn btn-success"></span>
+
+                <span class="btn btn-info"></span>
+
+                <span class="btn btn-warning"></span>
+
+                <span class="btn btn-danger"></span>
+            </div>
+        </div><!-- /.sidebar-shortcuts -->
+
+        <ul class="nav nav-list">
+            <li class="active open hover">
+                <a href="/user/configuration/projects">
+                    <i class="menu-icon fa fa-sitemap"></i>
+                    <span class="menu-text"> 项目管理 </span>
+                </a>
+                <b class="arrow"></b>
+            </li>
+
+            <li class="hover">
+                <a href="/user/configuration/sites">
+                    <i class="menu-icon fa fa-university"></i>
+                    <span class="menu-text"> 站点管理 </span>
+                </a>
+                <b class="arrow"></b>
+            </li>
+
+            <li class="hover">
+                <a href="/user/configuration/devices">
+                    <i class="menu-icon fa fa-cube"></i>
+                    <span class="menu-text"> 设备管理 </span>
+                </a>
+                <b class="arrow"></b>
+            </li>
+
+        </ul><!-- /.nav-list -->
+    </div>
+
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="page-content">
+                <% include ../includes/ace-settings-container.html %>
+
+                <div class="page-header">
+                    <h1>项目管理 </h1>
+                </div><!-- /.page-header -->
+
+                <div id="sidebar2" class="sidebar responsive menu-min ace-save-state">
+                    <ul class="nav nav-list">
+
+                        <li class="open">
+                            <a href="#" class="dropdown-toggle">
+                                <i class="menu-icon fa fa-sitemap"></i>
+                                                <span class="menu-text">
+                                                    项目管理
+                                                </span>
+
+                                <b class="arrow fa fa-angle-down"></b>
+                            </a>
+
+                            <b class="arrow"></b>
+
+                            <ul class="submenu nav-show" style="display: block;">
+                                <li class="">
+                                    <a href="/user/configuration/projects">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        项目列表
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                                <li class="">
+                                    <a href="/user/configuration/projects/addProj">
+                                        <i class="menu-icon fa fa-caret-right"></i>
+                                        添加项目
+                                    </a>
+
+                                    <b class="arrow"></b>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul><!-- /.nav-list -->
+
+                    <div class="sidebar-toggle sidebar-collapse">
+                        <i id="sidebar3-toggle-icon"
+                           class="ace-icon fa fa-angle-double-right ace-save-state"
+                           data-icon1="ace-icon fa fa-angle-double-left"
+                           data-icon2="ace-icon fa fa-angle-double-right"></i>
+                    </div>
+                </div><!-- .sidebar -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+
+                        <div class="widget-box">
+                            <div class="widget-header">
+                                <h4 class="widget-title">添加项目</h4>
+                            </div>
+
+                            <div class="widget-body add-proj" style="display: block;">
+                                <div class="widget-main">
+                                    <form class="form-horizontal" role="form" id="addProjForm">
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="ipt_ProjNum">
+                                                项目编号 </label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" id="ipt_ProjNum" name="ProjNum"
+                                                       placeholder="8位随机数字"
+                                                       class="col-xs-12 col-sm-5">
+                                                    <button class="btn btn-sm btn-primary btn-reset Js_error_bnt" type="button">
+                                                        随机取数
+                                                    </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="ipt_ProjName">
+                                                项目名称 </label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" id="ipt_ProjName" name="ProjName"
+                                                       placeholder=""
+                                                       class="col-xs-12 col-sm-5">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="ipt_ContactName">
+                                                项目联系人 </label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" id="ipt_ContactName" name="ContactName"
+                                                       placeholder=""
+                                                       class="col-xs-12 col-sm-5">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="ipt_ContactMobile">
+                                                联系人手机 </label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" id="ipt_ContactMobile" name="ContactMobile"
+                                                       placeholder=""
+                                                       class="col-xs-12 col-sm-5">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="ipt_ContactTel">
+                                                联系人电话 </label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" id="ipt_ContactTel" name="ContactTel"
+                                                       placeholder=""
+                                                       class="col-xs-12 col-sm-5">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="ipt_ContactEmail">
+                                                联系人邮箱 </label>
+
+                                            <div class="col-sm-9">
+                                                <input type="text" id="ipt_ContactEmail" name="ContactEmail"
+                                                       placeholder=""
+                                                       class="col-xs-12 col-sm-5">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label no-padding-right" for="ipt_OHNotes">
+                                                备注 </label>
+
+                                            <div class="col-sm-9">
+                                                <textarea id="ipt_OHNotes" rows="2" class="col-xs-12 col-sm-5" name="description" maxlength="100" placeholder="描述..."></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="clearfix form-actions">
+                                            <div class="col-md-offset-3 col-md-9">
+                                                <button class="btn btn-info" type="button">
+                                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                                    添加
+                                                </button>
+
+                                                &nbsp; &nbsp; &nbsp;
+                                                <button class="btn" type="reset">
+                                                    <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                    取消
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+
+    <% include ../includes/footer.html %>
+
+    <!-- 注册提示信息模态框 -->
+    <div class="modal fade" id="formInfoBox" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">提示信息</h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+
+<!-- basic scripts -->
+
+<!--[if !IE]> -->
+<script src="/javascripts/Ace_template_js/jquery-2.1.4.min.js"></script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script src="/javascripts/Ace_template_js/jquery-1.11.3.min.js"></script>
+<![endif]-->
+<script type="text/javascript">
+    if ('ontouchstart' in document.documentElement) document.write("<script src='/javascripts/Ace_template_js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+</script>
+<script src="/javascripts/Ace_template_js/bootstrap.min.js"></script>
+
+<!-- page specific plugin scripts -->
+<script src="/bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="/bower_components/jquery-validation/dist/localization/messages_zh.js"></script>
+
+<!-- ace scripts -->
+<script src="/javascripts/Ace_template_js/ace-elements.min.js"></script>
+<script src="/javascripts/Ace_template_js/ace.min.js"></script>
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    jQuery(function ($) {
+
+        generateRandom();
+
+        $('#sidebar2').insertBefore('.page-content');
+        $('#navbar').addClass('h-navbar');
+        $('.footer').insertAfter('.page-content');
+
+        $('.page-content').addClass('main-content');
+
+        $('.menu-toggler[data-target="#sidebar2"]').insertBefore('.navbar-brand');
+
+
+        $(document).on('settings.ace.two_menu', function (e, event_name, event_val) {
+            if (event_name == 'sidebar_fixed') {
+                if ($('#sidebar').hasClass('sidebar-fixed')) $('#sidebar2').addClass('sidebar-fixed')
+                else $('#sidebar2').removeClass('sidebar-fixed')
+            }
+        }).triggerHandler('settings.ace.two_menu', ['sidebar_fixed', $('#sidebar').hasClass('sidebar-fixed')]);
+
+        $('#sidebar2[data-sidebar-hover=true]').ace_sidebar_hover('reset');
+        $('#sidebar2[data-sidebar-scroll=true]').ace_sidebar_scroll('reset', true);
+
+//        产生8位随机数
+        function generateRandom(){
+            var num = Math.floor(Math.random()*100000000);
+            var str = String(num);
+            while(str.length<8){
+                str = str+"0";
+            }
+            $("#ipt_ProjNum").val(str)
+        }
+        $(".btn-reset").on("click",function(){
+            generateRandom();
+        })
+    })
+
+</script>
+<script src="/javascripts/customs/pages/application/addProj.js"></script>
+</body>
+</html>

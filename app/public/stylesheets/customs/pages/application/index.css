@@ -45,9 +45,9 @@
     z-index: 1025;
 }
 .player-music{
-    position: absolute;
-    top: 0;
-    right: 0;
+    position: fixed;
+    top: 200px;
+    right: 0px;
     overflow: hidden;
     z-index: 1025;
 }
