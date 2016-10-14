@@ -138,11 +138,32 @@ exports.getAllSiteInfo = function (callback) {
 };
 
 exports.getSiteInfoBySiteID = function (siteID, callback) {
-    NsOHBasicSite.find({"ID": siteID}, {_id: 0}).toArray(function (err, o) {
+    NsOHBasicSite.find({"ID": siteID}, {_id: 0}).toArray(function (err, Site) {
         if (err) {
             callback(err, null);
         } else {
-            callback(err, o);
+            NsOHBasicDevice.find({"SiteID": siteID}, {_id: 0, DeviceID: 1}).toArray(function (err, Device) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    var DeviceID = "";
+                    if (Device[0]) {
+                        try {
+                            DeviceID = Device[0].DeviceID;
+                            Site[0].DeviceID = DeviceID;
+                            callback(err, Site);
+                        } catch (err) {
+                            DeviceID = "";
+                            Site[0].DeviceID = DeviceID;
+                            callback(err, Site);
+                        }
+
+                    } else {
+                        Site[0].DeviceID = DeviceID;
+                        callback(err, Site);
+                    }
+                }
+            })
         }
     })
 };

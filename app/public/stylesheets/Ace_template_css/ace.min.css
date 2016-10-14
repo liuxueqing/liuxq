@@ -1161,7 +1161,9 @@ pre.prettyprint {
     padding-bottom: 10px;
     height: auto
 }
-
+.navbar .navbar-brand>img{
+    height: 58px;
+}
 .navbar .navbar-brand:focus, .navbar .navbar-brand:hover {
     color: #FFF
 }

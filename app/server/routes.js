@@ -747,7 +747,6 @@ module.exports = function (app) {
      * method: POST
      */
     app.post('/api/maps/getSiteInfoBySiteID', auth, function (req, res) {
-
         var siteID = req.body['siteID'];
         SM.getSiteInfoBySiteID(siteID, function (err, result) {
             if (err) {

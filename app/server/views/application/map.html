@@ -72,8 +72,8 @@
 
         <div class="widget-body">
             <div class="widget-main" id="siteInfoWindow">
-                <div class="widget-box-overlay"><i class="fa fa-spinner fa-spin fa-3x fa-fw white"></i></div>
-                正在加载数据, 请稍后..
+                <!--<div class="widget-box-overlay"><i class="fa fa-spinner fa-spin fa-3x fa-fw white"></i></div>-->
+                <table class="table table-bordered no-margin-bottom Js_realTimeDataTabel"></table>
             </div>
         </div>
     </div>
@@ -94,7 +94,7 @@
 
         <div class="widget-body">
             <div class="widget-main">
-                <div class="widget-box-overlay"><i class="fa fa-spinner fa-spin fa-3x fa-fw white"></i></div>
+                <!--<div class="widget-box-overlay"><i class="fa fa-spinner fa-spin fa-3x fa-fw white"></i></div>-->
                 <div class="control-group" >
                     正在加载数据, 请稍后..
                 </div>
@@ -153,6 +153,7 @@
 <!-- page specific plugin scripts -->
 <script src="/javascripts/Ace_template_js/jquery-ui.custom.min.js"></script>
 <script src="/javascripts/Ace_template_js/jquery.ui.touch-punch.min.js"></script>
+<script src="/bower_components/socket.io/socket.io-1.4.5.js"></script>
 
 <!-- ace scripts -->
 <script src="/javascripts/Ace_template_js/ace-elements.min.js"></script>
@@ -169,7 +170,13 @@
     }else{
         launch.animate({width:"0px",height:"100%"},60);
     }
-})
+});
+
+    $(function() {
+        $( ".m-siteInfoWindow").draggable();
+
+        $( "#baiduMap" ).droppable();
+    })
 </script>
 </body>
 </html>

@@ -13,20 +13,20 @@ var HOST = config.tcpSocket.HOST;
 var PORT = config.tcpSocket.PORT;
 
 
-var nodeServer = new net.Socket();
+global.nodeServer = new net.Socket();
 
 var splicingDataCacheObj = {}; //拼接数据缓存
 var Cmoment = null;//用来给处理程序传递时间戳标记
 var countNum = null;//处理完的可用数据计数器
 
-//nodeServer.connect(PORT, HOST, function () {
-//
-//    console.log('CONNECTED TO: ' + HOST + ':' + PORT);
-//    // 建立连接后立即向服务器发送数据，服务器将收到这些数据
-//    nodeServer.write('[START0043]{"type":"login","login":"who","pwd":"xxxx"}[END]');   // server login
-//    retry = null;     //重置
-//
-//});
+nodeServer.connect(PORT, HOST, function () {
+
+    console.log('CONNECTED TO: ' + HOST + ':' + PORT);
+    // 建立连接后立即向服务器发送数据，服务器将收到这些数据
+    nodeServer.write('[START0043]{"type":"login","login":"who","pwd":"xxxx"}[END]');   // server login
+    retry = null;     //重置
+
+});
 
 // 为客户端添加"data"事件处理函数
 // dataPackage是服务器发回的数据 , 1包！
@@ -37,7 +37,6 @@ nodeServer.on('data', function (dataPackage) {
 
     //这里对收到每一个片段包的数据进行处理
     try {
-
         splicingDataPackage(dataPackage.toString());
     } catch (err) {
         console.log("处理程序异常 ：");
@@ -62,7 +61,7 @@ nodeServer.setTimeout(1000 * 60 * waitTime, function () {
 
 // 为客户端添加"close"事件处理函数
 nodeServer.on('close', function (had_error) {
-    console.log('Connection closed' + had_error);
+    console.log('Connection closed ' + had_error);
 
     // 完全关闭连接
     nodeServer.destroy();
@@ -222,6 +221,7 @@ function splicingDataPackage(dataPackageStr) {
         } else if (_type === "levels") {
             //这是音频彩条
             //console.log("这是音频彩条")
+            audioLevels(_finalResultObj);
         }
 
 
@@ -233,7 +233,7 @@ function splicingDataPackage(dataPackageStr) {
         nodeServer.write('[START0039]{"type":"heartBeat","keepAlive":"true"}[END]');   // server login
     }
 
-    //报警规则
+    //报警规则模块
     function alertVerification(_finalResultObj) {
         var _deviceDataObj = _finalResultObj.deviceData;
         var deviceID = _finalResultObj.deviceID;
@@ -338,5 +338,16 @@ function splicingDataPackage(dataPackageStr) {
                 }
             }
         });
+    }
+
+    //彩条处理模块
+    function audioLevels(_finalResultObj) {
+        var levels = _finalResultObj.levels;
+        var deviceID = _finalResultObj.deviceID;
+        var expire = 1000 * 60 * 5; //5分钟没数据 即清空缓存， 页面可以直观得到显示！
+
+        //此处为写入缓存模块代码
+        GLOBAL_CACHE.set('levels_' + deviceID, levels, expire);
+        console.log(GLOBAL_CACHE.get('levels_' + deviceID))
     }
 }

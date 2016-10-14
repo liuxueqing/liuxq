@@ -4,6 +4,7 @@
 
 (function () {
 
+    var socket = null;
 
     $("#baiduMap").height($(window).height() - 75);
 
@@ -143,7 +144,7 @@
                         allSiteDataCache.push(Data[i]);
                         addCovering(Data[i], i);     // 根据数据添加地图覆盖物
                     }
-                    ajax_load_siteInfoWindow(allSiteDataCache[0]);
+                    ajax_load_siteInfoWindow2(allSiteDataCache[0]);
                     //ajax_load_deviceInfoBox(allSiteDataCache[0]);
                     addSiteSelected(polygonCache[0], polygonCache);
                     panTo_currentMarkerPoint(allSiteDataCache[0]);
@@ -215,11 +216,9 @@
                 remove_load_animal(widgetMain);
                 controlGroup.html("");
                 var len = Data.length;
-                //console.log(len)
                 for (var i = 0; i < len; i++) {
                     controlGroup.append('<div class="checkbox"><label class="block"><input name="siteSwitch" type="checkbox" class="ace input-lg" data-ProjNum=' + Data[i].ProjNum + ' checked><span class="lbl bigger-120"> ' + Data[i].ProjName + '</span> </label></div>')
                 }
-
             },
             error: function (e) {
                 console.log(e)
@@ -236,8 +235,6 @@
 
         var siteInfoWindow = $("#siteInfoWindow");
         var siteID = _Data.ID;
-        var beforeTime = 0;  //获取ajax传输前的秒数
-        var successTime = 0; //获取ajax传输成功的秒数
         //初始化加载站点详细信息窗口数据
         $.ajax({
             url: "/api/maps/getSiteInfoBySiteID",// 后台接口
@@ -246,35 +243,135 @@
             },
             type: 'post',
             dataType: 'json',
-            beforeSend: function () {
-                remove_load_animal(siteInfoWindow);//移除加载动画
-                add_load_animal(siteInfoWindow);//添加加载动画
-                beforeTime = +new Date();//获取当前秒数
-                console.log(beforeTime);
-            },
             success: function (Data) {
-                var minute = 0; //计算时间差
-                successTime = +new Date();//获取当前秒数
-                if (successTime >= beforeTime) {
-                    minute = successTime - beforeTime;
-                } else {
-                    minute = beforeTime - successTime;
-                }
-                if (minute >= 500) {
-                    siteInfoWindow.html(Data[0].SiteName);
-                }
-                else {
-                    setTimeout(function () {
-                        siteInfoWindow.html(Data[0].SiteName);
-                    }, 500)
-                }
-                //已经获得了所有数据， 暂时不知道要怎么展示， 先显示一条站点名称；
+                var deviceID = Data[0].DeviceID;
+                SOCKET_SiteInfoWindows(deviceID)
             },
             error: function (e) {
                 console.log(e);
 
             }
         });
+    }
+    function ajax_load_siteInfoWindow2(_Data, callback) {
+
+        var siteInfoWindow = $("#siteInfoWindow");
+        var siteID = _Data.ID;
+        //初始化加载站点详细信息窗口数据
+        $.ajax({
+            url: "/api/maps/getSiteInfoBySiteID",// 后台接口
+            data: {
+                "siteID": siteID
+            },
+            type: 'post',
+            dataType: 'json',
+            success: function (Data) {
+                var deviceID = Data[0].DeviceID;
+                SOCKET_SiteInfoWindows2(deviceID)
+            },
+            error: function (e) {
+                console.log(e);
+
+            }
+        });
+    }
+    //function ajax_load_siteInfoWindow(_Data, callback) {
+    //
+    //    var siteInfoWindow = $("#siteInfoWindow");
+    //    var siteID = _Data.ID;
+    //    //初始化加载站点详细信息窗口数据
+    //    $.ajax({
+    //        url: "/api/maps/getSiteInfoBySiteID",// 后台接口
+    //        data: {
+    //            "siteID": siteID
+    //        },
+    //        type: 'post',
+    //        dataType: 'json',
+    //        beforeSend: function () {
+    //            add_load_animal(siteInfoWindow);//添加加载动画
+    //        },
+    //        success: function (Data) {
+    //            var deviceID = Data[0].DeviceID;
+    //            SOCKET_SiteInfoWindows(deviceID)
+    //        },
+    //        error: function (e) {
+    //            console.log(e);
+    //
+    //        }
+    //    });
+    //}
+
+    function SOCKET_SiteInfoWindows(deviceID) {
+        var deviceDataArry = [];
+        deviceDataArry.push(deviceID);
+        socket = io.connect();
+        socket.on("login", function (data) {
+            socket.emit("userLogin", {name: "who", pass: "xxxx"});
+            socket.emit("getData", {siteNumArry: deviceDataArry});
+        });
+
+        socket.on('data', function (data) {
+            try {
+                for (var key in data) {
+                    //获得每一个数据json对象
+                    addSocketDataToPage(key, data[key]); //传入一个设备的json参数
+                }
+            } catch (err) {
+
+            }
+        });
+    }
+
+    function SOCKET_SiteInfoWindows2(deviceID) {
+        var deviceDataArry = [];
+        deviceDataArry.push(deviceID);
+        socket.emit("getData", {siteNumArry: deviceDataArry});
+        socket.on('data', function (data) {
+            console.log(data)
+            try {
+                for (var key in data) {
+                    //获得每一个数据json对象
+                    addSocketDataToPage(key, data[key]); //传入一个设备的json参数
+                }
+            } catch (err) {
+
+            }
+        });
+    }
+
+    //传入一个设备的json参数
+    function addSocketDataToPage(key, dataObj) {
+
+        //如果该设备有数据
+
+        if (dataObj) {
+            //实时音频监听中的html模板
+            var str1 = '<thead> <tr> <td>采集时间</td> <td title="' + dataObj.deviceData.CollTime + '"> ' + dataObj.deviceData.CollTime.split(" ")[1] +
+                ' <span class="site-states" data-state="0"></span></td> </tr> </thead><tbody> <tr> <td>设备ID</td> <td class="register-tag" title="' + dataObj.deviceID + '"> '
+                + dataObj.deviceID + '</td> </tr> <tr>  <td>频率</td> <td class="position-relative"> ' + dataObj.deviceData.FMReceiveFQY.value +
+                ' Mhz<div class="tb-tail"> <button title="设备频率设置按钮" class="btn btn-minier btn-yellow Js_setRate" data-toggle="modal"><i class="ace-icon fa fa-cog"></i>设置 </button> </div> </td></tr> <tr data-alert="' + dataObj.deviceData.RoomTemp.alarmStatus + '"> <td>温度</td> <td class="position-relative">'
+                + dataObj.deviceData.RoomTemp.value + '<span class="tb-tail"> ℃</span></td> </tr> <tr data-alert="' + dataObj.deviceData.RoomHum.alarmStatus + '"> <td>湿度</td> <td class="position-relative">' +
+                dataObj.deviceData.RoomHum.value + ' <span class="tb-tail">%</span></td> </tr> <tr data-alert="' + dataObj.deviceData.FMReviceRSSI.alarmStatus + '"> <td>场强</td> <td class="position-relative">' +
+                dataObj.deviceData.FMReviceRSSI.value + '<span class="tb-tail">N/C</span></td> </tr> <tr data-alert="' + dataObj.deviceData.FMReviceSNR.alarmStatus + '"> <td>信噪比</td> <td class="position-relative">' +
+                dataObj.deviceData.FMReviceSNR.value + '<span class="tb-tail">db</span></td> </tr> </tbody></table></table>';
+
+            try {
+                $('#siteInfoWindow').find(".Js_realTimeDataTabel").html(str1)
+            }
+            catch (err) {
+                console.log(err)
+            }
+
+            //如果该设备没有数据
+        } else {
+            var str2 = '<thead> <tr> <td>采集时间</td> <td>暂无数据 <span class="site-states" data-state="1"></span></td> </tr> </thead> <tbody> <tr> <td>设备ID</td> <td class="register-tag"> 暂无数据</td> </tr> <tr> <td>频率</td> <td class="position-relative"> 暂无数据<div class="tb-tail"> <button title="设备频率设置按钮" class="btn btn-minier btn-yellow Js_setRate"><i class="ace-icon fa fa-cog"></i>设置 </button> </div> </td> </tr> <tr> <td>温度</td> <td class="position-relative">暂无数据</td> </tr> <tr> <td>湿度</td> <td class="position-relative">暂无数据</td> </tr> <tr> <td>场强</td> <td class="position-relative">暂无数据</td> </tr> <tr> <td>信噪比</td> <td class="position-relative">暂无数据</td> </tr> </tbody></table>';
+            try {
+                $('#siteInfoWindow').find(".Js_realTimeDataTabel").html(str2)
+            }
+            catch (err) {
+                console.log(err)
+            }
+        }
     }
 
     /**
@@ -375,7 +472,7 @@
      * 参数说明: 无
      */
     function loadSiteData(_data) {
-        ajax_load_siteInfoWindow(_data);
+        ajax_load_siteInfoWindow2(_data);
         //ajax_load_deviceInfoBox(_data);
     }
 

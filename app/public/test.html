@@ -51,58 +51,6 @@
 <body class="no-skin">
 
 <!--导航条-->
-<nav style="height: 75px;color:#fff;background: #1291a9; ">导航条</nav>
-<div class="main-container">
-    <div class="main-content-inner">
-        <div class="main-content-inner">
-            <div class="page-content">
-                <div class="header-seach">
-                    <div class="row">
-                        <div class="search-area well col-xs-12">
-                            <div>
-                                <div class="pull-left">
-                                    <b class="text-primary">日期设置：</b>
-                                    &nbsp;
-                                    <div id="toggle-result-format" class="btn-group btn-overlap" data-toggle="buttons">
-                                        <label title="Today" class="btn btn-white btn-success active"
-                                               data-class="btn-success" aria-pressed="true">
-                                            <input type="radio" value="2" autocomplete="off"/>
-                                            今天
-                                        </label>
-
-                                        <label title="Yesterday" class="btn btn-white btn-grey"
-                                               data-class="btn-primary">
-                                            <input type="radio" value="1" checked="" autocomplete="off"/>
-                                            昨天
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="input-group pull-right date-wrap">
-                                    <input class="form-control input-mask-date datepicker drop-date-picker"
-                                           type="text"/>
-                                        <span class="input-group-btn Js_selectDate">
-                                            <button class="btn btn-sm btn-default" type="button">
-                                                <i class="ace-icon fa fa-calendar bigger-110"></i>
-                                            </button>
-                                        </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <input id="selectTime" type="text" style="display: none"/>
-
-                <div id="strObjInfo"></div>
-                <div class="chart-dom" id="Js_charts"></div>
-
-            </div>
-            <!-- /.page-content -->
-        </div>
-
-    </div>
-</div>
 
 <!--[if !IE]> -->
 <script src="javascripts/Ace_template_js/jquery-2.1.4.min.js"></script>
@@ -129,288 +77,144 @@
 <script src="javascripts/Ace_template_js/ace-elements.min.js"></script>
 <script src="javascripts/Ace_template_js/ace.min.js"></script>
 <script type="text/javascript">
-    setEcharts();
-    function setEcharts() {
-        var strObj = {
-            "FMReceiveRSSI": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "12", "-", "-", "-", "-", "-", "-", "-", "-"],//场强
-            "FMReceiveSNR": ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "4", "-", "-", "-", "-", "-", "-", "-", "-"],//信噪比
-            "strObjTime": ["00:00", "00:10", "00:20", "00:30", "00:40", "00:50", "01:00", "01:10", "01:20", "01:30", "01:40", "01:50", "02:00", "02:10", "02:20", "02:30", "02:40", "02:50", "03:00", "03:10", "03:20"],//时间
-            "AvgFMReceiveRSSI": ["10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10", "10"],//场强均值
-            "AvgFMReceiveSNR": ["2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2", "2"]//信噪比均值
-        };
 
-//        var strObj = JSON.parse(str);
-        // 基于准备好的dom，初始化echarts实例
-        var myChart_sitePage = echarts.init(document.getElementById('Js_charts'));
-
-        var timeData = strObj.strObjTime;
-        var AvgFMReceiveRSSI = strObj.AvgFMReceiveRSSI;
-        var FMReceiveRSSI = strObj.FMReceiveRSSI;
-        var AvgFMReceiveSNR = strObj.AvgFMReceiveSNR;
-        var FMReceiveSNR = strObj.FMReceiveSNR;
-        option = {
-            title: {
-                text: '场强于信噪比当日趋势图',
-                subtext: '历史数据',
-                x: 'center'
-            },
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    animation: false
-                }
-            },
-            legend: {
-                data: ['场强', '场强均值', '信噪比', '信噪比均值'],
-                x: 'left',
-                top: 40
-            },
-            toolbox: {
-                right: '10%',
-                top: 40,
-                feature: {
-                    dataZoom: {},
-                    restore: {},
-                    dataView: {},
-                    saveAsImage: {}
-                }
-            },
-            dataZoom: [
-                {
-                    show: true,
-                    realtime: true,
-                    orient: 'horizontal',
-                    start: 0,
-                    end: 100,
-                    xAxisIndex: [0, 1]
-                },
-                {
-                    type: 'inside',
-                    realtime: true,
-                    start: 0,
-                    end: 100,
-                    xAxisIndex: [0, 1]
-                }
-            ],
-            grid: [{
-                left: 50,
-                right: 50,
-                top: 100,
-                height: '35%'
-            }, {
-                left: 50,
-                right: 50,
-                top: '56%',
-                height: '35%'
-            }],
-            xAxis: [
-                {
-                    type: 'category',
-                    boundaryGap: false,
-                    axisLine: {onZero: true},
-                    data: timeData
-                },
-                {
-                    gridIndex: 1,
-                    type: 'category',
-                    boundaryGap: false,
-                    axisLine: {onZero: true},
-                    data: timeData,
-                    position: 'top'
-                }
-            ],
-            yAxis: [
-                {
-                    name: '电平[dBμV]',
-                    type: 'value',
-                    scale: true,
-                    min: 0,
-                    max: 100,
-                    nameTextStyle: {
-                        color: 'red',
-                        fontWeight: 'bold'
-                    }
-                },
-                {
-                    gridIndex: 1,
-                    name: '信噪比[dB]',
-                    type: 'value',
-                    scale: true,
-                    min: 0,
-                    max: 50,
-                    inverse: true,
-                    nameTextStyle: {
-                        color: 'blue',
-                        fontWeight: 'bold'
-                    }
-                }
-            ],
-            series: [
-                {
-                    name: '场强',
-                    type: 'line',
-                    symbolSize: 8,
-                    itemStyle: {
-                        normal: {
-                            color: '#CC0033',
-                            witch: 1,
-                            opacity: 1
-                        }
-                    },
-                    hoverAnimation: false,
-                    areaStyle: {normal: {}},
-                    data: FMReceiveRSSI
-                },
-                {
-                    name: '场强均值',
-                    type: 'line',
-                    symbolSize: 8,
-                    itemStyle: {
-                        normal: {
-                            color: '#CC0033',
-                            witch: 1,
-                            opacity: 0.2
-                        }
-                    },
-                    hoverAnimation: false,
-                    data: AvgFMReceiveRSSI
-                },
-                {
-                    name: '信噪比',
-                    type: 'line',
-                    xAxisIndex: 1,
-                    yAxisIndex: 1,
-                    symbolSize: 8,
-                    itemStyle: {
-                        normal: {
-                            color: '#91c7ae',
-                            witch: 1,
-                            opacity: 0.2
-                        }
-                    },
-                    hoverAnimation: false,
-                    areaStyle: {normal: {}},
-                    data: FMReceiveSNR
-                },
-                {
-                    name: '信噪比均值',
-                    type: 'line',
-                    xAxisIndex: 1,
-                    yAxisIndex: 1,
-                    symbolSize: 8,
-                    itemStyle: {
-                        normal: {
-                            color: '#91c7ae',
-                            witch: 1,
-                            opacity: 0.2
-                        }
-                    },
-                    hoverAnimation: false,
-                    data: AvgFMReceiveSNR
-                }
-            ]
-        };
-        // 使用刚指定的配置项和数据显示图表。
-        myChart_sitePage.setOption(option);
-        window.onresize = myChart_sitePage.resize;
-    }
-
-
-</script>
-<script>
-    $('.datepicker').pickadate({
-        // Strings and translations
-        monthsFull: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-        monthsShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-        weekdaysFull: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-        weekdaysShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-        showMonthsShort: true,
-
-        // Buttons
-        today: '今天',
-        clear: false,
-        close: '关闭',
-
-        // Accessibility labels
-        labelMonthNext: '下一月',
-        labelMonthPrev: '上一月',
-        labelMonthSelect: '选择月份',
-        labelYearSelect: '选择年份',
-
-        // Formats
-        format: '选择：yyyy/mm/dd',
-        formatSubmit: 'yyyy/mm/dd',
-        hiddenPrefix: undefined,
-        hiddenSuffix: '_submit',
-        hiddenName: undefined,
-
-        // First day of the week
-        firstDay: '周一',
-
-        // Date limits
-        min: [2016, 6, 13],
-        max: true
-
+//    jquery-ui 实现拖拽
+    $("#workflow_app_outer .tool").draggable({  //增加拖拽功能
+        helper: "clone",
+        zIndex: 100,
+        appendTo: "#workflow_app",
+        start: function (event, ui) {
+        },
+        stop: function (event, ui) {
+        }
     });
 
-    var get_date = "";  //得到日期
-    var $input = $('.datepicker').pickadate();  //      实例化日期参数
-    var picker = $input.pickadate('picker');
-    picker.set('select', moment());
-//    点击“今天”、“昨天”按钮时得到日期
-    $(".search-area label").on("click", (function () { // 在页面任意位置点击而触发此事件
-        var _value = $(this).children().val();       // e.target表示被点击的目标
-        var date = "";
-        if (_value == "2") {
-            date = moment().format("YYYY-MM-DD");
+//2. 拖拽目标位置后创建模块。
+    $("#workflow_app").droppable({  //拖拽到目标容易后触发
+        accept: '#workflow_app_outer .tool',
+        hoverClass: 'modelhover',
+        drop: function (event, ui) {
+            _acsd.pm.moduledrag.addShape({  //调用创建模块的方法
+                skin: ui.draggable.attr("vskin"),
+                html: ui.draggable.attr("vhtml"),
+                type: ui.draggable.attr("vtype"),
+                position: ui.position,
+                target: $(this)
+            });
         }
-        else if (_value == "1") {
-            date = moment().subtract(1, 'days').format("YYYY-MM-DD");
-            picker.set('select', date);
-        }
-        transformDate();
-    }));
-
-    //    关闭日期插件时得到日期
-    picker.on("close", function () {
-        get_date = picker.get('select', 'yyyy-mm-dd');
-        transformDate();
     });
 
-//    点击日历按钮时日期插件打开
-    $(".Js_selectDate").on("click", (function () {
-        setTimeout(function() {
-            picker.open();
-        },100)
-    }));
+//3. 具体创建模块的时候要使用jsplumb插件创建模块，jsplumb可以实现连线的功能
+    _acsd.pm.moduledrag = (function ($, window) {
+        return {
+            addShape: function (_opt) {
+                var opt = $.extend(true, {}, {
+                    id: guidGenerator(),
+                    skin: "",
+                    html: "",
+                    type: "0",
+                    position: {
+                        top: 0,
+                        left: 0
+                    },
+                    target: $(document.body)
+                }, _opt);
 
-//    传输日期数据
-    function transformDate(){
+                var _el = $('<div class="' + opt.skin + ' proc_l pingping con_po1 b_p1 b_p1c"  id="' + opt.id + '" onmouseup=\"_acsd.pm.appManager.TakeHtml(0,this)\" ></div>');
 
-        $.ajax({
-            url: "",// 后台接口
-            data: {
-                "chartDate": get_date
-            },
-            type: 'post',
-            dataType: 'json',
-            success: function (Data) {
-               console.log("传输成功！");
-            },
-            error: function (e) {
-                console.log(e)
+                opt.target.append(_el.css({  //将鼠标的当前位置交给新创建的模块（div）的位置
+                    "top": opt.position.top,
+                    "left": opt.position.left
+                }).find(".m_close1").click(function () {
+                    // _acsd.pm.moduledrag.delShape(opt.id, moudleid);    //关闭
+                }).end());
+                _acsd.pm.wfCommon.plumb.AddEndpoints(opt.id, ["RightMiddle"], ["LeftMiddle"]);  //添加连线必备的点
+                jsPlumb.draggable(_el);  //关键作用，这句才能使模块移动
+                _acsd.pm.appManager.TakeHtml(1, _el[0]); //操作模块属性，从这儿移到第3步》》》》》》
+
             }
-        });
+        }
+    });
+
+//3. 将模块HTML和ID内容记录下来，存到集合里边，并将集合编码入库
+    TakeHtml: function (type, apphtml) {
+        if (type == 1) {  //添加
+            _acsd.pm.elManager.ElInfoAdd(apphtml.id, apphtml.outerHTML); //转换json对象
+        }
+        else if (type == 0) {  //修改
+            _acsd.pm.elManager.ElInfoEidit(apphtml.id, apphtml.outerHTML); //转换json对象
+        }
+        else if (type == 2)  //删除
+        {
+            _acsd.pm.elManager.ElInfoRemove(apphtml); //转换json对象
+        }
+        var jsonElList = JSON.stringify(_elList);
+        jsonElList = encodeURIComponent(jsonElList);
+        _acsd.pm.appManager.APPHTMLUpdate(_acsd.property.getAppid(), jsonElList);
     }
 
-    //"今天”、“昨天”按钮样式切换
-    $('#toggle-result-format .btn').tooltip({container: 'body'}).on('click', function(e){
-        $(this).siblings().each(function() {
-            $(this).removeClass($(this).attr('data-class')).addClass('btn-grey');
-        });
-        $(this).removeClass('btn-grey').addClass($(this).attr('data-class'));
+
+            _acsd.pm.elManager = {
+        ElInfoAdd: function (optid, opthtml) {
+            _elList.push({ optid: optid, opthtml: opthtml, connid: "" }); //添加模块到集合中
+        },
+        ElInfoEidit: function (optid, opthtml) {  //编辑模块
+            $.each(_elList, function (i, val) {
+                if (val.optid == optid) {        //判断选中的模块编辑
+                    val.opthtml = opthtml;
+                }
+            });
+        },
+        ElInfoRemove: function (optid) {
+            var isReturn = false; //移除位数
+            $.each(_elList, function (i, val) {
+                if (!isReturn) {
+                    if (val.optid == optid) {        //判断选中的模块编辑
+                        _elList.splice(i, 1);
+                        isReturn = true;
+                    }
+                }
+            });
+            if (isReturn) {
+                $.each(_elList, function (i, val) {
+                    if (val.connid == optid) {
+                        val.connid = "";
+                    }
+                });
+            }
+        },
+        ElTakeUpdate: function (id) {
+            $.each(_elList, function (i, val) {
+                if (val.optid == id) {
+                    val.opthtml = $("#" + id)[0].outerHTML;
+                }
+            });
+            var jsonElList = JSON.stringify(_elList);
+            jsonElList = encodeURIComponent(jsonElList);
+            _acsd.pm.appManager.APPHTMLUpdate(_acsd.property.getAppid(), jsonElList);
+        }
+    };
+
+//4. 回显的时候将解码后得到的集合循序回显，
+    //假设date是从数据库查出来编码后的数据
+    //1》
+    _elList = eval(date);
+    $.each(_elList, function (val, txt) {
+        $("#workflow_app").append(txt.opthtml); //开始顺序回显模块
+        _acsd.pm.wfCommon.plumb.AddEndpoints(txt.optid, ["RightMiddle"], ["LeftMiddle"]); //为每个模块添加上下链接需要的点
     });
+    //2》
+    $.each(_elList, function (val, txt) {//添加链接线，有连线的连线
+        if (txt.optid != "" && txt.connid != "") {
+            jsPlumb.connect({ uuids: [txt.optid + "RightMiddle", txt.connid + "LeftMiddle"], editable: true });
+        }
+    });
+
+    //3》
+    jsPlumb.draggable(jsPlumb.getSelector(".pingping")); //初始化模块拖拽  都能拖拽
+
 </script>
+
 </body>
 
 </html>

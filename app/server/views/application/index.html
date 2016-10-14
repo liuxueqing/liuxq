@@ -150,7 +150,7 @@
 
                             <!-- real-time: 实时数据 --> <!-- historical: 实时数据 -->
 
-                            <div class="col-md-6 col-lg-3 widget-container-col" id="WC_<%=a.DeviceID%>">
+                            <div class="col-md-6 half col-lg-4 widget-container-col" id="WC_<%=a.DeviceID%>">
                                 <div class="widget-box widget-box-audioMonitoring" id="WB_<%=a.DeviceID%>">
                                     <div class="widget-header">
                                         <div class="widget-toolbar no-border pull-left">
@@ -207,7 +207,7 @@
                                                         <div class="fw-left" href="#" title="音频左右声道">
                                                             <img src="/images/customs/application/rule.png"
                                                                  alt="...">
-                                                            <div class="strapping"></div>
+                                                            <div class="strapping" id="meter"></div>
                                                         </div>
                                                         <div class="fw-right">
                                                             <div class="fw-right-content">
@@ -237,7 +237,7 @@
                                                                             <td>频率</td>
                                                                             <td class="position-relative"
                                                                                 title="<%= a.RegisterDeviceID %>">
-                                                                                <%= a.RegisterDeviceID %> Mhz
+                                                                                <%= a.RegisterDeviceID %> MHz
                                                                                 <div class="tb-tail">
                                                                                     <button class="btn btn-minier btn-yellow ">
                                                                                         <i class="ace-icon fa fa-cog"></i>设置
@@ -368,16 +368,28 @@
 <div id="dialog-message-1" class="hide">
     <p>
         <i class="ace-icon fa fa-exclamation-triangle red"></i>
-        请输入需要设置的频率值
+        请输入需要设置的间隔时间和频率值
     </p>
 
     <div class="hr hr-12 hr-double"></div>
 
-    <p>
-        <label for="rate">频率：</label>
-        <input type="text" id="rate"/>
-        Mhz
-    </p>
+    <form id="setForm">
+        <p>
+            <label for="rate">间隔时间：</label>
+            <input type="text" name="timeCircle" id="rate"/>
+            S
+        </p>
+
+        <hr>
+
+        <div id="InputsWrapper"></div>
+
+        <button class="btn btn-primary btn-sm btn-block" id="AddMoreFileBox">
+            <i class="ace-icon fa fa-plus bigger-110 white"></i>
+            添加频率
+        </button>
+    </form>
+
 </div><!-- 实时音频频率设置模态框 -->
 
 <!-- 报警规则设置模态框 -->
@@ -448,6 +460,8 @@
 
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
+
+    var socket = io.connect();
     //common
     //        根据面板大小判断彩条是否显示
     function fwLeftIfShow() {
@@ -457,13 +471,13 @@
         if (box_width > 320) {
             $(".fw-left").css("display", "block");
             $(".fw-right-content").css("margin-left", "110px");
-            td_none.css("display","table-cell");
-            td_padding.css("padding","8px")
+            td_none.css("display", "table-cell");
+            td_padding.css("padding", "8px")
         } else {
             $(".fw-left").css("display", "none");
             $(".fw-right-content").css("margin-left", "0");
-            td_none.css("display","none");
-            td_padding.css("padding","2px")
+            td_none.css("display", "none");
+            td_padding.css("padding", "2px")
         }
     }
 
@@ -510,13 +524,14 @@
 
 //        当插入页边距时实时监听面板设置
             $("#ace-settings-add-container").on('click', function () {
+
                 var widgetContainer = $(".widget-container-col");
-                if (widgetContainer.hasClass("col-lg-3")) {
-                    widgetContainer.removeClass("col-lg-3");
-                    widgetContainer.addClass("col-lg-6");
-                } else {
+                if (widgetContainer.hasClass("col-lg-6")) {
                     widgetContainer.removeClass("col-lg-6");
-                    widgetContainer.addClass("col-lg-3");
+                    widgetContainer.addClass("col-lg-4");
+                } else {
+                    widgetContainer.removeClass("col-lg-4");
+                    widgetContainer.addClass("col-lg-6");
                 }
             });
 
@@ -678,9 +693,8 @@
         deviceDataArry.forEach(function (item, index) {
             deviceDataArry[index] = item.DeviceID;
         });
-
-        var socket = io.connect();
         socket.on("login", function (data) {
+            console.log(deviceDataArry)
             socket.emit("userLogin", {name: "who", pass: "xxxx"});
             socket.emit("getData", {siteNumArry: deviceDataArry});
         });
@@ -706,7 +720,7 @@
                 var str1 = '<thead> <tr> <td>采集时间</td> <td title="' + dataObj.deviceData.CollTime + '"> ' + dataObj.deviceData.CollTime.split(" ")[1] +
                         ' <span class="site-states" data-state="0"></span></td> </tr> </thead><tbody> <tr> <td>设备ID</td> <td class="register-tag" title="' + dataObj.deviceID + '"> '
                         + dataObj.deviceID + '</td> </tr> <tr>  <td>频率</td> <td class="position-relative"> ' + dataObj.deviceData.FMReceiveFQY.value +
-                        ' Mhz<div class="tb-tail"> <button title="设备频率设置按钮" class="btn btn-minier btn-yellow Js_setRate" data-toggle="modal"><i class="ace-icon fa fa-cog"></i>设置 </button> </div> </td></tr> <tr data-alert="' + dataObj.deviceData.RoomTemp.alarmStatus + '"> <td>温度</td> <td class="position-relative">'
+                        ' MHz<div class="tb-tail"> <button title="设备频率设置按钮" class="btn btn-minier btn-yellow Js_setRate" data-toggle="modal"><i class="ace-icon fa fa-cog"></i>设置 </button> </div> </td></tr> <tr data-alert="' + dataObj.deviceData.RoomTemp.alarmStatus + '"> <td>温度</td> <td class="position-relative">'
                         + dataObj.deviceData.RoomTemp.value + '<span class="tb-tail"> ℃</span></td> </tr> <tr data-alert="' + dataObj.deviceData.RoomHum.alarmStatus + '"> <td>湿度</td> <td class="position-relative">' +
                         dataObj.deviceData.RoomHum.value + ' <span class="tb-tail">%</span></td> </tr> <tr data-alert="' + dataObj.deviceData.FMReviceRSSI.alarmStatus + '"> <td>场强</td> <td class="position-relative">' +
                         dataObj.deviceData.FMReviceRSSI.value + '<span class="tb-tail">N/C</span></td> </tr> <tr data-alert="' + dataObj.deviceData.FMReviceSNR.alarmStatus + '"> <td>信噪比</td> <td class="position-relative">' +
@@ -736,10 +750,13 @@
 </script>
 
 <script>
+
+    var currentDeviceID = "";
+
     $(document).ready(function () {
 
         var msg = null;//设置报警规则,右下角提示信息
-        var msgFreqSet = null//设置频率,右下角提示信息
+        var msgFreqSet = null;//设置频率,右下角提示信息
 
         //        频率设置弹出框
 
@@ -747,6 +764,9 @@
 
 
         Dom.on('click', ".Js_setRate", function () {
+
+            currentDeviceID = $(this).closest(".widget-box").attr("id").replace("WB_", "");
+
             var dialog = $("#dialog-message-1").removeClass('hide').dialog({
                 modal: true,
                 width: 320,
@@ -757,14 +777,54 @@
                         text: "设置",
                         "class": "btn btn-danger btn-minier",
                         click: function () {
-                            $(this).dialog("close");
-                            //获取用户设置的频率数据， 提交给后台处理!
-                            msgFreqSet = Messenger().post({
-                                message: '抱歉, 该功能暂未开放！',
-                                type: 'error',
-                                hideAfter: 5,
-                                id: "Only-one-message2"
-                            });
+
+
+                            var freqs_len = $("#setForm").find("input[name='freqs']").length;
+
+                            //至少需要输入一个频率!
+                            if (freqs_len > 0) {
+                                var paramsArry = $("#setForm").serialize().split("&");
+                                var newData = {
+                                    type:"set",
+                                    timeCircle: "",
+                                    freqs: [],
+                                    deviceID: "07WxacTCHY7giNmpKetxn8tNDQcBhOLfBfk"
+                                };
+
+                                for (var i = 0; i < paramsArry.length; i++) {
+
+                                    var key = paramsArry[i].split("=")[0];
+                                    var value = paramsArry[i].split("=")[1];
+
+                                    if (key === "timeCircle" && value != "") {
+                                        newData[key] = value;
+                                    } else if (key === "freqs" && value != "") {
+                                        newData[key].push(value);
+                                    }
+                                }
+
+                                console.log(newData);   //获得输入的input值
+                                //获取用户设置的频率数据， 提交给后台处理!
+                                socket.emit("set", newData);
+
+
+
+//                                $(this).dialog("close");
+//                                msgFreqSet = Messenger().post({
+//                                    message: '抱歉, 该功能暂未开放！',
+//                                    type: 'error',
+//                                    hideAfter: 5,
+//                                    id: "Only-one-message2"
+//                                });
+
+                            } else {
+                                msgFreqSet = Messenger().post({
+                                    message: '至少需要输入一个频率！',
+                                    type: 'error',
+                                    hideAfter: 5,
+                                    id: "Only-one-message2"
+                                });
+                            }
                         }
                     },
                     {
@@ -898,6 +958,10 @@
                 }
             });
         });
+    })
+
+    $(function () {
+        $(".m-siteInfoWindow").draggable();
     })
 </script>
 
@@ -1104,6 +1168,38 @@
         })
     });
 </script>
+<script src="/javascripts/customs/pages/application/meter.js"></script>
+<script>
+    $(document).ready(function () {
 
+        var MaxInputs = 10; //maximum input boxes allowed
+        var InputsWrapper = $("#InputsWrapper"); //Input boxes wrapper ID
+        var AddButton = $("#AddMoreFileBox"); //Add button ID
+
+        var x = InputsWrapper.length; //initlal text box count
+        var FieldCount = 1; //to keep track of text box added
+
+        $(AddButton).click(function (e)  //on add input button click
+        {
+            if (x <= MaxInputs) //max input box allowed
+            {
+                FieldCount++; //text box added increment
+                //add input box
+                $(InputsWrapper).append('<p> <label for="rate">频率：</label> <input type="text" name="freqs" id="field_' + FieldCount + '" placeholder="请输入频率值.."/> MHz <a href="#" class="removeclass">×</a></p>');
+                x++; //text box increment
+            }
+            return false;
+        });
+
+        $("body").on("click", ".removeclass", function (e) { //user click on remove text
+            if (x > 1) {
+                $(this).parent('p').remove(); //remove text box
+                x--; //decrement textbox
+            }
+            return false;
+        })
+
+    });
+</script>
 </body>
 </html>

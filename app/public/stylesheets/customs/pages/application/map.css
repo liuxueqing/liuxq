@@ -43,14 +43,39 @@ body, html,#baiduMap {width: 100%;height: 100%;overflow: hidden;margin:0;font-fa
 .m-hunanMap .copyright a {
     color: #0078A8;;
 }
-
+/*站点详细信息板块*/
 .m-siteInfoWindow {
     position: absolute;
     left: 90px;
     top: 88px;
     width: 335px;
 }
-
+.m-siteInfoWindow tr td:first-child{
+    min-width: 70px;
+}
+.m-siteInfoWindow tr td:last-child{
+    max-width: 130px;
+    padding-right: 54px;
+    overflow-x: hidden;
+    white-space: normal;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+}
+.m-siteInfoWindow tr td:last-child.register-tag{
+    padding-right: 8px;
+}
+.m-siteInfoWindow .tb-tail{
+    display: inline-block;
+    position: absolute;
+    width: 48px;
+    right: 5px;
+    top:5px;
+    font-size: 11px;
+    color: #108398;
+}
+.m-siteInfoWindow .tb-tail .Js_setRate{
+    display: none;
+}
 .m-ctrlBox {
     position: absolute;
     right: 10px;
